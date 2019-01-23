@@ -9,7 +9,7 @@
     <meta name="description" content="AirNet">
     <meta name="author" content="Marticles">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icon.png">
     <title>AirNet 注册</title>
     <!-- Bootstrap Core CSS -->
     <link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -37,24 +37,24 @@
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <section id="wrapper">
-        <div class="login-register" style="background-image:url(/images/background/login-register.png);">
+        <div class="login-register" style="background-image:url(/images/background/login-register.svg);">
             <div class="login-box card">
             <div class="card-body">
-                <form class="form-horizontal form-material" id="loginform" action="index.html">
+                <form class="form-horizontal form-material" id="register_form">
                     <h3 class="box-title m-b-20" style="text-align:center;">AirNet® 用户注册</h3>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input class="form-control" type="text" required="" placeholder="Name">
+                            <input class="form-control" type="text" id="name" required="" placeholder="用户名">
                         </div>
                     </div>
                     <div class="form-group ">
                         <div class="col-xs-12">
-                            <input class="form-control" type="text" required="" placeholder="Email">
+                            <input class="form-control" type="text" id="email" required="" placeholder="Email">
                         </div>
                     </div>
                     <div class="form-group ">
                         <div class="col-xs-12">
-                            <input class="form-control" type="password" required="" placeholder="Password">
+                            <input class="form-control" type="password" id="password" required="" placeholder="密码">
                         </div>
                     </div>
                    
@@ -62,13 +62,13 @@
                         <div class="">
                             <div class="checkbox checkbox-success p-t-0">
                                 <input id="checkbox-signup" type="checkbox">
-                                <label for="checkbox-signup">我同意<a href="#">AirNet®</a>使用条款</label>
+                                <label for="checkbox-signup">同意<a href="#">AirNet®</a>使用条款</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
-                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light">注册</button>
+                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" id="reg_button">注册</button>
                         </div>
                     </div>
                     <div class="form-group m-b-0">
@@ -108,10 +108,7 @@
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+    <script src="/js/airnet/auth.js"></script>
 </body>
 
 </html>
-
-<script>
-
-</script>
