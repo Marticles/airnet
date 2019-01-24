@@ -1,10 +1,10 @@
 package com.marticles.airnet.mainserver.controller;
 
-import com.marticles.airnet.mainserver.Util.JwtUtil;
 import com.marticles.airnet.mainserver.model.User;
 import com.marticles.airnet.mainserver.model.UserRequest;
 import com.marticles.airnet.mainserver.model.UserType;
 import com.marticles.airnet.mainserver.server.AuthServer;
+import com.marticles.airnet.mainserver.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,4 +65,16 @@ public class AuthController {
         }
 
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("jwt_token", null);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        response.addHeader("Set-Cookie", "HttpOnly");
+        return "redirect:/";
+    }
+
+
 }

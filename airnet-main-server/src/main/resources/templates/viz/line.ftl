@@ -9,16 +9,27 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/icon.png">
+    <link rel="icon" href="/static/images/icon.png"/>
     <title>AirNet</title>
     <!-- Bootstrap Core CSS -->
-    <link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="/plugins/c3-master/c3.min.css" rel="stylesheet">
+    <link href="/static/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Page plugins css -->
+    <link href="/static/plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
+    <!-- Date picker plugins css -->
+    <link href="/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <!-- Daterange picker plugins css -->
+    <link href="/static/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+    <link href="/static/plugins/daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- chartist CSS -->
+    <link href="/static/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="/static/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
+    <link href="/static/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    <link href="/static/plugins/c3-master/c3.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
-    <link href="/css/colors/purple.css" id="theme" rel="stylesheet">
+    <link href="/static/css/colors/purple.css" id="theme" rel="stylesheet">
+    <link href="/static/css/bootstrap-select.min.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -207,7 +218,7 @@
                                 <li><a href="#"><i class="ti-email"></i> 所有通知</a></li>
                                 <li><a href="#"><i class="ti-settings"></i> 用户设置</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#"><i class="fa fa-power-off"></i> 注销</a></li>
+                                <li><a href="/logout"><i class="fa fa-power-off"></i> 注销</a></li>
                             </ul>
                         </div>
                     </li>
@@ -233,24 +244,60 @@
                     <li class="nav-small-cap">PERSONAL</li>
                     <li>
                         <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span
-                                class="hide-menu">可视化</span></a>
+                                class="hide-menu">数据可视化</span></a>
                         <ul aria-expanded="false" class="collapse">
-                            <li><a href="index.html">标准折线图</a></li>
-                            <li><a href="#">标准柱状图</a></li>
-                            <li><a href="index3.html">标准散点图</a></li>
-                            <li><a href="#">标准饼图</a></li>
-                            <li><a href="#">标准雷达图</a></li>
-                            <li><a href="#">标准漏斗图</a></li>
-                            <li><a href="#">南丁格尔玫瑰图</a></li>
-                            <li><a href="#">全国PM2.5浓度总览</a></li>
+                            <li><a href="/viz/line">标准折线图</a></li>
+                            <li><a href="/viz/bar">标准柱状图</a></li>
+                            <li><a href="/viz/scatter">标准散点图</a></li>
+                            <li><a href="/viz/pie">标准饼图</a></li>
+                            <li><a href="/viz/radar">标准雷达图</a></li>
+                            <li><a href="/viz/funnel">标准漏斗图</a></li>
+                            <li><a href="/viz/rose">南丁格尔玫瑰图</a></li>
+                            <li><a href="/viz/map">全国PM2.5浓度总览</a></li>
                         </ul>
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span
-                                class="hide-menu">空气质量排行</span></a>
-
+                        <a class="has-arrow " href="/rank" aria-expanded="false"><i class="mdi mdi-bullseye"></i>
+                            <span class="hide-menu">空气质量排行</span></a>
                     </li>
+
+                    <#if isLogin=="true">
+
+                    <li>
+                        <a class="has-arrow " href="/forecast" aria-expanded="false"><i
+                                class="mdi mdi-chemical-weapon"></i>
+                            <span class="hide-menu">PM2.5预测</span></a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow " href="/alarm" aria-expanded="false"><i class="mdi mdi-alert"></i>
+                            <span class="hide-menu">污染物预警</span></a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow " href="/export" aria-expanded="false"><i
+                                class="mdi mdi-folder-download"></i>
+                            <span class="hide-menu">历史数据导出</span></a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow " href="/about-api" aria-expanded="false"><i class="mdi mdi-cube"></i>
+                            <span class="hide-menu">API说明</span></a>
+                    </li>
+                    </#if>
+                    <li>
+                        <a class="has-arrow " href="/info" aria-expanded="false"><i
+                                class="mdi mdi-book-open-variant"></i>
+                            <span class="hide-menu">相关知识</span></a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow " href="/about-airnet" aria-expanded="false"><i
+                                class="mdi mdi-cloud-outline"></i>
+                            <span class="hide-menu">关于AirNet</span></a>
+                    </li>
+
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->
@@ -274,8 +321,8 @@
             <div class="row page-titles">
                 <div class="col-md-5 col-8 align-self-center">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">主页</a></li>
-                        <li class="breadcrumb-item"></li>
+                        <li class="breadcrumb-item"><a href="/">数据可视化</a></li>
+                        <li class="breadcrumb-item active">标准折线图</li>
                     </ol>
                 </div>
 
@@ -295,6 +342,93 @@
             <div class="row">
                 <!-- Column -->
 
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body ">
+                            <div class="row">
+                            <div class="col-md-5">
+                            <div class='input-group mb-3'>
+                                <input type='text' id='time-range' class="form-control timeseconds"/>
+                                <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <span class="ti-calendar"></span>
+                                        </span>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-md-3" style=" margin-left:20px;">
+                                    <select class="selectpicker " id="site-picker" data-style="btn btn-block btn-outline-secondary" title="选择监测站(默认上海杨浦)" >
+                                        <optgroup label="静安">
+                                            <option value="jingan">静安监测站</option>
+                                        </optgroup>
+                                        <optgroup label="虹口">
+                                            <option value="hongkou">虹口监测站</option>
+                                        </optgroup>
+                                        <optgroup label="浦东">
+                                            <option value="pudongchuansha">浦东川沙监测站</option>
+                                            <option value="pudongxinqu">浦东新区监测站</option>
+                                            <option value="pudongzhangjiang">浦东张江监测站</option>
+                                        </optgroup>
+                                        <optgroup label="普陀">
+                                            <option value="putuo">普陀监测站</option>
+                                        </optgroup>
+                                        <optgroup label="黄埔">
+                                            <option value="shiwuchang">十五厂(卢湾师专附小)监测站</option>
+                                        </optgroup>
+                                        <optgroup label="杨浦">
+                                            <option value="yangpusipiao">杨浦四漂监测站</option>
+                                        </optgroup>
+                                        <optgroup label="徐汇">
+                                            <option value="xuhuishangshida">徐汇上师大监测站</option>
+                                        </optgroup>
+                                        <optgroup label="青浦">
+                                            <option value="qingpudianshanhu">青浦淀山湖监测站</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3" style=" margin-left:-38px;">
+                                    <select class="selectpicker " id="polpicker" data-style="btn btn-block btn-outline-secondary" title="选择污染物(默认PM2.5)" multiple data-actions-box="true">
+                                        <optgroup label="AQI/每小时平均">
+                                            <option value="aqi">AQI</option>
+                                        </optgroup>
+                                        <optgroup label="PM2.5/每小时平均">
+                                            <option value="pm25">PM2.5</option>
+                                        </optgroup>
+                                        <optgroup label="PM10/每小时平均">
+                                            <option value="pm10">PM10</option>
+                                        </optgroup>
+                                        <optgroup label="SO2/每小时平均">
+                                            <option value="so2">SO2</option>
+                                        </optgroup>
+                                        <optgroup label="NO2/每小时平均">
+                                            <option value="no2">NO2</option>
+                                        </optgroup>
+                                        <optgroup label="CO/每小时平均">
+                                            <option value="co">CO</option>
+                                        </optgroup>
+                                        <optgroup label="O3/每小时平均/八小时平均">
+                                            <option value="ozone1hour">O3</option>
+                                            <option value="ozone8hour">O3/8h</option>
+                                        </optgroup>
+
+                                    </select>
+
+                                </div>
+                                <div class="col-md-1" style=" margin-left:-38px;">
+                                <button type="button" class="btn waves-effect waves-light btn-primary btn-block"> <i class="fa fa-check"></i>&nbsp确认 </button>
+                            </div>
+                            </div>
+
+                            <hr style=" margin-top:0px;">
+
+
+                            <div class="col-md-12" id="main_charts" style="width: 1000px;height:600px;margin: 0 auto;"></div>
+
+
+                        </div>
+                    </div>
+                </div>
 
 
             </div>
@@ -344,7 +478,7 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer">
-            © 2019 Marticles' Graduation Project
+            © 2019 LJH's Graduation Project
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->
@@ -360,36 +494,56 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
-<script src="/plugins/jquery/jquery.min.js"></script>
+<script src="/static/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap tether Core JavaScript -->
-<script src="/plugins/popper/popper.min.js"></script>
-<script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="/static/plugins/popper/popper.min.js"></script>
+<script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
 <!-- slimscrollbar scrollbar JavaScript -->
-<script src="/js/jquery.slimscroll.js"></script>
+<script src="/static/js/jquery.slimscroll.js"></script>
 <!--Wave Effects -->
-<script src="/js/waves.js"></script>
+<script src="/static/js/waves.js"></script>
 <!--Menu sidebar -->
-<script src="/js/sidebarmenu.js"></script>
+<script src="/static/js/sidebarmenu.js"></script>
 <!--stickey kit -->
-<script src="/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
-<script src="/plugins/sparkline/jquery.sparkline.min.js"></script>
-<script src="/plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="/static/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+<script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
 <!--Custom JavaScript -->
-<script src="/js/custom.min.js"></script>
+<script src="/static/js/custom.min.js"></script>
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->
 <!--c3 JavaScript -->
-<script src="/plugins/d3/d3.min.js"></script>
-<script src="/plugins/c3-master/c3.min.js"></script>
-
+<script src="/static/plugins/d3/d3.min.js"></script>
+<script src="/static/plugins/c3-master/c3.min.js"></script>
+<!-- chartist chart -->
+<script src="/static/plugins/chartist-js/dist/chartist.min.js"></script>
+<script src="/static/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
 <!-- ============================================================== -->
 <!-- Style switcher -->
 <!-- ============================================================== -->
-<script src="/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uDNbzypTGIdYSsNqHVhvSr7Q5tPEuWmB"></script>
-
+<script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+<!-- Echarts -->
+<script src="/static/js/echarts.js"></script>
+<script src="/static/js/macarons.js"></script>
+<!-- DateTime -->
+<script src="/static/plugins/moment/moment.js"></script>
+<script src="/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<!-- Clock Plugin JavaScript -->
+<script src="/static/plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<!-- Date range Plugin JavaScript -->
+<script src="/static/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="/static/plugins/moment/moment.js"></script>
+<!-- 自定义时间 -->
+<script src="/static/js/datetime.js"></script>
+<script src="/static/js/bootstrap-select.min.js"></script>
 </body>
 
 </html>
+
+<script>
+    console.log($('#time-range').val());
+</script>

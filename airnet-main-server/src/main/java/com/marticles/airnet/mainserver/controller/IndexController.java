@@ -1,14 +1,12 @@
 package com.marticles.airnet.mainserver.controller;
 
-import com.marticles.airnet.mainserver.Util.JwtUtil;
 import com.marticles.airnet.mainserver.model.User;
+import com.marticles.airnet.mainserver.model.UserLocal;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marticles
@@ -19,21 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class IndexController {
 
+    @Autowired
+    UserLocal userLocal;
+
     @GetMapping("/")
-    public String index(Model model, HttpServletRequest request) {
-        String jwt_token = null;
-        if (request.getCookies() != null) {
-            for (Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equals("jwt_token")) {
-                    jwt_token = cookie.getValue();
-                    break;
-                }
-            }
-        }
-        if (jwt_token != null) {
-            User user = JwtUtil.getUserInfoByJwt(jwt_token);
+    public String index(Model model) {
+        User user = userLocal.getUser();
+        if (null != user) {
             model.addAttribute("isLogin", "true");
-            model.addAttribute("user",user);
         } else {
             model.addAttribute("isLogin", "false");
         }
@@ -43,5 +34,15 @@ public class IndexController {
     @GetMapping("/test")
     public String test() {
         return "test";
+    }
+
+    @GetMapping("/403")
+    public String error403() {
+        return "403";
+    }
+
+    @GetMapping("/404")
+    public String error404() {
+        return "404";
     }
 }

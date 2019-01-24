@@ -11,7 +11,7 @@ function store(name, val) {
       e.preventDefault();
         var currentStyle = $(this).attr('data-theme');
         store('theme', currentStyle);
-        $('#theme').attr({href: 'css/colors/'+currentStyle+'.css'})
+        $('#theme').attr({href: '/static/css/colors/'+currentStyle+'.css'})
     });
 
     var currentTheme =  localStorage.getItem('theme');

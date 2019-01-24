@@ -76,16 +76,16 @@ $(document).ready(function() {
 
       if ($('#locale').is(':checked')) {
         options.locale = {
-          format: 'MM/DD/YYYY',
+          format: 'YYYY/MM/DD',
           separator: ' - ',
-          applyLabel: 'Apply',
-          cancelLabel: 'Cancel',
+          applyLabel: '确认',
+          cancelLabel: '取消',
           fromLabel: 'From',
           toLabel: 'To',
           customRangeLabel: 'Custom',
           weekLabel: 'W',
-          daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
-          monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          daysOfWeek: ['日', '一', '二', '三', '四', '五','六'],
+          monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
           firstDay: 1
         };
       }

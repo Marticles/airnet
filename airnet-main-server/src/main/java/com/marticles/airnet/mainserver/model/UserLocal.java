@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 public class UserLocal {
     private static ThreadLocal<User> userLocal = new ThreadLocal<User>();
 
-    public static void setUser(User user){
+    public void setUser(User user){
         userLocal.set(user);
     }
 
-    public static User getUser(){
+    public User getUser(){
         return userLocal.get();
     }
 
-    public static void remove(){
+    public void remove(){
         userLocal.remove();
     }
 }

@@ -1,0 +1,12 @@
+.ct-series-a .ct-area {
+    fill: #1E88E5;
+    fill-opacity: 0.1;
+}
+.ct-series-a .ct-line,
+.ct-series-a .ct-point {
+    stroke: #1E88E5;
+    stroke-width: 2px;
+}
+.ct-series-a .ct-point {
+    stroke-width: 6px;
+}

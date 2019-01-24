@@ -9,16 +9,20 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" href="/images/icon.png"/>
+    <link rel="icon" href="/static/images/icon.png"/>
     <title>AirNet</title>
     <!-- Bootstrap Core CSS -->
-    <link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="/plugins/c3-master/c3.min.css" rel="stylesheet">
+    <link href="/static/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- chartist CSS -->
+    <link href="/static/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="/static/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
+    <link href="/static/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    <link href="/static/plugins/c3-master/c3.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
-    <link href="/css/colors/purple.css" id="theme" rel="stylesheet">
+    <link href="/static/css/colors/purple.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -207,7 +211,7 @@
                                 <li><a href="#"><i class="ti-email"></i> 所有通知</a></li>
                                 <li><a href="#"><i class="ti-settings"></i> 用户设置</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#"><i class="fa fa-power-off"></i> 注销</a></li>
+                                <li><a href="/logout"><i class="fa fa-power-off"></i> 注销</a></li>
                             </ul>
                         </div>
                     </li>
@@ -233,24 +237,56 @@
                     <li class="nav-small-cap">PERSONAL</li>
                     <li>
                         <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span
-                                class="hide-menu">可视化</span></a>
+                                class="hide-menu">数据可视化</span></a>
                         <ul aria-expanded="false" class="collapse">
-                            <li><a href="index.html">标准折线图</a></li>
-                            <li><a href="#">标准柱状图</a></li>
-                            <li><a href="index3.html">标准散点图</a></li>
-                            <li><a href="#">标准饼图</a></li>
-                            <li><a href="#">标准雷达图</a></li>
-                            <li><a href="#">标准漏斗图</a></li>
-                            <li><a href="#">南丁格尔玫瑰图</a></li>
-                            <li><a href="#">全国PM2.5浓度总览</a></li>
+                            <li><a href="/viz/line">标准折线图</a></li>
+                            <li><a href="/viz/bar">标准柱状图</a></li>
+                            <li><a href="/viz/scatter">标准散点图</a></li>
+                            <li><a href="/viz/pie">标准饼图</a></li>
+                            <li><a href="/viz/radar">标准雷达图</a></li>
+                            <li><a href="/viz/funnel">标准漏斗图</a></li>
+                            <li><a href="/viz/rose">南丁格尔玫瑰图</a></li>
+                            <li><a href="/viz/map">全国PM2.5浓度总览</a></li>
                         </ul>
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span
-                                class="hide-menu">空气质量排行</span></a>
-
+                        <a class="has-arrow " href="/rank" aria-expanded="false"><i class="mdi mdi-bullseye"></i>
+                            <span class="hide-menu">空气质量排行</span></a>
                     </li>
+
+                    <#if isLogin=="true">
+
+                    <li>
+                        <a class="has-arrow " href="/forecast" aria-expanded="false"><i class="mdi mdi-chemical-weapon"></i>
+                            <span class="hide-menu">PM2.5预测</span></a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow " href="/alarm" aria-expanded="false"><i class="mdi mdi-alert"></i>
+                            <span class="hide-menu">污染物预警</span></a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow " href="/export" aria-expanded="false"><i class="mdi mdi-folder-download"></i>
+                            <span class="hide-menu">历史数据导出</span></a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow " href="/about-api" aria-expanded="false"><i class="mdi mdi-cube"></i>
+                            <span class="hide-menu">API说明</span></a>
+                    </li>
+                    </#if>
+                    <li>
+                        <a class="has-arrow " href="/info" aria-expanded="false"><i class="mdi mdi-book-open-variant"></i>
+                            <span class="hide-menu">相关知识</span></a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow " href="/about-airnet" aria-expanded="false"><i class="mdi mdi-cloud-outline"></i>
+                            <span class="hide-menu">关于AirNet</span></a>
+                    </li>
+
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->
@@ -297,7 +333,7 @@
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-header">
-                            上海市监测站地图
+                            <span>上海市监测站地图 (Updated on 2019-01-24 12:45:00)</span>
                             <div class="card-actions">
                                 <a class="" data-action="collapse"><i class="ti-minus"></i></a>
                                 <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
@@ -306,7 +342,7 @@
                         </div>
                         <div class="card-body ">
 
-                            <div id="allmap" style="width:800px; height:400px;margin:0 auto;"></div>
+                            <div id="allmap" style="width:780px; height:400px;margin:0 auto;"></div>
                         </div>
 
                     </div>
@@ -315,7 +351,7 @@
 
                 <div class="col-lg-4">
                     <div class="card">
-                        <img class="" src="/images/background/weatherbg.jpg" alt="Card image cap">
+                        <img class="" src="/static/images/background/weatherbg.jpg" alt="Card image cap">
                         <div class="card-img-overlay" style="height:110px;">
                             <h3 class="card-title text-white m-b-0 dl">上海</h3>
                             <small class="card-text text-white font-light">2019/1/23</small>
@@ -340,6 +376,28 @@
                             </div>
                         </div>
                     </div>
+
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-wrap">
+                                    <div>
+                                        <h3 class="card-title">上海市PM2.5浓度</h3>
+                                        <h6 class="card-subtitle">一周历史趋势</h6>
+                                    </div>
+                                    <div class="ml-auto align-self-center">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <h6 class="text-muted text-info"><i class="fa fa-circle font-10 m-r-10"></i>PM2.5浓度</h6> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pm25 ct-charts"></div>
+
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div>
 
@@ -391,7 +449,7 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer">
-            © 2019 Marticles' Graduation Project
+            © 2019 LJH's Graduation Project
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->
@@ -407,35 +465,37 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
-<script src="/plugins/jquery/jquery.min.js"></script>
+<script src="/static/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap tether Core JavaScript -->
-<script src="/plugins/popper/popper.min.js"></script>
-<script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="/static/plugins/popper/popper.min.js"></script>
+<script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
 <!-- slimscrollbar scrollbar JavaScript -->
-<script src="/js/jquery.slimscroll.js"></script>
+<script src="/static/js/jquery.slimscroll.js"></script>
 <!--Wave Effects -->
-<script src="/js/waves.js"></script>
+<script src="/static/js/waves.js"></script>
 <!--Menu sidebar -->
-<script src="/js/sidebarmenu.js"></script>
+<script src="/static/js/sidebarmenu.js"></script>
 <!--stickey kit -->
-<script src="/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
-<script src="/plugins/sparkline/jquery.sparkline.min.js"></script>
-<script src="/plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="/static/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+<script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
 <!--Custom JavaScript -->
-<script src="/js/custom.min.js"></script>
+<script src="/static/js/custom.min.js"></script>
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->
 <!--c3 JavaScript -->
-<script src="/plugins/d3/d3.min.js"></script>
-<script src="/plugins/c3-master/c3.min.js"></script>
-
+<script src="/static/plugins/d3/d3.min.js"></script>
+<script src="/static/plugins/c3-master/c3.min.js"></script>
+<!-- chartist chart -->
+<script src="/static/plugins/chartist-js/dist/chartist.min.js"></script>
+<script src="/static/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
 <!-- ============================================================== -->
 <!-- Style switcher -->
 <!-- ============================================================== -->
-<script src="/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+<script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
 
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uDNbzypTGIdYSsNqHVhvSr7Q5tPEuWmB"></script>
+<script src="http://api.map.baidu.com/api?v=2.0&ak=uDNbzypTGIdYSsNqHVhvSr7Q5tPEuWmB"></script>
 
 </body>
 
@@ -476,11 +536,35 @@
     });
     map.addControl(geolocationControl);
 
+    // TODO 调用API拿到最新的空气质量指数
     var point1 = new BMap.Point(121.436183, 31.230475);
     var point2 = new BMap.Point(121.484901, 31.280611);
     var marker1 = new BMap.Marker(point1);
     var marker2 = new BMap.Marker(point2);
     map.addOverlay(marker1);
     map.addOverlay(marker2);
+
+    // TODO 调用API拿到历史一周PM2.5浓度
+    var chart = new Chartist.Line('.pm25', {
+        labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        series: [
+            [0, 5, 6, 8, 25, 9, 8, 24],
+        ]}, {
+        low: 0,
+        high: 28,
+        showArea: true,
+        fullWidth: true,
+        plugins: [
+            Chartist.plugins.tooltip()
+        ],
+        axisY: {
+            onlyInteger: true
+            , scaleMinSpace: 40
+            , offset: 30
+            , labelInterpolationFnc: function (value) {
+                return value ;
+            }
+        },
+    });
 
 </script>

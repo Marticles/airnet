@@ -907,6 +907,7 @@ html body #visitor .c3-chart-arcs-title {
 Dashboard2 chart
  ============================================================== */
 
+
 .campaign {
     height: 280px;
     .ct-series-a .ct-area {
@@ -3892,7 +3893,7 @@ Error Page
 .error-box {
     height: 100%;
     position: fixed;
-    background: url(../../assets/images/background/error-bg.jpg) no-repeat center center #fff;
+    background: url(/static/images/background/error-bg.jpg) no-repeat center center #fff;
     width: 100%;
     .footer {
         width: 100%;
