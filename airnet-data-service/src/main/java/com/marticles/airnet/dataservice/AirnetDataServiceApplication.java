@@ -1,17 +1,15 @@
-package com.marticles.airnet.zuul.gateway;
+package com.marticles.airnet.dataservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 @EnableDiscoveryClient
-@EnableZuulProxy
 @SpringBootApplication
-public class AirnetZuulGatewayApplication {
+public class AirnetDataServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AirnetZuulGatewayApplication.class, args);
+        SpringApplication.run(AirnetDataServiceApplication.class, args);
     }
 
 }
