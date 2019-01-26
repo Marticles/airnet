@@ -2,10 +2,10 @@ package com.marticles.airnet.mainservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.marticles.airnet.mainservice.model.UserLocal;
+import com.marticles.airnet.mainservice.model.VizRequest;
 import com.marticles.airnet.mainservice.service.VizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
@@ -33,20 +33,30 @@ public class VizController {
     @Autowired
     VizService vizService;
 
-    @GetMapping("/line")
-    public String line(Model model) throws Exception {
+    @GetMapping("/default")
+    @ResponseBody
+    public JSONObject getDefaultVizData() throws Exception {
         JSONObject siteUpdatedTime = vizService.getSiteUpdatedTime(DEFAULT_SITE);
-
         Date endDate = SIMPLE_DATE_FORMAT.parse(siteUpdatedTime.getString("updatedTime"));
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_WEEK, -1);
+        calendar.setTime(endDate);
+        calendar.add(Calendar.DAY_OF_WEEK, -7);
         Date startDate = calendar.getTime();
-
-        JSONObject pm25 = vizService.getPollution(DEFAULT_SITE,
+        JSONObject data = vizService.getPollution(DEFAULT_SITE,
                 DEFAULT_POLLUTION,
                 SIMPLE_DATE_FORMAT.format(startDate),
                 SIMPLE_DATE_FORMAT.format(endDate));
-        model.addAttribute("pm25",pm25);
+        return data;
+    }
+
+    @PostMapping("/custom")
+    @ResponseBody
+    public JSONObject getCustomVizData(@RequestBody VizRequest vizRequest) {
+        return vizService.getAllPollution(vizRequest.getSite(), vizRequest.getStart(), vizRequest.getEnd());
+    }
+
+    @GetMapping("/line")
+    public String line() {
         return "/viz/line";
     }
 

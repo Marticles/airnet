@@ -1,13 +1,13 @@
 package com.marticles.airnet.dataservice.service;
 
 import com.marticles.airnet.dataservice.dao.PollutionDAO;
+import com.marticles.airnet.dataservice.model.PollutionList;
 import com.marticles.airnet.dataservice.model.PollutionResponse;
 import com.marticles.airnet.dataservice.model.SinglePollutionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * @author Marticles
@@ -22,7 +22,38 @@ public class PollutionService {
 
     public PollutionResponse getAllPollution(String site, Date start, Date end) {
         PollutionResponse pollutionResponse = new PollutionResponse();
-        pollutionResponse.setPollution(pollutionDAO.getAllPollution(site, start, end));
+        List<HashMap<String, Object>> pollutionHashMapList = pollutionDAO.getAllPollution(site, start, end);
+        PollutionList pollutionList = new PollutionList();
+        List<Integer> aqiList = new ArrayList<>();
+        List<Float> coList = new ArrayList<>();
+        List<String> levelList = new ArrayList<>();
+        List<Float> no2List = new ArrayList<>();
+        List<Float> oZoneList = new ArrayList<>();
+        List<Float> pm10List = new ArrayList<>();
+        List<Float> pm25List = new ArrayList<>();
+        List<String> primaryPollutantList = new ArrayList<>();
+        List<Float> so2List = new ArrayList<>();
+        for (HashMap<String, Object> map : pollutionHashMapList) {
+            aqiList.add(null == map.get("aqi") ? 0 : Integer.valueOf(map.get("aqi").toString()));
+            coList.add(null == map.get("co") ? 0F : Float.valueOf(map.get("co").toString()));
+            levelList.add(null == map.get("level") ? "" : map.get("level").toString());
+            no2List.add(null == map.get("no2") ? 0F : Float.valueOf(map.get("no2").toString()));
+            oZoneList.add(null == map.get("oZone") ? 0F : Float.valueOf(map.get("oZone").toString()));
+            pm10List.add(null == map.get("pm10") ? 0F : Float.valueOf(map.get("pm10").toString()));
+            pm25List.add(null == map.get("pm25") ? 0F : Float.valueOf(map.get("pm25").toString()));
+            primaryPollutantList.add(null == map.get("primaryPollutant") ? "" : map.get("primaryPollutant").toString());
+            so2List.add(null == map.get("so2") ? 0F : Float.valueOf(map.get("so2").toString()));
+        }
+        pollutionList.setAqi(aqiList);
+        pollutionList.setCo(coList);
+        pollutionList.setLevel(levelList);
+        pollutionList.setNo2(no2List);
+        pollutionList.setOZone(oZoneList);
+        pollutionList.setPm10(pm10List);
+        pollutionList.setPm25(pm25List);
+        pollutionList.setPrimaryPollutant(primaryPollutantList);
+        pollutionList.setSo2(so2List);
+        pollutionResponse.setPollution(pollutionList);
         pollutionResponse.setTime(pollutionDAO.getTimeRange(site, start, end));
         return pollutionResponse;
     }
@@ -31,6 +62,7 @@ public class PollutionService {
         SinglePollutionResponse singlePollutionResponse = new SinglePollutionResponse();
         singlePollutionResponse.setPollution(pollutionDAO.getPollution(site, pollution, start, end));
         singlePollutionResponse.setTime(pollutionDAO.getTimeRange(site, start, end));
+        singlePollutionResponse.setPollution_name(pollution);
         return singlePollutionResponse;
     }
 

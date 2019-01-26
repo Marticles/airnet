@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @description VizService
  * @date 2019/1/25
  */
-@FeignClient(value = "airnet-zuul-gateway")
+@FeignClient(value = "airnet-zuul-gateway",fallback = VizService.VizFallBackService.class)
 public interface VizService {
 
     @GetMapping("/data/{site}/pollution")

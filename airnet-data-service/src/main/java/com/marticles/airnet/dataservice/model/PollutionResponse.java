@@ -17,6 +17,6 @@ public class PollutionResponse {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     List<Date> time;
-    List<Pollution> pollution;
+    PollutionList pollution;
 
 }

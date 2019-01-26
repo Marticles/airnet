@@ -28,7 +28,7 @@ $('.timeseconds').daterangepicker({
     startDate: new Date(),
     endDate: new Date(),
     locale:{
-        "format": 'YYYY-MM-DD hh:mm:ss',
+        "format": 'YYYY-MM-DD HH:mm:ss',
         "separator": " - ",
         "applyLabel": "确定",
         "cancelLabel": "取消",

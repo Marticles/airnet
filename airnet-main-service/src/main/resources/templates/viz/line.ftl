@@ -16,7 +16,7 @@
     <!-- Page plugins css -->
     <link href="/static/plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
     <!-- Date picker plugins css -->
-    <link href="/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css"/>
     <!-- Daterange picker plugins css -->
     <link href="/static/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="/static/plugins/daterangepicker/daterangepicker.css" rel="stylesheet">
@@ -341,23 +341,23 @@
             <!-- Row -->
             <div class="row">
                 <!-- Column -->
-
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body ">
                             <div class="row">
-                            <div class="col-md-5">
-                            <div class='input-group mb-3'>
-                                <input type='text' id='time-range' class="form-control timeseconds"/>
-                                <div class="input-group-append">
+                                <div class="col-md-5">
+                                    <div class='input-group mb-3'>
+                                        <input type='text' id='time-range' class="form-control timeseconds"/>
+                                        <div class="input-group-append">
                                         <span class="input-group-text">
                                             <span class="ti-calendar"></span>
                                         </span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            </div>
-                            <div class="col-md-3" style=" margin-left:20px;">
-                                    <select class="selectpicker " id="site_picker" data-style="btn btn-block btn-outline-secondary" title="选择监测站(默认上海杨浦)" >
+                                <div class="col-md-3" style=" margin-left:20px;">
+                                    <select class="selectpicker " id="site_picker"
+                                            data-style="btn btn-block btn-outline-secondary" title="选择监测站(默认上海杨浦)">
                                         <optgroup label="静安">
                                             <option value="jingan">静安监测站</option>
                                         </optgroup>
@@ -386,9 +386,10 @@
                                         </optgroup>
                                     </select>
                                 </div>
-
                                 <div class="col-md-3" style=" margin-left:-38px;">
-                                    <select class="selectpicker " id="pollution_picker" data-style="btn btn-block btn-outline-secondary" title="选择污染物(默认PM2.5)" multiple data-actions-box="true">
+                                    <select class="selectpicker " id="pollution_picker"
+                                            data-style="btn btn-block btn-outline-secondary" title="选择污染物(默认PM2.5)"
+                                            multiple data-actions-box="true">
                                         <optgroup label="AQI/每小时平均">
                                             <option value="aqi">AQI</option>
                                         </optgroup>
@@ -408,38 +409,27 @@
                                             <option value="co">CO</option>
                                         </optgroup>
                                         <optgroup label="O3/每小时平均">
-                                            <option value="ozone1hour">O3</option>
+                                            <option value="ozone">O3</option>
                                         </optgroup>
 
                                     </select>
-
                                 </div>
                                 <div class="col-md-1" style=" margin-left:-38px;">
-                                <button type="button" id="request_button" class="btn waves-effect waves-light btn-primary "> <i class="fa fa-check"></i>&nbsp确认</button>
+                                    <button type="button" id="request_button"
+                                            class="btn waves-effect waves-light btn-primary "><i
+                                            class="fa fa-check"></i>&nbsp确认
+                                    </button>
+                                </div>
                             </div>
-                            </div>
-
                             <hr style=" margin-top:0px;">
-
-
-                            <div class="col-md-12" id="main_charts" style="width: 1150px;height:480px;margin: 0 auto;"></div>
-
-
+                            <div class="col-md-12" id="main_charts"
+                                 style="width: 1150px;height:480px;margin: 0 auto;"></div>
                         </div>
                     </div>
                 </div>
 
-
             </div>
 
-
-            <!-- ============================================================== -->
-            <!-- End PAge Content -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Right sidebar -->
-            <!-- ============================================================== -->
-            <!-- .right-sidebar -->
             <div class="right-sidebar">
                 <div class="slimscrollright">
                     <div class="rpanel-title"> 配色 <span><i class="ti-close right-side-toggle"></i></span></div>
@@ -544,8 +534,6 @@
 </html>
 
 <script>
-    console.log($('#time-range').val());
-
     var theme = 'macarons';
     var ChartItem = function () {
         return {
@@ -562,69 +550,192 @@
         }
     };
 
-    var myChart = echarts.init(document.getElementById('main_charts'),theme);
+    var myChart = echarts.init(document.getElementById('main_charts'), theme);
 
     var app = {
-        xday: [1,2,3,4,5,6,7,8],
-        yvalue: [12,35,26,17,12,65,15,8]
+        xday: [],
+        yvalue: []
     };
 
-    myChart.setOption({
-        title: {
-            text: '展示类型 - 折线图',
-            subtext: '鼠标悬停可查看详细信息'
-        },
-        tooltip: {trigger: 'axis'},
-        legend: {
-            data: ['pm2.5']
-        },
-        toolbox: {
-            show: true,
-            feature: {
-                mark: {show: true},
-                dataView: {show: true, readOnly: false},
-                magicType: {show: true, type: [ 'line']},
-                restore: {show: true},
-                saveAsImage: {show: true}
-            }
-        },
-        calculable: true,
-        xAxis: {
-            show: true,
-            data: app.xday,
-            name: '日期',
-        },
-        yAxis: [
-            {
-                show: true,
-                type: 'value',
-            }
-        ],
-        series: [{
-            name: 'pm2.5',
-            type: 'line',
-            data: app.yvalue,
-
-            markPoint: {
-
-                data: [
-                    {type: 'max', name: '最高值'},
-                    {type: 'min', name: '最低值'},
-                    {type: 'average', name: '平均值'}
-                ],
-
-            },
-        }]
-    })
-
-
     $(document).ready(function () {
-
+        getDefaultData();
     });
+
+    function getDefaultData() {
+        $.ajax({
+            url: '/viz/default',
+            data: {},
+            type: 'GET',
+            async: true,
+            dataType: 'json',
+            success: function (data) {
+                app.xday = data.time;
+                app.yvalue = data.pollution;
+                var default_time = data.time[0] + ' - ' + data.time[data.time.length - 1];
+                $('#time-range').val(default_time);
+                myChart.setOption({
+                    title: {
+                        text: '展示类型 - 折线图',
+                        subtext: '鼠标悬停可查看详细信息'
+                    },
+                    tooltip: {trigger: 'axis'},
+                    legend: {
+                        data: ['PM2.5']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            magicType: {show: true, type: ['line']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    calculable: true,
+                    xAxis: {
+                        show: true,
+                        data: app.xday,
+                        name: '日期',
+                    },
+                    yAxis: [
+                        {
+                            show: true,
+                            type: 'value',
+                        }
+                    ],
+                    series: [{
+                        name: 'PM2.5',
+                        type: 'line',
+                        data: app.yvalue,
+                        markPoint: {
+                            data: [
+                                {type: 'max', name: '最高值'},
+                                {type: 'min', name: '最低值'},
+                                {type: 'average', name: '平均值'}
+                            ],
+
+                        },
+                    }]
+                })
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        })
+    };
+
 
     $("#request_button").click(function () {
-        console.log($('#pollution_picker').val());
-    });
+        var time = $('#time-range').val().split(" - ");
+        var request = {};
+        request.start = time[0];
+        request.end = time[1];
+        request.site = $('#site_picker').val();
+        var request_pollution = $('#pollution_picker').val();
+        $.ajax({
+            url: '/viz/custom',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(request),
+            contentType: 'application/json;charset=UTF-8',
+            success: function (data) {
+                myChart.clear();
+                var newChart = echarts.init(document.getElementById('main_charts'),theme);
+                var app = {
+                    xday: [],
+                    lengends: [],
+                    yvalue: []
+                };
+                for (var obj in request_pollution) {
+                    if (request_pollution[obj] == 'aqi') {
+                        var chartitem = new ChartItem();
+                        chartitem.name = 'AQI';
+                        chartitem.data = data.pollution.aqi;
+                        app.yvalue.push(chartitem);
+                        app.lengends.push('AQI');
+                    }
+                    if (request_pollution[obj] == 'pm25') {
+                        var chartitem = new ChartItem();
+                        chartitem.name = 'PM2.5';
+                        chartitem.data = data.pollution.pm25;
+                        app.yvalue.push(chartitem);
+                        app.lengends.push('PM2.5');
+                    }
+                    if (request_pollution[obj] == 'pm10') {
+                        var chartitem = new ChartItem();
+                        chartitem.name = 'PM10';
+                        chartitem.data = data.pollution.pm10;
+                        app.yvalue.push(chartitem);
+                        app.lengends.push('PM10');
+                    }
+                    if (request_pollution[obj] == 'co') {
+                        var chartitem = new ChartItem();
+                        chartitem.name = 'CO';
+                        chartitem.data = data.pollution.co;
+                        app.yvalue.push(chartitem);
+                        app.lengends.push('CO');
+                    }
+                    if (request_pollution[obj] == 'no2') {
+                        var chartitem = new ChartItem();
+                        chartitem.name = 'NO2';
+                        chartitem.data = data.pollution.no2;
+                        app.yvalue.push(chartitem);
+                        app.lengends.push('NO2');
+                    }
+                    if (request_pollution[obj] == 'ozone') {
+                        var chartitem = new ChartItem();
+                        chartitem.name = 'O3';
+                        chartitem.data = data.pollution.ozone1hour;
+                        app.yvalue.push(chartitem);
+                        app.lengends.push('O3');
+                    }
+                    if (request_pollution[obj] == 'so2') {
+                        var chartitem = new ChartItem();
+                        chartitem.name = 'SO2';
+                        chartitem.data = data.pollution.so2;
+                        app.yvalue.push(chartitem);
+                        app.lengends.push('SO2');
+                    }
 
+                }
 
+                app.xday = data.time;
+                newChart.setOption({
+                    title: {
+                        text: '展示类型 - 折线图',
+                        subtext: '鼠标悬停可查看详细信息'
+                    },
+                    tooltip: {trigger: 'axis'},
+                    legend: {
+                        data: app.lengends
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    calculable: true,
+                    xAxis: {
+                        show: true,
+                        data: app.xday,
+                    },
+                    yAxis: [
+                        {
+                            show: true,
+                            type: 'value',
+                        }
+                    ],
+                    series: app.yvalue
+                })
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+       });
 </script>
