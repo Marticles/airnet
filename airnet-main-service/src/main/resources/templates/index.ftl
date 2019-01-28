@@ -353,24 +353,72 @@
                     <div class="card">
                         <img class="" src="/static/images/background/weatherbg.jpg" alt="Card image cap">
                         <div class="card-img-overlay" style="height:110px;">
-                            <h3 class="card-title text-white m-b-0 dl">上海</h3>
-                            <small class="card-text text-white font-light">2019/1/23</small>
+                            <h3 class="card-title text-white m-b-0 dl">${weatherInfo.city!'上海'}</h3>
+                            <small class="card-text text-white font-light">${weatherInfo.time!}</small>
                             <br>
-                            <small class="card-text text-white">气象条件较不利于空气污染物稀释、扩散和清除，请适当减少室外活动时间。</small>
+                            <small class="card-text text-white">${weatherInfo.airInfo!'和风天气API暂不可用...'}</small>
                         </div>
                         <div class="card-body weather-small">
                             <div class="row">
                                 <div class="col-6 b-r align-self-center">
                                     <div class="d-flex">
-                                        <div class="display-6 text-info"><i class="wi wi-day-rain-wind"></i></div>
+                                        <#if weatherInfo.weather=="晴">
+                                        <div class="display-6 text-info"><i class="wi wi-day-sunny"></i></div>
                                         <div class="m-l-20">
-                                            <h3 class="font-light text-info m-b-0">22<sup>°C</sup>~32<sup>°C</sup></h3>
-                                            <small>多云</small>
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <small>>${weatherInfo.weather!}</small>
                                         </div>
+                                        <#elseif weatherInfo.weather=="多云"||weatherInfo.weather=="少云"||weatherInfo.weather=="晴间多云"||weatherInfo.weather=="阴">
+                                        <div class="display-6 text-info"><i class="wi wi-day-cloudy"></i></div>
+                                        <div class="m-l-20">
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <small>${weatherInfo.weather!}</small>
+                                        </div>
+                                        <#elseif weatherInfo.weather=="有风"||weatherInfo.weather=="微风"||weatherInfo.weather=="和风"||weatherInfo.weather=="清风">
+                                        <div class="display-6 text-info"><i class="wi wi-day-cloudy-windy"></i></div>
+                                        <div class="m-l-20">
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <small>${weatherInfo.weather!}</small>
+                                        </div>
+                                        <#elseif weatherInfo.weather=="阵雨"||weatherInfo.weather=="强阵雨"||weatherInfo.weather=="雷阵雨"||weatherInfo.weather=="强雷阵雨"
+                                        ||weatherInfo.weather=="小雨"||weatherInfo.weather=="中雨"||weatherInfo.weather=="大雨"||weatherInfo.weather=="毛毛雨/细雨"
+                                        ||weatherInfo.weather=="暴雨"||weatherInfo.weather=="大暴雨"||weatherInfo.weather=="冻雨"||weatherInfo.weather=="冻雨"||weatherInfo.weather=="冻雨"
+                                        ||weatherInfo.weather=="小到中雨"||weatherInfo.weather=="中到大雨"||weatherInfo.weather=="大到暴雨"||weatherInfo.weather=="雨">
+                                        <div class="display-6 text-info"><i class="wi wi-day-rain"></i></div>
+                                        <div class="m-l-20">
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <small>${weatherInfo.weather!}</small>
+                                        </div>
+                                        <#elseif weatherInfo.weather=="薄雾"||weatherInfo.weather=="雾"||weatherInfo.weather=="霾"||weatherInfo.weather=="浓雾"||weatherInfo.weather=="中度霾"
+                                        ||weatherInfo.weather=="重度霾"||weatherInfo.weather=="大雾">
+                                        <div class="display-6 text-info"><i class="wi wi-day-haze"></i></div>
+                                        <div class="m-l-20">
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <small>${weatherInfo.weather!}</small>
+                                        </div>
+                                        <#elseif weatherInfo.weather=="热">
+                                        <div class="display-6 text-info"><i class="wi wi-hot"></i></div>
+                                        <div class="m-l-20">
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <small>${weatherInfo.weather!}</small>
+                                        </div>
+                                        <#elseif weatherInfo.weather=="冷">
+                                        <div class="display-6 text-info"><i class="wi wi-thermometer-exterior"></i></div>
+                                        <div class="m-l-20">
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <small>${weatherInfo.weather!}</small>
+                                        </div>
+                                        <#else>
+                                        <div class="display-6 text-info"><i class="wi wi-thermometer"></i></div>
+                                        <div class="m-l-20">
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <small>${weatherInfo.weather!}</small>
+                                        </div>
+                                        </#if>
                                     </div>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <h3 class="font-light m-b-0">较差</sup></h3>
+                                    <h3 class="font-light m-b-0">${weatherInfo.airStatus!}</sup></h3>
                                     <small>空气污染扩散条件指数</small>
                                 </div>
                             </div>

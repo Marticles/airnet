@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class VizRequest {
-    String start;
-    String end;
-    String site;
+    private String start;
+    private String end;
+    private String site;
 }
