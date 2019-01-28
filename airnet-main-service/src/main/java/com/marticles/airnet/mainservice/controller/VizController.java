@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.marticles.airnet.mainservice.model.UserLocal;
 import com.marticles.airnet.mainservice.model.VizRequest;
 import com.marticles.airnet.mainservice.service.VizService;
+import com.marticles.airnet.mainservice.util.Global;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,6 @@ import java.util.Date;
 @RequestMapping("/viz")
 public class VizController {
 
-    private static final String DEFAULT_SITE = "yangpusipiao";
-    private static final String DEFAULT_POLLUTION = "pm25";
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
@@ -36,14 +35,19 @@ public class VizController {
     @GetMapping("/default")
     @ResponseBody
     public JSONObject getDefaultVizData() throws Exception {
-        JSONObject siteUpdatedTime = vizService.getSiteUpdatedTime(DEFAULT_SITE);
-        Date endDate = SIMPLE_DATE_FORMAT.parse(siteUpdatedTime.getString("updatedTime"));
+        JSONObject siteUpdatedTime = vizService.getSiteUpdatedTime(Global.DEFAULT_SITE);
+        Date endDate = null;
+        if (null == siteUpdatedTime){
+            endDate = SIMPLE_DATE_FORMAT.parse(Global.DEFAULT_UPDATEDTIME);
+        }else{
+            endDate = SIMPLE_DATE_FORMAT.parse(siteUpdatedTime.getString("updatedTime"));
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(endDate);
         calendar.add(Calendar.DAY_OF_WEEK, -7);
         Date startDate = calendar.getTime();
-        JSONObject data = vizService.getPollution(DEFAULT_SITE,
-                DEFAULT_POLLUTION,
+        JSONObject data = vizService.getPollution(Global.DEFAULT_SITE,
+                Global.DEFAULT_POLLUTION,
                 SIMPLE_DATE_FORMAT.format(startDate),
                 SIMPLE_DATE_FORMAT.format(endDate));
         return data;

@@ -436,7 +436,7 @@
                                     <div class="ml-auto align-self-center">
                                         <ul class="list-inline m-b-0">
                                             <li>
-                                                <h6 class="text-muted text-info"><i class="fa fa-circle font-10 m-r-10"></i>PM2.5浓度</h6> </li>
+                                                <h6 class="text-muted text-info"><i class="fa fa-circle font-10 m-r-10"></i>PM2.5（μg/m3）</h6> </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -592,14 +592,28 @@
     map.addOverlay(marker1);
     map.addOverlay(marker2);
 
+
+    // PM2.5首页数据
+    var pm25Array = [];
+    var pm25TimeArray = []
+    <#list pm25List as pm25>
+        pm25Array.push(${pm25});
+    </#list>
+
+    <#list pm25TimeList as pm25Time>
+        pm25TimeArray.push('${pm25Time}');
+    </#list>
+
+    console.log(pm25TimeArray);
+
     // TODO 调用API拿到历史一周PM2.5浓度
     var chart = new Chartist.Line('.pm25', {
-        labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        labels: pm25TimeArray,
         series: [
-            [0, 5, 6, 8, 25, 9, 8, 24],
+            pm25Array,
         ]}, {
         low: 0,
-        high: 28,
+        high: Math.max(pm25Array),
         showArea: true,
         fullWidth: true,
         plugins: [
