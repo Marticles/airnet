@@ -565,6 +565,9 @@
         $.ajax({
             url: '/viz/default',
             data: {},
+            headers: {
+                Authorization: getCookie("jwt_token")
+            },
             type: 'GET',
             async: true,
             dataType: 'json',
@@ -641,7 +644,7 @@
             contentType: 'application/json;charset=UTF-8',
             success: function (data) {
                 myChart.clear();
-                var newChart = echarts.init(document.getElementById('main_charts'),theme);
+                var newChart = echarts.init(document.getElementById('main_charts'), theme);
                 var app = {
                     xday: [],
                     lengends: [],
@@ -737,5 +740,12 @@
                 console.log(msg);
             }
         });
-       });
+    });
+
+    function getCookie(name) {
+        var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+        if (arr != null)
+            return unescape(arr[2]);
+        return null;
+    }
 </script>

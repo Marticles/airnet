@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -13,28 +14,31 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @description VizService
  * @date 2019/1/25
  */
-@FeignClient(value = "airnet-zuul-gateway",fallback = VizService.VizFallBackService.class)
+@FeignClient(value = "airnet-zuul-gateway", fallback = VizService.VizFallBackService.class)
 public interface VizService {
 
     @GetMapping("/data/{site}/pollution")
-    JSONObject getAllPollution(@PathVariable(value = "site") String site,
+    JSONObject getAllPollution(@RequestHeader("Authorization") String jwtToken,
+                               @PathVariable(value = "site") String site,
                                @RequestParam(value = "start") String start,
                                @RequestParam(value = "end") String end);
 
     @GetMapping("/data/{site}/{pollution}")
     JSONObject getPollution(@PathVariable(value = "site") String site,
-                                               @PathVariable(value = "pollution") String pollution,
-                                               @RequestParam(value = "start") String start,
-                                               @RequestParam(value = "end") String end);
+                            @PathVariable(value = "pollution") String pollution,
+                            @RequestParam(value = "start") String start,
+                            @RequestParam(value = "end") String end);
+
     @GetMapping("/data/{site}/updated-time")
-    JSONObject getSiteUpdatedTime(@PathVariable(value = "site") String site);
+    JSONObject getSiteUpdatedTime(@RequestHeader("Authorization") String jwtToken,
+                                  @PathVariable(value = "site") String site);
 
 
     @Slf4j
     @Component
     class VizFallBackService implements VizService {
         @Override
-        public JSONObject getAllPollution(String site, String start, String end) {
+        public JSONObject getAllPollution(String jwtToken, String site, String start, String end) {
             log.error("***********************************");
             log.error(String.format("Data service was disable! getAllPollution(%s, %s, %s)", site, start, end));
             log.error("***********************************");
@@ -50,7 +54,7 @@ public interface VizService {
         }
 
         @Override
-        public JSONObject getSiteUpdatedTime(String site) {
+        public JSONObject getSiteUpdatedTime(String jwtToken, String site) {
             log.error("***********************************");
             log.error(String.format("Data service was disable! getSiteUpdatedTime(%s)", site));
             log.error("***********************************");

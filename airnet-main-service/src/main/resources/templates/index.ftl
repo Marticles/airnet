@@ -445,11 +445,7 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
-
             </div>
 
 
@@ -584,7 +580,7 @@
     });
     map.addControl(geolocationControl);
 
-    // TODO 调用API拿到最新的空气质量指数
+    //TODO 调用API拿到最新的空气质量指数
     var point1 = new BMap.Point(121.436183, 31.230475);
     var point2 = new BMap.Point(121.484901, 31.280611);
     var marker1 = new BMap.Marker(point1);
@@ -604,9 +600,6 @@
         pm25TimeArray.push('${pm25Time}');
     </#list>
 
-    console.log(pm25TimeArray);
-
-    // TODO 调用API拿到历史一周PM2.5浓度
     var chart = new Chartist.Line('.pm25', {
         labels: pm25TimeArray,
         series: [
@@ -626,7 +619,6 @@
             , labelInterpolationFnc: function (value) {
                 return value ;
             }
-        },
+        }
     });
-
 </script>

@@ -2,13 +2,13 @@ package com.marticles.airnet.mainservice.interceptor;
 
 import com.marticles.airnet.mainservice.model.User;
 import com.marticles.airnet.mainservice.model.UserLocal;
+import com.marticles.airnet.mainservice.util.CookieUtil;
 import com.marticles.airnet.mainservice.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,10 +25,11 @@ public class UserLocalInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        String jwt_token = getJWT(request);
-        if (jwt_token != null) {
-            User user = JwtUtil.getUserInfoByJwt(jwt_token);
+        String jwtToken = CookieUtil.getCookie(request,"jwt_token");
+        if (jwtToken != null) {
+            User user = JwtUtil.getUserInfoByJwt(jwtToken);
             userLocal.setUser(user);
+            userLocal.setJwt(jwtToken);
         }
         return true;
     }
@@ -39,7 +40,6 @@ public class UserLocalInterceptor extends HandlerInterceptorAdapter {
             modelAndView.addObject("user", userLocal.getUser());
             modelAndView.addObject("isLogin", "true");
         }
-
     }
 
     @Override
@@ -47,15 +47,5 @@ public class UserLocalInterceptor extends HandlerInterceptorAdapter {
         userLocal.remove();
     }
 
-    private String getJWT(HttpServletRequest request){
-        String jwt_token = null;
-        if (request.getCookies() != null) {
-            for (Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equals("jwt_token")) {
-                    jwt_token = cookie.getValue();
-                }
-            }
-        }
-        return jwt_token;
-    }
+
 }

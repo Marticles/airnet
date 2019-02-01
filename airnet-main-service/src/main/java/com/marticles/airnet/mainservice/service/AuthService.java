@@ -17,7 +17,6 @@ public class AuthService {
     @Autowired
     AuthDAO authDAO;
 
-
     public int addUser(UserRequest user){
         return authDAO.addUser(user);
     }

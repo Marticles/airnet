@@ -1,4 +1,4 @@
-package com.marticles.airnet.mainservice.model;
+package com.marticles.airnet.zuul.gateway.model;
 
 import lombok.Data;
 
