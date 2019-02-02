@@ -1,6 +1,6 @@
 package com.marticles.airnet.zuul.gateway.conifig;
 
-import com.marticles.airnet.zuul.gateway.fliter.TestFliter;
+import com.marticles.airnet.zuul.gateway.fliter.AuthFliter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,13 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ZuulConfig {
 
-//    @Bean
-//    public AuthFliter authFliter(){
-//        return new AuthFliter();
-//    }
     @Bean
-    public TestFliter testFliter(){
-        return new TestFliter();
+    public AuthFliter authFliter(){
+        return new AuthFliter();
     }
-
 }

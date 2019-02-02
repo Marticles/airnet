@@ -6,12 +6,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.marticles.airnet.mainservice.model.WeatherInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * 和风天气API
+ * 和风天气API服务
  *
  * @author Marticles
  * @description HeWeatherService
@@ -35,7 +36,7 @@ public class HeWeatherService {
         JSONObject weatherInfoJson = null;
         JSONArray lifeStyleJsonArray = null;
         JSONObject lifeStyleJson = null;
-        if (weatherEntity.getStatusCodeValue() == 200 || lifeStyleEntity.getStatusCodeValue() == 200) {
+        if (weatherEntity.getStatusCodeValue() == HttpStatus.OK.value() || lifeStyleEntity.getStatusCodeValue() == HttpStatus.OK.value()) {
             String weatherBody = formatJson(weatherEntity.getBody());
             String lifeStyleBody = lifeStyleEntity.getBody();
             weatherInfoJson = JSON.parseObject(weatherBody).getJSONObject("HeWeather6");

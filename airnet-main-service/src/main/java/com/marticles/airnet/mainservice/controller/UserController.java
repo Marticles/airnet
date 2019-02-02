@@ -3,7 +3,7 @@ package com.marticles.airnet.mainservice.controller;
 import com.marticles.airnet.mainservice.model.User;
 import com.marticles.airnet.mainservice.model.UserRequest;
 import com.marticles.airnet.mainservice.model.UserType;
-import com.marticles.airnet.mainservice.service.AuthService;
+import com.marticles.airnet.mainservice.service.UserService;
 import com.marticles.airnet.mainservice.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +16,18 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 用户注册、登录
+ *
  * @author Marticles
  * @description LoginController
  * @date 2019/1/21
  */
 @Slf4j
 @Controller
-public class AuthController {
+public class UserController {
 
     @Autowired
-    AuthService authService;
+    UserService userService;
 
 
     @GetMapping("/register")
@@ -37,7 +39,7 @@ public class AuthController {
     @ResponseBody
     public String addUser(UserRequest user) {
         user.setType(UserType.USER_COMMON);
-        authService.addUser(user);
+        userService.addUser(user);
         return "success";
     }
 
@@ -49,7 +51,7 @@ public class AuthController {
     @PostMapping("/check_user")
     @ResponseBody
     public String userLogin(UserRequest userRequest,HttpServletResponse response) {
-        User user = authService.checkUser(userRequest);
+        User user = userService.checkUser(userRequest);
         if (null != user){
             String jwt_token = JwtUtil.generateJwt(user);
             Cookie cookie = new Cookie("jwt_token", jwt_token);

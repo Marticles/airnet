@@ -10,14 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_DECORATION_FILTER_ORDER;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
-/**
- * 权限校验
- * 防止没有权限的用户直接访问内部微服务API
- *
- * @author Marticles
- * @description AuthFliter
- * @date 2019/2/1
- */
 @Slf4j
 public class TestFliter extends ZuulFilter {
 

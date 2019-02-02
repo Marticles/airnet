@@ -2,15 +2,12 @@ package com.marticles.airnet.mainservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.marticles.airnet.mainservice.constant.AirNetConstants;
-import com.marticles.airnet.mainservice.model.UserLocal;
 import com.marticles.airnet.mainservice.model.VizRequest;
 import com.marticles.airnet.mainservice.service.VizService;
-import com.marticles.airnet.mainservice.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,15 +26,12 @@ public class VizController {
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
-    UserLocal userLocal;
-
-    @Autowired
     VizService vizService;
+
 
     @GetMapping("/default")
     @ResponseBody
-    public JSONObject getDefaultVizData(HttpServletRequest request) throws Exception {
-        String jwtToken = CookieUtil.getCookie(request, "jwt_token");
+    public JSONObject getDefaultVizData(@RequestHeader(value = "Authorization") String jwtToken) throws Exception {
         JSONObject siteUpdatedTime = vizService.getSiteUpdatedTime(jwtToken, AirNetConstants.DEFAULT_SITE);
         Date endDate = null;
         if (null == siteUpdatedTime) {
@@ -49,7 +43,7 @@ public class VizController {
         calendar.setTime(endDate);
         calendar.add(Calendar.DAY_OF_WEEK, -7);
         Date startDate = calendar.getTime();
-        JSONObject data = vizService.getPollution(AirNetConstants.DEFAULT_SITE,
+        JSONObject data = vizService.getPollution(jwtToken, AirNetConstants.DEFAULT_SITE,
                 AirNetConstants.DEFAULT_POLLUTION,
                 SIMPLE_DATE_FORMAT.format(startDate),
                 SIMPLE_DATE_FORMAT.format(endDate));
@@ -58,9 +52,9 @@ public class VizController {
 
     @PostMapping("/custom")
     @ResponseBody
-    public JSONObject getCustomVizData(@RequestBody VizRequest vizRequest,HttpServletRequest request) {
-        String jwtToken = CookieUtil.getCookie(request, "jwt_token");
-        return vizService.getAllPollution(jwtToken,vizRequest.getSite(), vizRequest.getStart(), vizRequest.getEnd());
+    public JSONObject getCustomVizData(@RequestHeader(value = "Authorization") String jwtToken,
+                                       @RequestBody VizRequest vizRequest) {
+        return vizService.getAllPollution(jwtToken, vizRequest.getSite(), vizRequest.getStart(), vizRequest.getEnd());
     }
 
     @GetMapping("/line")

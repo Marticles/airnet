@@ -8,6 +8,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /**
+ * 拦截器配置
+ * 排除静态资源
+ *
  * @author Marticles
  * @description InterceptorsConfiguration
  * @date 2019/1/23

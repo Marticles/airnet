@@ -8,11 +8,11 @@ import org.apache.ibatis.annotations.Select;
 
 /**
  * @author Marticles
- * @description AuthDAO
+ * @description UserDAO
  * @date 2019/1/21
  */
 @Mapper
-public interface AuthDAO {
+public interface UserDAO {
 
     @Insert({"insert into user (name, email,password,type) values (#{name},#{email},#{password},#{type})"})
     Integer addUser(UserRequest user);

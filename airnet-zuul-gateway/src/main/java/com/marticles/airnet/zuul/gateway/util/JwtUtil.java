@@ -1,4 +1,4 @@
-package com.marticles.airnet.zuul.gateway.Util;
+package com.marticles.airnet.zuul.gateway.util;
 
 import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.JWT;

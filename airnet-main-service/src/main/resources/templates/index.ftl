@@ -1,3 +1,4 @@
+<#--noinspection ALL-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,13 +116,13 @@
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
-                <ul class="navbar-nav my-lg-0">
+            <ul class="navbar-nav my-lg-0">
 
                     <#if isLogin=="false">
                      <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="icon-login"></i><a href="/login" style="color: white"">登录</a>
+                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             <i class="icon-login"></i><a href="/login" style="color: white"">登录</a>
                      </li>
 
                     <li class="nav-item dropdown">
@@ -218,7 +219,7 @@
 
                 </ul>
 
-</#if>
+                    </#if>
             </div>
         </nav>
     </header>
@@ -258,7 +259,8 @@
                     <#if isLogin=="true">
 
                     <li>
-                        <a class="has-arrow " href="/forecast" aria-expanded="false"><i class="mdi mdi-chemical-weapon"></i>
+                        <a class="has-arrow " href="/forecast" aria-expanded="false"><i
+                                class="mdi mdi-chemical-weapon"></i>
                             <span class="hide-menu">PM2.5预测</span></a>
                     </li>
 
@@ -268,7 +270,8 @@
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="/export" aria-expanded="false"><i class="mdi mdi-folder-download"></i>
+                        <a class="has-arrow " href="/export" aria-expanded="false"><i
+                                class="mdi mdi-folder-download"></i>
                             <span class="hide-menu">历史数据导出</span></a>
                     </li>
 
@@ -278,12 +281,14 @@
                     </li>
                     </#if>
                     <li>
-                        <a class="has-arrow " href="/info" aria-expanded="false"><i class="mdi mdi-book-open-variant"></i>
+                        <a class="has-arrow " href="/info" aria-expanded="false"><i
+                                class="mdi mdi-book-open-variant"></i>
                             <span class="hide-menu">相关知识</span></a>
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="/about-airnet" aria-expanded="false"><i class="mdi mdi-cloud-outline"></i>
+                        <a class="has-arrow " href="/about-airnet" aria-expanded="false"><i
+                                class="mdi mdi-cloud-outline"></i>
                             <span class="hide-menu">关于AirNet</span></a>
                     </li>
 
@@ -333,7 +338,7 @@
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-header">
-                            <span>上海市监测站地图 (Updated on 2019-01-24 12:45:00)</span>
+                            <span>上海市监测站地图 (Updated on ${updatedTime!})</span>
                             <div class="card-actions">
                                 <a class="" data-action="collapse"><i class="ti-minus"></i></a>
                                 <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
@@ -363,21 +368,24 @@
                                 <div class="col-6 b-r align-self-center">
                                     <div class="d-flex">
                                         <#if weatherInfo.weather=="晴">
-                                        <div class="display-6 text-info"><i class="wi wi-day-sunny"></i></div>
-                                        <div class="m-l-20">
-                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
-                                            <small>>${weatherInfo.weather!}</small>
-                                        </div>
+                                            <div class="display-6 text-info"><i class="wi wi-day-sunny"></i></div>
+                                            <div class="m-l-20">
+                                                <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup>
+                                                </h3>
+                                                <small>>${weatherInfo.weather!}</small>
+                                            </div>
                                         <#elseif weatherInfo.weather=="多云"||weatherInfo.weather=="少云"||weatherInfo.weather=="晴间多云"||weatherInfo.weather=="阴">
                                         <div class="display-6 text-info"><i class="wi wi-day-cloudy"></i></div>
                                         <div class="m-l-20">
-                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}
+                                                <sup>°C</sup></h3>
                                             <small>${weatherInfo.weather!}</small>
                                         </div>
                                         <#elseif weatherInfo.weather=="有风"||weatherInfo.weather=="微风"||weatherInfo.weather=="和风"||weatherInfo.weather=="清风">
                                         <div class="display-6 text-info"><i class="wi wi-day-cloudy-windy"></i></div>
                                         <div class="m-l-20">
-                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}
+                                                <sup>°C</sup></h3>
                                             <small>${weatherInfo.weather!}</small>
                                         </div>
                                         <#elseif weatherInfo.weather=="阵雨"||weatherInfo.weather=="强阵雨"||weatherInfo.weather=="雷阵雨"||weatherInfo.weather=="强雷阵雨"
@@ -386,32 +394,38 @@
                                         ||weatherInfo.weather=="小到中雨"||weatherInfo.weather=="中到大雨"||weatherInfo.weather=="大到暴雨"||weatherInfo.weather=="雨">
                                         <div class="display-6 text-info"><i class="wi wi-day-rain"></i></div>
                                         <div class="m-l-20">
-                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}
+                                                <sup>°C</sup></h3>
                                             <small>${weatherInfo.weather!}</small>
                                         </div>
                                         <#elseif weatherInfo.weather=="薄雾"||weatherInfo.weather=="雾"||weatherInfo.weather=="霾"||weatherInfo.weather=="浓雾"||weatherInfo.weather=="中度霾"
                                         ||weatherInfo.weather=="重度霾"||weatherInfo.weather=="大雾">
                                         <div class="display-6 text-info"><i class="wi wi-day-haze"></i></div>
                                         <div class="m-l-20">
-                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}
+                                                <sup>°C</sup></h3>
                                             <small>${weatherInfo.weather!}</small>
                                         </div>
                                         <#elseif weatherInfo.weather=="热">
                                         <div class="display-6 text-info"><i class="wi wi-hot"></i></div>
                                         <div class="m-l-20">
-                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}
+                                                <sup>°C</sup></h3>
                                             <small>${weatherInfo.weather!}</small>
                                         </div>
                                         <#elseif weatherInfo.weather=="冷">
-                                        <div class="display-6 text-info"><i class="wi wi-thermometer-exterior"></i></div>
+                                        <div class="display-6 text-info"><i class="wi wi-thermometer-exterior"></i>
+                                        </div>
                                         <div class="m-l-20">
-                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}
+                                                <sup>°C</sup></h3>
                                             <small>${weatherInfo.weather!}</small>
                                         </div>
                                         <#else>
                                         <div class="display-6 text-info"><i class="wi wi-thermometer"></i></div>
                                         <div class="m-l-20">
-                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}<sup>°C</sup></h3>
+                                            <h3 class="font-light text-info m-b-0">${weatherInfo.temperature!}
+                                                <sup>°C</sup></h3>
                                             <small>${weatherInfo.weather!}</small>
                                         </div>
                                         </#if>
@@ -426,82 +440,83 @@
                     </div>
 
 
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-wrap">
-                                    <div>
-                                        <h3 class="card-title">上海市PM2.5浓度</h3>
-                                        <h6 class="card-subtitle">一周历史趋势</h6>
-                                    </div>
-                                    <div class="ml-auto align-self-center">
-                                        <ul class="list-inline m-b-0">
-                                            <li>
-                                                <h6 class="text-muted text-info"><i class="fa fa-circle font-10 m-r-10"></i>PM2.5（μg/m3）</h6> </li>
-                                        </ul>
-                                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap">
+                                <div>
+                                    <h3 class="card-title">上海市PM2.5浓度</h3>
+                                    <h6 class="card-subtitle">一周历史趋势</h6>
                                 </div>
-                                <div class="pm25 ct-charts"></div>
-
+                                <div class="ml-auto align-self-center">
+                                    <ul class="list-inline m-b-0">
+                                        <li>
+                                            <h6 class="text-muted text-info"><i class="fa fa-circle font-10 m-r-10"></i>PM2.5（μg/m3）
+                                            </h6></li>
+                                    </ul>
+                                </div>
                             </div>
+                            <div class="pm25 ct-charts"></div>
+
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
-            <!-- ============================================================== -->
-            <!-- End PAge Content -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Right sidebar -->
-            <!-- ============================================================== -->
-            <!-- .right-sidebar -->
-            <div class="right-sidebar">
-                <div class="slimscrollright">
-                    <div class="rpanel-title"> 配色 <span><i class="ti-close right-side-toggle"></i></span></div>
-                    <div class="r-panel-body">
-                        <ul id="themecolors" class="m-t-20">
-                            <li><b>亮色</b></li>
-                            <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
-                            <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
-                            <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
-                            <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
-                            <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
-                            <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
-                            <li class="d-block m-t-30"><b>暗色</b></li>
-                            <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a>
-                            </li>
-                            <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
-                            <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
-                            <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
-                            <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a>
-                            </li>
-                            <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a>
-                            </li>
-                        </ul>
-                    </div>
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Right sidebar -->
+        <!-- ============================================================== -->
+        <!-- .right-sidebar -->
+        <div class="right-sidebar">
+            <div class="slimscrollright">
+                <div class="rpanel-title"> 配色 <span><i class="ti-close right-side-toggle"></i></span></div>
+                <div class="r-panel-body">
+                    <ul id="themecolors" class="m-t-20">
+                        <li><b>亮色</b></li>
+                        <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
+                        <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
+                        <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
+                        <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
+                        <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
+                        <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
+                        <li class="d-block m-t-30"><b>暗色</b></li>
+                        <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a>
+                        </li>
+                        <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
+                        <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
+                        <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
+                        <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a>
+                        </li>
+                        <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- End Right sidebar -->
-            <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
-        <footer class="footer">
-            © 2019 LJH's Graduation Project
-        </footer>
-        <!-- ============================================================== -->
-        <!-- End footer -->
+        <!-- End Right sidebar -->
         <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
-    <!-- End Page wrapper  -->
+    <!-- End Container fluid  -->
     <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <footer class="footer">
+        © 2019 LJH's Graduation Project
+    </footer>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->
 </div>
 <!-- ============================================================== -->
 <!-- End Wrapper -->
@@ -548,7 +563,7 @@
 <script>
 
     var map = new BMap.Map("allmap");    // 创建Map实例
-    map.centerAndZoom(new BMap.Point(121.47, 31.23), 12);  // 初始化地图,设置中心点坐标和地图级别
+    map.centerAndZoom(new BMap.Point(121.544779, 31.232901), 12);  // 初始化地图,设置中心点坐标和地图级别
     //添加地图类型控件
     map.addControl(new BMap.MapTypeControl({
         mapTypes: [
@@ -580,14 +595,180 @@
     });
     map.addControl(geolocationControl);
 
-    //TODO 调用API拿到最新的空气质量指数
-    var point1 = new BMap.Point(121.436183, 31.230475);
-    var point2 = new BMap.Point(121.484901, 31.280611);
-    var marker1 = new BMap.Marker(point1);
-    var marker2 = new BMap.Marker(point2);
-    map.addOverlay(marker1);
-    map.addOverlay(marker2);
+    var jingan_point = new BMap.Point(121.436183, 31.230475);
+    var hongkou_point = new BMap.Point(121.484901, 31.280611);
+    var pdchuansha_point = new BMap.Point(121.713507, 31.194598);
+    var pdxinqu_point = new BMap.Point(121.544779, 31.232901);
+    var pdzhangjiang_point = new BMap.Point(121.588475, 31.207949);
+    var putuo_point = new BMap.Point(121.417679, 31.241087);
+    var qingpu_point = new BMap.Point(121.099302, 31.140646);
+    var shiwuchang_point = new BMap.Point(121.488848, 31.208004);
+    var xuhui_point = new BMap.Point(121.42531, 31.167918);
+    var yangpu_point = new BMap.Point(121.544531, 31.270083);
 
+    function gen_color(aqi) {
+        if (aqi < 50) {
+           var color = "#33FF33"
+        }
+        else if (aqi >= 50 && aqi < 100) {
+            var color = "#00BFFF"
+        }
+        else if (aqi >= 100 && aqi < 150) {
+            var color = "#FFFF00"
+        }
+        else if (aqi >= 150 && aqi < 200) {
+            var color = "#FFD700"
+        }
+        else if (aqi >= 200 && aqi < 300) {
+            var color = "#FF8C00"
+        }
+        else if (aqi >= 300) {
+            var color = "#FF4500"
+        }
+        else {
+            var color = "#FFFFFF"
+        }
+        return color;
+    }
+
+    function gen_marker(point, aqi) {
+        var color = gen_color(aqi);
+        var marker = new BMap.Marker(point, {
+            icon: new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
+                scale: 1,//图标缩放大小
+                fillColor: color,//填充颜色
+                fillOpacity: 1,//填充透明度
+                strokeWeight: 0.5,
+                strokeColor:"#696969",
+            })
+        });
+        return marker;
+    }
+
+    var jingan_marker = gen_marker(jingan_point,${jingan.aqi!'0'});
+    var hongkou_marker = gen_marker(hongkou_point,${hongkou.aqi!'0'});
+    var pdchuansha_marker = gen_marker(pdchuansha_point,${pdchuansha.aqi!'0'});
+    var pdxinqu_marker = gen_marker(pdxinqu_point,${pdxinqu.aqi!'0'});
+    var pdzhangjiang_marker = gen_marker(pdzhangjiang_point,${pdzhangjiang.aqi!'0'});
+    var putuo_marker = gen_marker(putuo_point,${putuo.aqi!'0'});
+    var qingpu_marker = gen_marker(qingpu_point,${qingpu.aqi!'0'});
+    var shiwuchang_marker = gen_marker(shiwuchang_point,${shiwuchang.aqi!'0'});
+    var xuhui_marker = gen_marker(xuhui_point,${xuhui.aqi!'0'});
+    var yangpu_marker = gen_marker(yangpu_point,${yangpu.aqi!'0'});
+
+    map.addOverlay(jingan_marker);
+    map.addOverlay(hongkou_marker);
+    map.addOverlay(pdchuansha_marker);
+    map.addOverlay(pdxinqu_marker);
+    map.addOverlay(pdzhangjiang_marker);
+    map.addOverlay(putuo_marker);
+    map.addOverlay(qingpu_marker);
+    map.addOverlay(shiwuchang_marker);
+    map.addOverlay(xuhui_marker);
+    map.addOverlay(yangpu_marker);
+
+    function gen_label(aqi, site, level) {
+        var color = gen_color(aqi);
+        var label = new BMap.Label(site+"("+level+")", {offset: new BMap.Size(25, -10)});
+        label.setStyle({
+            color: color,
+            fontSize: "12px",
+            height: "20px",
+            lineHeight: "20px",
+            fontFamily: "微软雅黑",
+            border: "1px solid"+color,
+        });
+        return label;
+    }
+
+    function get_level(aqi) {
+        if (aqi < 50) {
+            var level = "优"
+        }
+        else if (aqi >= 50 && aqi < 100) {
+            var level = "良"
+        }
+        else if (aqi >= 100 && aqi < 150) {
+            var level = "轻度污染"
+        }
+        else if (aqi >= 150 && aqi < 200) {
+            var level = "中度污染"
+        }
+        else if (aqi >= 200 && aqi < 300) {
+            var level = "重度污染"
+        }
+        else if (aqi >= 300) {
+            var level = "严重污染"
+        }
+        else {
+            var level = "未知"
+        }
+        return level;
+    }
+
+    var jingan_label = gen_label(${jingan.aqi!'0'},"静安监测站",get_level(${jingan.aqi!'0'}));
+    var hongkou_label = gen_label(${hongkou.aqi!'0'},"虹口监测站",get_level(${hongkou.aqi!'0'}));
+    var pdchuansha_label = gen_label(${pdchuansha.aqi!'0'},"浦东川沙监测站",get_level(${pdchuansha.aqi!'0'}));
+    var pdxinqu_label = gen_label(${pdxinqu.aqi!'0'},"浦东新区监测站",get_level(${pdxinqu.aqi!'0'}));
+    var pdzhangjiang_label = gen_label(${pdzhangjiang.aqi!'0'},"浦东张江监测站",get_level(${pdzhangjiang.aqi!'0'}));
+    var putuo_label = gen_label(${putuo.aqi!'0'},"普陀监测站",get_level(${putuo.aqi!'0'}));
+    var qingpu_label = gen_label(${qingpu.aqi!'0'},"青浦淀山湖监测站",get_level(${qingpu.aqi!'0'}));
+    var shiwuchang_label = gen_label(${shiwuchang.aqi!'0'},"黄埔十五厂监测站",get_level(${shiwuchang.aqi!'0'}));
+    var xuhui_label = gen_label(${xuhui.aqi!'0'},"徐汇上师大监测站",get_level(${xuhui.aqi!'0'}));
+    var yangpu_label = gen_label(${yangpu.aqi!'0'},"杨浦四漂监测站",get_level(${yangpu.aqi!'0'}));
+
+    jingan_marker.setLabel(jingan_label);
+    hongkou_marker.setLabel(hongkou_label);
+    pdchuansha_marker.setLabel(pdchuansha_label);
+    pdxinqu_marker.setLabel(pdxinqu_label);
+    pdzhangjiang_marker.setLabel(pdzhangjiang_label);
+    putuo_marker.setLabel(putuo_label);
+    qingpu_marker.setLabel(qingpu_label);
+    shiwuchang_marker.setLabel(shiwuchang_label);
+    xuhui_marker.setLabel(xuhui_label);
+    yangpu_marker.setLabel(yangpu_label);
+
+    var jingan_infowindow = new BMap.InfoWindow("${jingan.info!}");
+    var hongkou_infowindow = new BMap.InfoWindow("${hongkou.info!}");
+    var pdchuansha_infowindow = new BMap.InfoWindow("${pdchuansha.info!}");
+    var pdxinqu_infowindow = new BMap.InfoWindow("${pdxinqu.info!}");
+    var pdzhangjiang_infowindow = new BMap.InfoWindow("${pdzhangjiang.info!}");
+    var putuo_infowindow = new BMap.InfoWindow("${putuo.info!}");
+    var qingpu_infowindow = new BMap.InfoWindow("${qingpu.info!}");
+    var shiwuchang_infowindow = new BMap.InfoWindow("${shiwuchang.info!}");
+    var xuhui_infowindow = new BMap.InfoWindow("${xuhui.info!}");
+    var yangpu_infowindow = new BMap.InfoWindow("${yangpu.info!}");
+
+    jingan_marker.addEventListener("click", function(){
+        map.openInfoWindow(jingan_infowindow,jingan_point);
+    });
+    hongkou_marker.addEventListener("click", function(){
+        map.openInfoWindow(hongkou_infowindow,hongkou_point);
+    });
+    pdchuansha_marker.addEventListener("click", function(){
+        map.openInfoWindow(pdchuansha_infowindow,pdchuansha_point);
+    });
+    pdxinqu_marker.addEventListener("click", function(){
+        map.openInfoWindow(pdxinqu_infowindow,pdxinqu_point);
+    });
+    pdzhangjiang_marker.addEventListener("click", function(){
+        map.openInfoWindow(pdzhangjiang_infowindow,pdzhangjiang_point);
+    });
+    putuo_marker.addEventListener("click", function(){
+        map.openInfoWindow(putuo_infowindow,putuo_point);
+    });
+    qingpu_marker.addEventListener("click", function(){
+        map.openInfoWindow(qingpu_infowindow,qingpu_point);
+    });
+    shiwuchang_marker.addEventListener("click", function(){
+        map.openInfoWindow(shiwuchang_infowindow,shiwuchang_point);
+    });
+    xuhui_marker.addEventListener("click", function(){
+        map.openInfoWindow(xuhui_infowindow,xuhui_point);
+    });
+    yangpu_marker.addEventListener("click", function(){
+        map.openInfoWindow(yangpu_infowindow,yangpu_point);
+    });
 
     // PM2.5首页数据
     var pm25Array = [];
@@ -604,7 +785,8 @@
         labels: pm25TimeArray,
         series: [
             pm25Array,
-        ]}, {
+        ]
+    }, {
         low: 0,
         high: Math.max(pm25Array),
         showArea: true,
@@ -617,8 +799,48 @@
             , scaleMinSpace: 40
             , offset: 30
             , labelInterpolationFnc: function (value) {
-                return value ;
+                return value;
             }
         }
     });
+
+
+
 </script>
+
+<style type="text/css">
+    .anchorBL{
+    display:none;
+    }
+    .BMap_bubble_title{
+    color:black;
+    font-size:10px;
+    font-weight: bold;
+    text-align:left;
+    }
+    .BMap_pop div:nth-child(1){
+    border-radius:7px 0 0 0;
+    }
+    .BMap_pop div:nth-child(3){
+    border-radius:0 7px 0 0;background:#ABABAB;;
+    /*background: #ABABAB;*/
+    width:23px;
+    width:0px;height;0px;
+    }
+    .BMap_pop div:nth-child(3) div{
+    border-radius:7px;
+    }
+    .BMap_pop div:nth-child(5){
+    border-radius:0 0 0 7px;
+    }
+    .BMap_pop div:nth-child(5) div{
+    border-radius:7px;
+    }
+    .BMap_pop div:nth-child(7){
+    border-radius:0 0 7px 0 ;
+    }
+    .BMap_pop div:nth-child div(7){
+    border-radius:7px ;
+    }
+
+</style>

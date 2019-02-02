@@ -639,6 +639,9 @@
         $.ajax({
             url: '/viz/custom',
             type: 'POST',
+            headers: {
+                Authorization: getCookie("jwt_token")
+            },
             dataType: 'json',
             data: JSON.stringify(request),
             contentType: 'application/json;charset=UTF-8',
