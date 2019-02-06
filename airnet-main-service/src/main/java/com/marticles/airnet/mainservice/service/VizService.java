@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * 调用DataService微服务
+ * 提供可视化需要的数据
+ * 由DataService微服务提供
  *
  * @author Marticles
  * @description VizService

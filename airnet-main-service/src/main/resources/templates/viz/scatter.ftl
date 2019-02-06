@@ -324,7 +324,7 @@
                 <div class="col-md-5 col-8 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">数据可视化</a></li>
-                        <li class="breadcrumb-item active">标准折线图</li>
+                        <li class="breadcrumb-item active">标准散点图</li>
                     </ol>
                 </div>
 
@@ -540,7 +540,7 @@
     var ChartItem = function () {
         return {
             name: '',
-            type: 'line',
+            type: 'scatter',
             markPoint: {
                 data: [
                     {type: 'max', name: '最高值'},
@@ -580,7 +580,7 @@
                 $('#time-range').val(default_time);
                 myChart.setOption({
                     title: {
-                        text: '展示类型 - 折线图',
+                        text: '展示类型 - 散点图',
                         subtext: '鼠标悬停可查看详细信息'
                     },
                     tooltip: {trigger: 'axis'},
@@ -611,7 +611,7 @@
                     ],
                     series: [{
                         name: 'PM2.5',
-                        type: 'line',
+                        type: 'scatter',
                         data: app.yvalue,
                         markPoint: {
                             data: [
@@ -711,7 +711,7 @@
                 app.xday = data.time;
                 newChart.setOption({
                     title: {
-                        text: '展示类型 - 折线图',
+                        text: '展示类型 - 散点图',
                         subtext: '鼠标悬停可查看详细信息'
                     },
                     tooltip: {trigger: 'axis'},

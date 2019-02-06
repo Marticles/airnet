@@ -54,9 +54,7 @@ public class IndexService {
             bMapInfo.setInfo("null");
         }else {
             JSONObject pollutionJSONObject = data.getJSONObject("pollution");
-            JSONArray timeJSONArray = data.getJSONArray("time");
             bMapInfo.setAqi(pollutionJSONObject.getJSONArray("aqi").getFloat(0));
-            String time = timeJSONArray.getString(0);
             String aqi = pollutionJSONObject.getJSONArray("aqi").getString(0);
             String level = pollutionJSONObject.getJSONArray("level").getString(0);
             String primaryPollutant = pollutionJSONObject.getJSONArray("primaryPollutant").getString(0);
@@ -66,7 +64,7 @@ public class IndexService {
             String no2 = pollutionJSONObject.getJSONArray("no2").getString(0);
             String ozone = pollutionJSONObject.getJSONArray("ozone").getString(0);
             String so2 = pollutionJSONObject.getJSONArray("so2").getString(0);
-            String info = "【时间:"+time+"】【AQI:"+aqi+"】 【等级:"+level+"】 【主要污染物:"+primaryPollutant+"】 <br> 【PM2.5:"+pm25+"】 【PM10:"+pm10+"】 【CO:"+co+"】 【NO2:"+no2+"】 【O3:"+ozone+"】 【SO2:"+so2+"】";
+            String info = "<br>【AQI:"+aqi+"】 【等级:"+level+"】 【主要污染物:"+primaryPollutant+"】 【PM2.5:"+pm25+"】 <br> 【PM10:"+pm10+"】 【CO:"+co+"】 【NO2:"+no2+"】 【O3:"+ozone+"】 【SO2:"+so2+"】";
             bMapInfo.setInfo(info);
         }
         return bMapInfo;

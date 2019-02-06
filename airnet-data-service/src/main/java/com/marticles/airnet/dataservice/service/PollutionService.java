@@ -34,15 +34,15 @@ public class PollutionService {
         List<String> primaryPollutantList = new ArrayList<>();
         List<Float> so2List = new ArrayList<>();
         for (HashMap<String, Object> map : pollutionHashMapList) {
-            aqiList.add(null == map.get("aqi") ? 0 : Integer.valueOf(map.get("aqi").toString()));
-            coList.add(null == map.get("co") ? 0F : Float.valueOf(map.get("co").toString()));
-            levelList.add(null == map.get("level") ? "" : map.get("level").toString());
-            no2List.add(null == map.get("no2") ? 0F : Float.valueOf(map.get("no2").toString()));
-            oZoneList.add(null == map.get("oZone") ? 0F : Float.valueOf(map.get("oZone").toString()));
-            pm10List.add(null == map.get("pm10") ? 0F : Float.valueOf(map.get("pm10").toString()));
-            pm25List.add(null == map.get("pm25") ? 0F : Float.valueOf(map.get("pm25").toString()));
-            primaryPollutantList.add(null == map.get("primaryPollutant") ? "" : map.get("primaryPollutant").toString());
-            so2List.add(null == map.get("so2") ? 0F : Float.valueOf(map.get("so2").toString()));
+            aqiList.add("".equals(map.get("aqi")) || null == map.get("aqi") ? 0 : Integer.valueOf(map.get("aqi").toString()));
+            coList.add("".equals(map.get("co")) || null == map.get("co") ? 0F : Float.valueOf(map.get("co").toString()));
+            levelList.add("".equals(map.get("level")) || null == map.get("level") ? "" : map.get("level").toString());
+            no2List.add("".equals(map.get("no2")) || null == map.get("no2") ? 0F : Float.valueOf(map.get("no2").toString()));
+            oZoneList.add("".equals(map.get("oZone")) || null == map.get("oZone") ? 0F : Float.valueOf(map.get("oZone").toString()));
+            pm10List.add("".equals(map.get("pm10")) || null == map.get("pm10") ? 0F : Float.valueOf(map.get("pm10").toString()));
+            pm25List.add("".equals(map.get("pm25")) || null == map.get("pm25") ? 0F : Float.valueOf(map.get("pm25").toString()));
+            primaryPollutantList.add("".equals(map.get("primaryPollutant")) || null == map.get("primaryPollutant") ? "" : map.get("primaryPollutant").toString());
+            so2List.add("".equals(map.get("so2")) || null == map.get("so2") ? 0F : Float.valueOf(map.get("so2").toString()));
         }
         pollutionList.setAqi(aqiList);
         pollutionList.setCo(coList);

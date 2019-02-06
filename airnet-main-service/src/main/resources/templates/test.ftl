@@ -245,7 +245,9 @@
                             <li><a href="/viz/radar">标准雷达图</a></li>
                             <li><a href="/viz/funnel">标准漏斗图</a></li>
                             <li><a href="/viz/rose">南丁格尔玫瑰图</a></li>
-                            <li><a href="/viz/map">全国空气质量指数地图</a></li>
+                            <li><a href="/viz/airflowmap">上海市高空气流图</a></li>
+                            <li><a href="/viz/aqimap">全国空气质量指数(AQI)地图</a></li>
+                            <li><a href="/viz/globalmap">全球污染物分布图</a></li>
                         </ul>
                     </li>
 

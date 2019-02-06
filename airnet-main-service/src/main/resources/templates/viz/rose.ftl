@@ -324,7 +324,7 @@
                 <div class="col-md-5 col-8 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">数据可视化</a></li>
-                        <li class="breadcrumb-item active">标准折线图</li>
+                        <li class="breadcrumb-item active">南丁格尔玫瑰图图</li>
                     </ol>
                 </div>
 
@@ -390,28 +390,13 @@
                                 </div>
                                 <div class="col-md-3" style=" margin-left:-38px;">
                                     <select class="selectpicker " id="pollution_picker"
-                                            data-style="btn btn-block btn-outline-secondary" title="选择污染物(默认PM2.5)"
-                                            multiple data-actions-box="true">
-                                        <optgroup label="AQI/每小时平均">
-                                            <option value="aqi">AQI</option>
+                                            data-style="btn btn-block btn-outline-secondary" title="选择统计量(默认空气质量等级)"
+                                    >
+                                        <optgroup label="(优、良、轻度污染、中度污染、重度污染、严重污染)">
+                                            <option value="level">空气质量等级</option>
                                         </optgroup>
-                                        <optgroup label="PM2.5/每小时平均">
-                                            <option value="pm25">PM2.5</option>
-                                        </optgroup>
-                                        <optgroup label="PM10/每小时平均">
-                                            <option value="pm10">PM10</option>
-                                        </optgroup>
-                                        <optgroup label="SO2/每小时平均">
-                                            <option value="so2">SO2</option>
-                                        </optgroup>
-                                        <optgroup label="NO2/每小时平均">
-                                            <option value="no2">NO2</option>
-                                        </optgroup>
-                                        <optgroup label="CO/每小时平均">
-                                            <option value="co">CO</option>
-                                        </optgroup>
-                                        <optgroup label="O3/每小时平均">
-                                            <option value="ozone">O3</option>
+                                        <optgroup label="(细颗粒物PM2.5、颗粒物PM10、二氧化硫、一氧化碳、二氧化氮等)">
+                                            <option value="primarypollutant">首要污染物</option>
                                         </optgroup>
 
                                     </select>
@@ -555,15 +540,37 @@
     var myChart = echarts.init(document.getElementById('main_charts'), theme);
 
     var app = {
-        xday: [],
-        yvalue: []
-    };
+        days: [],
+        exellent: [],
+        good: [],
+        // 1 2 3 4轻/中/重度/严重污染
+        polluted1: [],
+        polluted2: [],
+        polluted3: [],
+        polluted4: [],
+        pm25: [],
+        pm10: [],
+        pm25pm10: [],
+        no2: [],
+        co: [],
+        o31h: [],
+        so2: []
+    }
+
+    function getJsonLength(json) {
+        var jsonLength = 0;
+        for (var i in json) {
+            jsonLength++;
+        }
+        return jsonLength;
+    }
 
     $(document).ready(function () {
+        getDefaultTime()
         getDefaultData();
     });
 
-    function getDefaultData() {
+    function getDefaultTime() {
         $.ajax({
             url: '/viz/default',
             data: {},
@@ -571,61 +578,132 @@
                 Authorization: getCookie("jwt_token")
             },
             type: 'GET',
-            async: true,
+            async: false,
             dataType: 'json',
             success: function (data) {
-                app.xday = data.time;
-                app.yvalue = data.pollution;
                 var default_time = data.time[0] + ' - ' + data.time[data.time.length - 1];
                 $('#time-range').val(default_time);
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        })
+    };
+
+    function getDefaultData() {
+        var time = $('#time-range').val().split(" - ");
+        var request = {};
+        request.start = time[0];
+        request.end = time[1];
+        request.site = 'yangpusipiao';
+        $.ajax({
+            url: '/viz/custom',
+            type: 'POST',
+            headers: {
+                Authorization: getCookie("jwt_token")
+            },
+            dataType: 'json',
+            data: JSON.stringify(request),
+            async: true,
+            contentType: 'application/json;charset=UTF-8',
+            success: function (data) {
+                app.days = getJsonLength(data.time);
+                var value = data.pollution.level;
+                var counter_exellent = 0;
+                var counter_good = 0;
+                var counter_polluted1 = 0;
+                var counter_polluted2 = 0;
+                var counter_polluted3 = 0;
+                var counter_polluted4 = 0;
+                for (var obj in value) {
+                    if (value[obj] == '优') {
+                        counter_exellent += 1;
+                    }
+                    else if (value[obj] == '良') {
+                        counter_good += 1;
+                    }
+                    else if (value[obj] == '轻度污染') {
+                        counter_polluted1 += 1;
+                    }
+                    else if (value[obj] == '中度污染') {
+                        counter_polluted2 += 1;
+                    }
+                    else if (value[obj] == '重度污染') {
+                        counter_polluted3 += 1;
+                    }
+                    else if (value[obj] == '严重污染') {
+                        counter_polluted4 += 1;
+                    }
+                    app.exellent = counter_exellent;
+                    app.good = counter_good;
+                    app.polluted1 = counter_polluted1;
+                    app.polluted2 = counter_polluted2;
+                    app.polluted3 = counter_polluted3;
+                    app.polluted4 = counter_polluted4;
+
+                }
+
                 myChart.setOption({
                     title: {
-                        text: '展示类型 - 折线图',
-                        subtext: '鼠标悬停可查看详细信息'
+                        text: '展示类型 - 南丁格尔玫瑰图',
+                        subtext: '鼠标悬停可查看详细信息',
+                        x: 'center'
                     },
-                    tooltip: {trigger: 'axis'},
+                    tooltip: {trigger: 'axis',},
                     legend: {
-                        data: ['PM2.5']
+                        orient: 'vertical',
+                        x: 'left',
+                        data: ['优', '良', '轻度污染', '中度污染', '重度污染', '严重污染']
                     },
                     toolbox: {
                         show: true,
                         feature: {
                             mark: {show: true},
                             dataView: {show: true, readOnly: false},
-                            magicType: {show: true, type: ['line']},
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
                             restore: {show: true},
                             saveAsImage: {show: true}
                         }
                     },
                     calculable: true,
-                    xAxis: {
-                        show: true,
-                        data: app.xday,
-                        name: '日期',
-                    },
-                    yAxis: [
-                        {
-                            show: true,
-                            type: 'value',
-                        }
-                    ],
                     series: [{
-                        name: 'PM2.5',
-                        type: 'line',
-                        data: app.yvalue,
-                        markPoint: {
-                            data: [
-                                {type: 'max', name: '最高值'},
-                                {type: 'min', name: '最低值'},
-                                {type: 'average', name: '平均值'}
-                            ],
+                        name: '空气质量等级',
+                        type: 'pie',
+                        roseType: 'radius',
 
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: '{b}: {c}({d}%)'
+                            }
                         },
+                        data: [
+                            {value: app.exellent, name: '优'},
+                            {value: app.good, name: '良'},
+                            {value: app.polluted1, name: '轻度污染'},
+                            {value: app.polluted2, name: '中度污染'},
+                            {value: app.polluted3, name: '重度污染'},
+                            {value: app.polluted4, name: '严重污染'}
+                        ]
+
                     }]
                 })
             },
-            error: function (msg) {
-                console.log(msg);
+
+            error: function (type, error) {
+                console.log(type);
+                console.log(error);
             }
         })
     };
@@ -648,97 +726,157 @@
             data: JSON.stringify(request),
             contentType: 'application/json;charset=UTF-8',
             success: function (data) {
-                myChart.clear();
-                var newChart = echarts.init(document.getElementById('main_charts'), theme);
-                var app = {
-                    xday: [],
-                    lengends: [],
-                    yvalue: []
-                };
-                for (var obj in request_pollution) {
-                    if (request_pollution[obj] == 'aqi') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'AQI';
-                        chartitem.data = data.pollution.aqi;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('AQI');
+                app.days = getJsonLength(data.time);
+                if (request_pollution == 'level') {
+                    var value = data.pollution.level;
+                    var counter_exellent = 0;
+                    var counter_good = 0;
+                    var counter_polluted1 = 0;
+                    var counter_polluted2 = 0;
+                    var counter_polluted3 = 0;
+                    var counter_polluted4 = 0;
+                    for (var obj in value) {
+                        if (value[obj] == '优') {
+                            counter_exellent += 1;
+                        }
+                        else if (value[obj] == '良') {
+                            counter_good += 1;
+                        }
+                        else if (value[obj] == '轻度污染') {
+                            counter_polluted1 += 1;
+                        }
+                        else if (value[obj] == '中度污染') {
+                            counter_polluted2 += 1;
+                        }
+                        else if (value[obj] == '重度污染') {
+                            counter_polluted3 += 1;
+                        }
+                        else if (value[obj] == '严重污染') {
+                            counter_polluted4 += 1;
+                        }
+                        app.exellent = counter_exellent;
+                        app.good = counter_good;
+                        app.polluted1 = counter_polluted1;
+                        app.polluted2 = counter_polluted2;
+                        app.polluted3 = counter_polluted3;
+                        app.polluted4 = counter_polluted4;
+                        var pie_data = [
+                            {value: app.exellent, name: '优'},
+                            {value: app.good, name: '良'},
+                            {value: app.polluted1, name: '轻度污染'},
+                            {value: app.polluted2, name: '中度污染'},
+                            {value: app.polluted3, name: '重度污染'},
+                            {value: app.polluted4, name: '严重污染'}
+                        ];
+                        var pie_name = '空气质量等级'
+                        var pie_legends = ['优', '良', '轻度污染', '中度污染', '重度污染', '严重污染']
+
                     }
-                    if (request_pollution[obj] == 'pm25') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'PM2.5';
-                        chartitem.data = data.pollution.pm25;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('PM2.5');
-                    }
-                    if (request_pollution[obj] == 'pm10') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'PM10';
-                        chartitem.data = data.pollution.pm10;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('PM10');
-                    }
-                    if (request_pollution[obj] == 'co') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'CO';
-                        chartitem.data = data.pollution.co;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('CO');
-                    }
-                    if (request_pollution[obj] == 'no2') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'NO2';
-                        chartitem.data = data.pollution.no2;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('NO2');
-                    }
-                    if (request_pollution[obj] == 'ozone') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'O3';
-                        chartitem.data = data.pollution.ozone1hour;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('O3');
-                    }
-                    if (request_pollution[obj] == 'so2') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'SO2';
-                        chartitem.data = data.pollution.so2;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('SO2');
+                }
+                else if (request_pollution == 'primarypollutant') {
+                    var value = data.pollution.primaryPollutant;
+                    var counter_pm25 = 0;
+                    var counter_pm10 = 0;
+                    var counter_pm25pm10 = 0;
+                    var counter_no2 = 0;
+                    var counter_co = 0;
+                    var counter_o31h = 0;
+                    var counter_so2 = 0;
+                    for (var obj in value) {
+                        if (value[obj] == '细颗粒物(PM2.5)'| value[obj] == 'PM2.5') {
+                            counter_pm25 += 1;
+                        }
+                        else if (value[obj] == '颗粒物(PM10)'| value[obj] == 'PM10') {
+                            counter_pm10 += 1;
+                        }
+                        else if (value[obj] == '颗粒物(PM10)细颗粒物(PM2.5)') {
+                            counter_pm25pm10 += 1;
+                        }
+                        else if (value[obj] == '二氧化氮') {
+                            counter_no2 += 1;
+                        }
+                        else if (value[obj] == '一氧化碳') {
+                            counter_co += 1;
+                        }
+                        else if (value[obj] == '臭氧一小时') {
+                            counter_o31h += 1;
+                        }
+                        else if (value[obj] == '二氧化硫') {
+                            counter_so2 += 1;
+                        }
+                        app.pm25 = counter_pm25;
+                        app.pm10 = counter_pm10;
+                        app.pm25pm10 = counter_pm25pm10;
+                        app.no2 = counter_no2;
+                        app.co = counter_co;
+                        app.o31h = counter_o31h;
+                        app.so2 = counter_so2;
+
+                        var pie_data = [
+                            {value: app.pm25, name: '细颗粒物(PM2.5)'},
+                            {value: app.pm10, name: '颗粒物(PM10)'},
+                            {value: app.pm25pm10, name: '颗粒物(PM10)细颗粒物(PM2.5)'},
+                            {value: app.no2 , name: '二氧化氮'},
+                            {value: app.co, name: '一氧化碳'},
+                            {value: app.o31h, name: '臭氧一小时'},
+                            {value: app.so2, name: '二氧化硫'}
+                        ];
+                        var pie_name = '首要污染物'
+                        var pie_legends = ['细颗粒物(PM2.5)', '颗粒物(PM10)', '颗粒物(PM10)细颗粒物(PM2.5)','二氧化氮','一氧化碳','臭氧一小时','二氧化硫']
+
                     }
 
                 }
 
-                app.xday = data.time;
-                newChart.setOption({
+
+                myChart.setOption({
                     title: {
-                        text: '展示类型 - 折线图',
-                        subtext: '鼠标悬停可查看详细信息'
+                        text: '展示类型 - 南丁格尔玫瑰图',
+                        subtext: '鼠标悬停可查看详细信息',
+                        x: 'center'
                     },
-                    tooltip: {trigger: 'axis'},
+                    tooltip: {trigger: 'axis',},
                     legend: {
-                        data: app.lengends
+                        orient: 'vertical',
+                        x: 'left',
+                        data: pie_legends
                     },
                     toolbox: {
                         show: true,
                         feature: {
                             mark: {show: true},
                             dataView: {show: true, readOnly: false},
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
                             restore: {show: true},
                             saveAsImage: {show: true}
                         }
                     },
                     calculable: true,
-                    xAxis: {
-                        show: true,
-                        data: app.xday,
-                    },
-                    yAxis: [
-                        {
-                            show: true,
-                            type: 'value',
-                        }
-                    ],
-                    series: app.yvalue
+
+                    series: [{
+                        name: pie_name,
+                        type: 'pie',
+                        roseType: 'radius',
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: '{b}: {c}({d}%)'
+                            }
+                        },
+                        data: pie_data
+
+                    }]
                 })
             },
             error: function (msg) {

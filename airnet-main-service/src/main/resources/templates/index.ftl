@@ -247,7 +247,9 @@
                             <li><a href="/viz/radar">标准雷达图</a></li>
                             <li><a href="/viz/funnel">标准漏斗图</a></li>
                             <li><a href="/viz/rose">南丁格尔玫瑰图</a></li>
-                            <li><a href="/viz/map">全国空气质量指数地图</a></li>
+                            <li><a href="/viz/airflowmap">上海市高空气流图</a></li>
+                            <li><a href="/viz/aqimap">全国空气质量指数(AQI)地图</a></li>
+                            <li><a href="/viz/globalmap">全球污染物分布图</a></li>
                         </ul>
                     </li>
 
@@ -553,13 +555,12 @@
 <!-- Style switcher -->
 <!-- ============================================================== -->
 <script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-
+<!-- BaiduMap-->
 <script src="http://api.map.baidu.com/api?v=2.0&ak=uDNbzypTGIdYSsNqHVhvSr7Q5tPEuWmB"></script>
 
 </body>
 
 </html>
-
 <script>
 
     var map = new BMap.Map("allmap");    // 创建Map实例
@@ -608,7 +609,7 @@
 
     function gen_color(aqi) {
         if (aqi < 50) {
-           var color = "#33FF33"
+            var color = "#1DF01D"
         }
         else if (aqi >= 50 && aqi < 100) {
             var color = "#00BFFF"
@@ -728,16 +729,16 @@
     xuhui_marker.setLabel(xuhui_label);
     yangpu_marker.setLabel(yangpu_label);
 
-    var jingan_infowindow = new BMap.InfoWindow("${jingan.info!}");
-    var hongkou_infowindow = new BMap.InfoWindow("${hongkou.info!}");
-    var pdchuansha_infowindow = new BMap.InfoWindow("${pdchuansha.info!}");
-    var pdxinqu_infowindow = new BMap.InfoWindow("${pdxinqu.info!}");
-    var pdzhangjiang_infowindow = new BMap.InfoWindow("${pdzhangjiang.info!}");
-    var putuo_infowindow = new BMap.InfoWindow("${putuo.info!}");
-    var qingpu_infowindow = new BMap.InfoWindow("${qingpu.info!}");
-    var shiwuchang_infowindow = new BMap.InfoWindow("${shiwuchang.info!}");
-    var xuhui_infowindow = new BMap.InfoWindow("${xuhui.info!}");
-    var yangpu_infowindow = new BMap.InfoWindow("${yangpu.info!}");
+    var jingan_infowindow = new BMap.InfoWindow("静安监测站  地址:静安区武定西路1480号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${jingan.info!}");
+    var hongkou_infowindow = new BMap.InfoWindow("虹口凉城监测站  地址:虹口区凉城路854号凉城社区卫生中心<br>更新时间:"+"${updatedTime!}"+"<br>"+"${hongkou.info!}");
+    var pdchuansha_infowindow = new BMap.InfoWindow("浦东川沙监测站  地址:浦东新区川环南路319号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${pdchuansha.info!}");
+    var pdxinqu_infowindow = new BMap.InfoWindow("浦东新区监测站  地址:浦东新区灵山路51号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${pdxinqu.info!}");
+    var pdzhangjiang_infowindow = new BMap.InfoWindow("浦东张江监测站  地址:浦东新区祖冲之路295号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${pdzhangjiang.info!}");
+    var putuo_infowindow = new BMap.InfoWindow("普陀监测站  地址:普陀区杏山路317号曹杨社区文化中心<br>更新时间:"+"${updatedTime!}"+"<br>"+"${putuo.info!}");
+    var qingpu_infowindow = new BMap.InfoWindow("青浦淀山湖监测站  地址:青浦区淀峰渔民村1号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${qingpu.info!}");
+    var shiwuchang_infowindow = new BMap.InfoWindow("黄埔十五厂(卢湾师专附小)监测站  地址:黄埔区局门路478号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${shiwuchang.info!}");
+    var xuhui_infowindow = new BMap.InfoWindow("徐汇上师大监测站  地址:徐汇区桂林路100号上师大<br>更新时间:"+"${updatedTime!}"+"<br>"+"${xuhui.info!}");
+    var yangpu_infowindow = new BMap.InfoWindow("杨浦四漂监测站  地址:杨浦区平凉路1398号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${yangpu.info!}");
 
     jingan_marker.addEventListener("click", function(){
         map.openInfoWindow(jingan_infowindow,jingan_point);
@@ -774,12 +775,12 @@
     var pm25Array = [];
     var pm25TimeArray = []
     <#list pm25List as pm25>
-        pm25Array.push(${pm25});
+pm25Array.push(${pm25});
     </#list>
 
-    <#list pm25TimeList as pm25Time>
-        pm25TimeArray.push('${pm25Time}');
-    </#list>
+<#list pm25TimeList as pm25Time>
+pm25TimeArray.push('${pm25Time}');
+</#list>
 
     var chart = new Chartist.Line('.pm25', {
         labels: pm25TimeArray,
@@ -804,9 +805,8 @@
         }
     });
 
-
-
 </script>
+
 
 <style type="text/css">
     .anchorBL{
