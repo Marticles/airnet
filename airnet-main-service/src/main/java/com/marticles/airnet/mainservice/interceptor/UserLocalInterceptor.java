@@ -47,5 +47,4 @@ public class UserLocalInterceptor extends HandlerInterceptorAdapter {
         userLocal.remove();
     }
 
-
 }

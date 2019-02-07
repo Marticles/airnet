@@ -167,12 +167,9 @@ $('#timepicker').bootstrapMaterialDatePicker({
     time: true,
     date: false
 });
-$('#date-format').bootstrapMaterialDatePicker({
-    format: 'dddd DD MMMM YYYY - HH:mm'
-});
 
 $('#min-date').bootstrapMaterialDatePicker({
-    format: 'DD/MM/YYYY HH:mm',
+    format: 'yyyy-MM-dd HH:mm:ss',
     minDate: new Date()
 });
 // Clock pickers

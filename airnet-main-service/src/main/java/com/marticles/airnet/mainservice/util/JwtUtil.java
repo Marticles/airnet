@@ -24,7 +24,7 @@ public class JwtUtil {
 
     public static String generateJwt(User user) {
         Algorithm algorithm = Algorithm.HMAC256(SECRET);
-        Map<String, Object> map = new HashMap<String, Object>(16,0.75F);
+        Map<String, Object> map = new HashMap<String, Object>(32,0.75F);
         map.put("typ", "JWT");
         map.put("alg", "HS256");
         String userJson = JSONObject.toJSONString(user);

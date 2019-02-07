@@ -1,14 +1,14 @@
-package com.marticles.airnet.mainservice.model;
+package com.marticles.airnet.mainservice.constant;
 
 import lombok.Data;
 
 /**
  * @author Marticles
- * @description UserType
+ * @description UserTypeConstants
  * @date 2019/1/21
  */
 @Data
-public class UserType {
+public class UserTypeConstants {
     /**
      * 0 管理员
      * 1 普通用户

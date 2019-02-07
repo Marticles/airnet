@@ -20,6 +20,8 @@
     <!-- Daterange picker plugins css -->
     <link href="/static/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="/static/plugins/daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="/static/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
+          rel="stylesheet">
     <!-- chartist CSS -->
     <link href="/static/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
     <link href="/static/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
@@ -176,7 +178,7 @@
 
                                         <a href="#">
                                             <div class="mail-contnet">
-                                                <h5>污染物预警通知</h5>
+                                                <h5>❗ 污染物预警通知</h5>
                                                 <h6>杨浦区PM2.5已超标23.2%</h6> <span
                                                     class="mail-desc">当前监测值：25.2；设定阈值：20</span> <span class="time">2019-01-21 12:14</span>
                                             </div>
@@ -327,8 +329,8 @@
             <div class="row page-titles">
                 <div class="col-md-5 col-8 align-self-center">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">数据可视化</a></li>
-                        <li class="breadcrumb-item active">标准散点图</li>
+                        <li class="breadcrumb-item"><a href="/">空气质量排行</a></li>
+                        <li class="breadcrumb-item">上海市空气质量实时/历史排行</li>
                     </ol>
                 </div>
 
@@ -349,93 +351,70 @@
                 <!-- Column -->
                 <div class="col-lg-12">
                     <div class="card">
+                        <div class="card-header">
+                            <span>上海市空气质量实时/历史排行 (Updated on ${updatedTime!})</span>
+                            <div class="card-actions">
+                                <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                                <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
+                                <a class="btn-close" data-action="close"><i class="ti-close"></i></a>
+                            </div>
+                        </div>
                         <div class="card-body ">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class='input-group mb-3'>
-                                        <input type='text' id='time-range' class="form-control timeseconds"/>
-                                        <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <span class="ti-calendar"></span>
-                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3" style=" margin-left:20px;">
-                                    <select class="selectpicker " id="site_picker"
-                                            data-style="btn btn-block btn-outline-secondary" title="选择监测站(默认上海杨浦)">
-                                        <optgroup label="静安">
-                                            <option value="jingan">静安监测站</option>
-                                        </optgroup>
-                                        <optgroup label="虹口">
-                                            <option value="hongkou">虹口监测站</option>
-                                        </optgroup>
-                                        <optgroup label="浦东">
-                                            <option value="pudongchuansha">浦东川沙监测站</option>
-                                            <option value="pudongxinqu">浦东新区监测站</option>
-                                            <option value="pudongzhangjiang">浦东张江监测站</option>
-                                        </optgroup>
-                                        <optgroup label="普陀">
-                                            <option value="putuo">普陀监测站</option>
-                                        </optgroup>
-                                        <optgroup label="黄埔">
-                                            <option value="shiwuchang">十五厂(卢湾师专附小)监测站</option>
-                                        </optgroup>
-                                        <optgroup label="杨浦">
-                                            <option value="yangpusipiao">杨浦四漂监测站</option>
-                                        </optgroup>
-                                        <optgroup label="徐汇">
-                                            <option value="xuhuishangshida">徐汇上师大监测站</option>
-                                        </optgroup>
-                                        <optgroup label="青浦">
-                                            <option value="qingpudianshanhu">青浦淀山湖监测站</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                                <div class="col-md-3" style=" margin-left:-38px;">
-                                    <select class="selectpicker " id="pollution_picker"
-                                            data-style="btn btn-block btn-outline-secondary" title="选择污染物(默认PM2.5)"
-                                            multiple data-actions-box="true">
-                                        <optgroup label="AQI/每小时平均">
-                                            <option value="aqi">AQI</option>
-                                        </optgroup>
-                                        <optgroup label="PM2.5/每小时平均">
-                                            <option value="pm25">PM2.5</option>
-                                        </optgroup>
-                                        <optgroup label="PM10/每小时平均">
-                                            <option value="pm10">PM10</option>
-                                        </optgroup>
-                                        <optgroup label="SO2/每小时平均">
-                                            <option value="so2">SO2</option>
-                                        </optgroup>
-                                        <optgroup label="NO2/每小时平均">
-                                            <option value="no2">NO2</option>
-                                        </optgroup>
-                                        <optgroup label="CO/每小时平均">
-                                            <option value="co">CO</option>
-                                        </optgroup>
-                                        <optgroup label="O3/每小时平均">
-                                            <option value="ozone">O3</option>
-                                        </optgroup>
 
+                            <div class="row">
+                                <div class="col-md-3" style=" margin-left:250px;">
+                                    <input type="text" id="date-picker" class="form-control"
+                                           placeholder="" value="${updatedTime!}">
+                                </div>
+
+                                <div class="col-md-3" style=" margin-left:30px;">
+                                    <select class="selectpicker " id="order_picker"
+                                            data-style="btn btn-block btn-outline-secondary" title="选择排序(默认顺序)">
+                                        <option value="order">顺序</option>
+                                        <option value="reverse">逆序</option>
                                     </select>
                                 </div>
-                                <div class="col-md-1" style=" margin-left:-38px;">
+
+                                <div class="col-md-2" style=" margin-left:-20px;">
                                     <button type="button" id="request_button"
                                             class="btn waves-effect waves-light btn-primary "><i
                                             class="fa fa-check"></i>&nbsp确认
                                     </button>
                                 </div>
                             </div>
-                            <hr style=" margin-top:0px;">
-                            <div class="col-md-12" id="main_charts"
-                                 style="width: 1150px;height:480px;margin: 0 auto;"></div>
+
+                            <hr style=" margin-top:15px;">
+                            <div class="table-responsive">
+                                <table id="tb" class="table color-table primary-table hover-table">
+                                    <thead>
+                                    <tr style="text-align:center;">
+                                        <th>排名</th>
+                                        <th>监测站</th>
+                                        <th>等级</th>
+                                        <th>AQI</th>
+                                        <th>主要污染物</th>
+                                        <th>PM2.5</th>
+                                        <th>PM10</th>
+                                        <th>CO</th>
+                                        <th>NO2</th>
+                                        <th>O3</th>
+                                        <th>SO2</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
 
             </div>
-
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
             <div class="right-sidebar">
                 <div class="slimscrollright">
                     <div class="rpanel-title"> 配色 <span><i class="ti-close right-side-toggle"></i></span></div>
@@ -518,9 +497,6 @@
 <!-- Style switcher -->
 <!-- ============================================================== -->
 <script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-<!-- Echarts -->
-<script src="/static/js/echarts.js"></script>
-<script src="/static/js/macarons.js"></script>
 <!-- DateTime -->
 <script src="/static/plugins/moment/moment.js"></script>
 <script src="/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
@@ -531,224 +507,17 @@
 <!-- Date range Plugin JavaScript -->
 <script src="/static/plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
-<script src="/static/plugins/moment/moment.js"></script>
+<script src="/static/plugins/moment/moment-with-locales.js"></script>
+<script src="/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 <!-- 自定义时间 -->
 <script src="/static/js/datetime.js"></script>
 <script src="/static/js/bootstrap-select.min.js"></script>
+
 </body>
 
-</html>
-
 <script>
-    var theme = 'macarons';
-    var ChartItem = function () {
-        return {
-            name: '',
-            type: 'scatter',
-            markPoint: {
-                data: [
-                    {type: 'max', name: '最高值'},
-                    {type: 'min', name: '最低值'},
-                    {type: 'average', name: '平均值'}
-                ]
-            },
-            data: []
-        }
-    };
-
-    var myChart = echarts.init(document.getElementById('main_charts'), theme);
-
-    var app = {
-        xday: [],
-        yvalue: []
-    };
-
-    $(document).ready(function () {
-        getDefaultData();
-    });
-
-    function getDefaultData() {
-        $.ajax({
-            url: '/viz/default',
-            data: {},
-            headers: {
-                Authorization: getCookie("jwt_token")
-            },
-            type: 'GET',
-            async: true,
-            dataType: 'json',
-            success: function (data) {
-                app.xday = data.time;
-                app.yvalue = data.pollution;
-                var default_time = data.time[0] + ' - ' + data.time[data.time.length - 1];
-                $('#time-range').val(default_time);
-                myChart.setOption({
-                    title: {
-                        text: '展示类型 - 散点图',
-                        subtext: '鼠标悬停可查看详细信息'
-                    },
-                    tooltip: {trigger: 'axis'},
-                    legend: {
-                        data: ['PM2.5']
-                    },
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            mark: {show: true},
-                            dataView: {show: true, readOnly: false},
-                            magicType: {show: true, type: ['line']},
-                            restore: {show: true},
-                            saveAsImage: {show: true}
-                        }
-                    },
-                    calculable: true,
-                    xAxis: {
-                        show: true,
-                        data: app.xday,
-                        name: '日期',
-                    },
-                    yAxis: [
-                        {
-                            show: true,
-                            type: 'value',
-                        }
-                    ],
-                    series: [{
-                        name: 'PM2.5',
-                        type: 'scatter',
-                        data: app.yvalue,
-                        markPoint: {
-                            data: [
-                                {type: 'max', name: '最高值'},
-                                {type: 'min', name: '最低值'},
-                                {type: 'average', name: '平均值'}
-                            ],
-
-                        },
-                    }]
-                })
-            },
-            error: function (msg) {
-                console.log(msg);
-            }
-        })
-    };
-
-
-    $("#request_button").click(function () {
-        var time = $('#time-range').val().split(" - ");
-        var request = {};
-        request.start = time[0];
-        request.end = time[1];
-        request.site = $('#site_picker').val();
-        var request_pollution = $('#pollution_picker').val();
-        $.ajax({
-            url: '/viz/custom',
-            type: 'POST',
-            headers: {
-                Authorization: getCookie("jwt_token")
-            },
-            dataType: 'json',
-            data: JSON.stringify(request),
-            contentType: 'application/json;charset=UTF-8',
-            success: function (data) {
-                myChart.clear();
-                var newChart = echarts.init(document.getElementById('main_charts'), theme);
-                var app = {
-                    xday: [],
-                    lengends: [],
-                    yvalue: []
-                };
-                for (var obj in request_pollution) {
-                    if (request_pollution[obj] == 'aqi') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'AQI';
-                        chartitem.data = data.pollution.aqi;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('AQI');
-                    }
-                    if (request_pollution[obj] == 'pm25') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'PM2.5';
-                        chartitem.data = data.pollution.pm25;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('PM2.5');
-                    }
-                    if (request_pollution[obj] == 'pm10') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'PM10';
-                        chartitem.data = data.pollution.pm10;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('PM10');
-                    }
-                    if (request_pollution[obj] == 'co') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'CO';
-                        chartitem.data = data.pollution.co;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('CO');
-                    }
-                    if (request_pollution[obj] == 'no2') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'NO2';
-                        chartitem.data = data.pollution.no2;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('NO2');
-                    }
-                    if (request_pollution[obj] == 'ozone') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'O3';
-                        chartitem.data = data.pollution.ozone1hour;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('O3');
-                    }
-                    if (request_pollution[obj] == 'so2') {
-                        var chartitem = new ChartItem();
-                        chartitem.name = 'SO2';
-                        chartitem.data = data.pollution.so2;
-                        app.yvalue.push(chartitem);
-                        app.lengends.push('SO2');
-                    }
-
-                }
-
-                app.xday = data.time;
-                newChart.setOption({
-                    title: {
-                        text: '展示类型 - 散点图',
-                        subtext: '鼠标悬停可查看详细信息'
-                    },
-                    tooltip: {trigger: 'axis'},
-                    legend: {
-                        data: app.lengends
-                    },
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            mark: {show: true},
-                            dataView: {show: true, readOnly: false},
-                            restore: {show: true},
-                            saveAsImage: {show: true}
-                        }
-                    },
-                    calculable: true,
-                    xAxis: {
-                        show: true,
-                        data: app.xday,
-                    },
-                    yAxis: [
-                        {
-                            show: true,
-                            type: 'value',
-                        }
-                    ],
-                    series: app.yvalue
-                })
-            },
-            error: function (msg) {
-                console.log(msg);
-            }
-        });
+    $('#date-picker').bootstrapMaterialDatePicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
     });
 
     function getCookie(name) {
@@ -757,4 +526,113 @@
             return unescape(arr[2]);
         return null;
     }
+
+    $(document).ready(function () {
+        getDefaultData();
+    });
+
+    function getDefaultData() {
+        var time = $('#date-picker').val();
+        var request = {};
+        request.time = time;
+        request.order = "order";
+        $.ajax({
+            url: '/rank',
+            type: 'POST',
+            headers: {
+                Authorization: getCookie("jwt_token")
+            },
+            dataType: 'json',
+            data: JSON.stringify(request),
+            contentType: 'application/json;charset=UTF-8',
+            success: function (data) {
+                $('#tb tr:gt(0)').remove();
+                var table_data = '';
+                var color = '';
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].aqi < 50) {
+                        color = '<td><span class="label label-success">' + data[i].level + '</span></td>';
+                    }
+                    if (data[i].aqi > 50 && data[i].aqi < 100) {
+                        color = '<td><span class="label label-info">' + data[i].level + '</span></td>';
+                    }
+                    if (data[i].aqi > 100 && data[i].aqi < 150) {
+                        color = '<td><span class="label label-warning">' + data[i].level + '</span></td>';
+                    }
+                    if (data[i].aqi > 150 && data[i].aqi < 200) {
+                        color = '<td><span class="label label-light-warning">' + data[i].level + '</span></td>';
+                    }
+                    if (data[i].aqi > 200 && data[i].aqi < 300) {
+                        color = '<td><span class="label label-danger">' + data[i].level + '</span></td>';
+                    }
+                    if (data[i].aqi > 300) {
+                        color = '<td><span class="label label-danger">' + data[i].level + '</span></td>';
+                    }
+                    table_data += '<tr><td>' + (i + 1) + '</td><td>' + data[i].site + '</td>';
+                    table_data += color;
+                    table_data += '<td>' + data[i].aqi + '</td><td>' + data[i].primaryPollutant + '</td><td>' + data[i].pm25 + '</td><td>' + data[i].pm10 + '</td><td>' + data[i].co + '</td><td>' + data[i].no2 + '</td><td>' + data[i].ozone + '</td><td>' + data[i].so2 + '</td></tr>';
+                }
+
+                $('#tb').append('<tbody style="text-align:center;">' + table_data + '</tbody>');
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+    }
+
+    $("#request_button").click(function () {
+        var time = $('#date-picker').val();
+        var request = {};
+        request.time = time;
+        request.order = $('#order_picker').val();
+        $.ajax({
+            url: '/rank',
+            type: 'POST',
+            headers: {
+                Authorization: getCookie("jwt_token")
+            },
+            dataType: 'json',
+            data: JSON.stringify(request),
+            contentType: 'application/json;charset=UTF-8',
+            success: function (data) {
+                $('#tb tr:gt(0)').remove();
+                var table_data = '';
+                var color = '';
+                for (var i = 0; i < data.length; i++) {
+
+                    if (data[i].aqi < 50) {
+                        color = '<td><span class="label label-success">' + data[i].level + '</span></td>';
+                    }
+                    if (data[i].aqi > 50 && data[i].aqi < 100) {
+                        color = '<td><span class="label label-info">' + data[i].level + '</span></td>';
+                    }
+                    if (data[i].aqi > 100 && data[i].aqi < 150) {
+                        color = '<td><span class="label label-warning">' + data[i].level + '</span></td>';
+                    }
+                    if (data[i].aqi > 150 && data[i].aqi < 200) {
+                        color = '<td><span class="label label-light-warning">' + data[i].level + '</span></td>';
+                    }
+                    if (data[i].aqi > 200 && data[i].aqi < 300) {
+                        color = '<td><span class="label label-danger">' + data[i].level + '</span></td>';
+                    }
+                    if (data[i].aqi > 300) {
+                        color = '<td><span class="label label-danger">' + data[i].level + '</span></td>';
+                    }
+                    table_data += '<tr><td>' + (i + 1) + '</td><td>' + data[i].site + '</td>';
+                    table_data += color;
+                    table_data += '<td>' + data[i].aqi + '</td><td>' + data[i].primaryPollutant + '</td><td>' + data[i].pm25 + '</td><td>' + data[i].pm10 + '</td><td>' + data[i].co + '</td><td>' + data[i].no2 + '</td><td>' + data[i].ozone + '</td><td>' + data[i].so2 + '</td></tr>';
+                }
+
+                $('#tb').append('<tbody style="text-align:center;">' + table_data + '</tbody>');
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+    });
+
 </script>
+
+
+</html>

@@ -27,7 +27,7 @@ public class IndexService {
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
-    VizService vizService;
+    DataService dataService;
 
     /**
      * 获取地图中的监测站数据
@@ -39,14 +39,14 @@ public class IndexService {
      */
     public BMapInfo getBMapInfo(String site) throws Exception {
         BMapInfo bMapInfo = new BMapInfo();
-        JSONObject siteUpdatedTime = vizService.getSiteUpdatedTime(AirNetConstants.VISITOR_JWT, site);
+        JSONObject siteUpdatedTime = dataService.getSiteUpdatedTime(AirNetConstants.VISITOR_JWT, site);
         Date date = null;
         if (null == siteUpdatedTime) {
             date = SIMPLE_DATE_FORMAT.parse(AirNetConstants.DEFAULT_UPDATEDTIME);
         } else {
             date = SIMPLE_DATE_FORMAT.parse(siteUpdatedTime.getString("updatedTime"));
         }
-        JSONObject data = vizService.getAllPollution(AirNetConstants.VISITOR_JWT, site,
+        JSONObject data = dataService.getAllPollution(AirNetConstants.VISITOR_JWT, site,
                 SIMPLE_DATE_FORMAT.format(date),
                 SIMPLE_DATE_FORMAT.format(date));
         if (null == data) {
@@ -79,7 +79,7 @@ public class IndexService {
      * @date 2019/2/2
      */
     public String getIndexUpdatedTime() {
-        JSONObject siteUpdatedTime = vizService.getSiteUpdatedTime(AirNetConstants.VISITOR_JWT, AirNetConstants.DEFAULT_SITE);
+        JSONObject siteUpdatedTime = dataService.getSiteUpdatedTime(AirNetConstants.VISITOR_JWT, AirNetConstants.DEFAULT_SITE);
         if (null == siteUpdatedTime) {
             return AirNetConstants.DEFAULT_UPDATEDTIME;
         } else {
@@ -97,7 +97,7 @@ public class IndexService {
      * @date 2019/1/29
      */
     public List<Float> getIndexPm25Info() throws Exception {
-        JSONObject siteUpdatedTime = vizService.getSiteUpdatedTime(AirNetConstants.VISITOR_JWT, AirNetConstants.DEFAULT_SITE);
+        JSONObject siteUpdatedTime = dataService.getSiteUpdatedTime(AirNetConstants.VISITOR_JWT, AirNetConstants.DEFAULT_SITE);
         Date endDate = null;
         if (null == siteUpdatedTime) {
             endDate = SIMPLE_DATE_FORMAT.parse(AirNetConstants.DEFAULT_UPDATEDTIME);
@@ -108,7 +108,7 @@ public class IndexService {
         calendar.setTime(endDate);
         calendar.add(Calendar.DAY_OF_WEEK, -7);
         Date startDate = calendar.getTime();
-        JSONObject data = vizService.getPollution(AirNetConstants.VISITOR_JWT,
+        JSONObject data = dataService.getPollution(AirNetConstants.VISITOR_JWT,
                 AirNetConstants.DEFAULT_SITE,
                 AirNetConstants.DEFAULT_POLLUTION,
                 SIMPLE_DATE_FORMAT.format(startDate),
@@ -151,7 +151,7 @@ public class IndexService {
      */
     public List<String> getIndexPm25Time() throws Exception {
         List<String> timeList = new ArrayList<>();
-        JSONObject siteUpdatedTime = vizService.getSiteUpdatedTime(AirNetConstants.VISITOR_JWT, AirNetConstants.DEFAULT_SITE);
+        JSONObject siteUpdatedTime = dataService.getSiteUpdatedTime(AirNetConstants.VISITOR_JWT, AirNetConstants.DEFAULT_SITE);
         Date endDate = null;
         if (null == siteUpdatedTime) {
             endDate = SIMPLE_DATE_FORMAT.parse(AirNetConstants.DEFAULT_UPDATEDTIME);

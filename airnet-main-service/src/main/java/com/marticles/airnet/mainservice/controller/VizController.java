@@ -5,7 +5,7 @@ import com.marticles.airnet.mainservice.constant.AirNetConstants;
 import com.marticles.airnet.mainservice.model.VizRequest;
 import com.marticles.airnet.mainservice.service.IndexService;
 import com.marticles.airnet.mainservice.service.MapService;
-import com.marticles.airnet.mainservice.service.VizService;
+import com.marticles.airnet.mainservice.service.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * 默认视图返回最后一周的PM2.5数据
+ * 可视化图表默认返回最新一周的PM2.5数据
  *
  * @author Marticles
  * @description VizController
@@ -29,7 +29,7 @@ public class VizController {
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
-    VizService vizService;
+    DataService dataService;
 
     @Autowired
     MapService mapService;
@@ -40,7 +40,7 @@ public class VizController {
     @GetMapping("/default")
     @ResponseBody
     public JSONObject getDefaultVizData(@RequestHeader(value = "Authorization") String jwtToken) throws Exception {
-        JSONObject siteUpdatedTime = vizService.getSiteUpdatedTime(jwtToken, AirNetConstants.DEFAULT_SITE);
+        JSONObject siteUpdatedTime = dataService.getSiteUpdatedTime(jwtToken, AirNetConstants.DEFAULT_SITE);
         Date endDate = null;
         if (null == siteUpdatedTime) {
             endDate = SIMPLE_DATE_FORMAT.parse(AirNetConstants.DEFAULT_UPDATEDTIME);
@@ -51,7 +51,7 @@ public class VizController {
         calendar.setTime(endDate);
         calendar.add(Calendar.DAY_OF_WEEK, -7);
         Date startDate = calendar.getTime();
-        JSONObject data = vizService.getPollution(jwtToken, AirNetConstants.DEFAULT_SITE,
+        JSONObject data = dataService.getPollution(jwtToken, AirNetConstants.DEFAULT_SITE,
                 AirNetConstants.DEFAULT_POLLUTION,
                 SIMPLE_DATE_FORMAT.format(startDate),
                 SIMPLE_DATE_FORMAT.format(endDate));
@@ -62,7 +62,7 @@ public class VizController {
     @ResponseBody
     public JSONObject getCustomVizData(@RequestHeader(value = "Authorization") String jwtToken,
                                        @RequestBody VizRequest vizRequest) {
-        return vizService.getAllPollution(jwtToken, vizRequest.getSite(), vizRequest.getStart(), vizRequest.getEnd());
+        return dataService.getAllPollution(jwtToken, vizRequest.getSite(), vizRequest.getStart(), vizRequest.getEnd());
     }
 
     @GetMapping("/line")

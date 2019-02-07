@@ -238,6 +238,9 @@
                         <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span
                                 class="hide-menu">数据可视化</span></a>
                         <ul aria-expanded="false" class="collapse">
+                            <li><a href="/viz/airflowmap">上海市高空气流图</a></li>
+                            <li><a href="/viz/aqimap">全国空气质量指数(AQI)地图</a></li>
+                            <li><a href="/viz/globalmap">全球污染物分布图</a></li>
                             <li><a href="/viz/line">标准折线图</a></li>
                             <li><a href="/viz/bar">标准柱状图</a></li>
                             <li><a href="/viz/scatter">标准散点图</a></li>
@@ -245,15 +248,16 @@
                             <li><a href="/viz/radar">标准雷达图</a></li>
                             <li><a href="/viz/funnel">标准漏斗图</a></li>
                             <li><a href="/viz/rose">南丁格尔玫瑰图</a></li>
-                            <li><a href="/viz/airflowmap">上海市高空气流图</a></li>
-                            <li><a href="/viz/aqimap">全国空气质量指数(AQI)地图</a></li>
-                            <li><a href="/viz/globalmap">全球污染物分布图</a></li>
                         </ul>
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="/rank" aria-expanded="false"><i class="mdi mdi-bullseye"></i>
-                            <span class="hide-menu">空气质量排行</span></a>
+                        <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span
+                                class="hide-menu">空气质量排行</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="/rank/sh">上海市空气质量实时/历史排行</a></li>
+                            <li><a href="/rank/cn">全国空气质量实时排行</a></li>
+                        </ul>
                     </li>
 
                     <#if isLogin=="true">

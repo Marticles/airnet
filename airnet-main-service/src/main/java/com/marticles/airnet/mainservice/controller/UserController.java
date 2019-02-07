@@ -1,8 +1,8 @@
 package com.marticles.airnet.mainservice.controller;
 
+import com.marticles.airnet.mainservice.constant.UserTypeConstants;
 import com.marticles.airnet.mainservice.model.User;
 import com.marticles.airnet.mainservice.model.UserRequest;
-import com.marticles.airnet.mainservice.model.UserType;
 import com.marticles.airnet.mainservice.service.UserService;
 import com.marticles.airnet.mainservice.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ public class UserController {
     @PostMapping("/register")
     @ResponseBody
     public String addUser(UserRequest user) {
-        user.setType(UserType.USER_COMMON);
+        user.setType(UserTypeConstants.USER_COMMON);
         userService.addUser(user);
         return "success";
     }
