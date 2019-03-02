@@ -1,4 +1,4 @@
-# airnet
+# AirNet - 环境污染物数据分析与预测平台
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 ![](https://img.shields.io/badge/language-Java-orange.svg)
 
@@ -6,7 +6,7 @@
 
 ## 关于 AirNet
 
-AirNet 是一个环境污染物数据分析与预测平台，基于 Spring Cloud 与 Flask 开发，监测数据来自[上海市环境监测中心](http://219.233.250.38/aqi/SiteAQI/SiteAQI)。
+AirNet 是一个环境污染物数据分析与预测平台，采用微服务架构，基于 Spring Cloud(Finchley.SR2) 与 Flask 开发，监测数据来自[上海市环境监测中心](http://219.233.250.38/aqi/SiteAQI/SiteAQI)。
 
 ## 架构
 
@@ -15,7 +15,7 @@ AirNet 是一个环境污染物数据分析与预测平台，基于 Spring Cloud
 | consule | 8500 | 服务注册中心 |
 | airnet-config-service | 8888 | 服务配置中心         |
 | airnet-zuul-gateway   | 9000 | Zuul 网关            |
-| airnet-main-service   | 8080 | 前端页面展示(Freemarker)、注册登录 |
+| airnet-main-service   | 8080 | 前端页面展示、注册登录 |
 | airnet-data-service   | 8081 | 污染物数据服务     |
 | airnet-mail-service | 8082 | 邮件服务 |
 
@@ -61,13 +61,26 @@ TODO
 
 TODO
 
+## 技术
+
+- FrontEnd: Freemarker / BootStrap / Echarts
+- BackEnd: Spring Cloud Config / Zuul / Feign / Hystrix / Quartz / Mybatis
+- DB: MySQL / Redis
+- MQ: Kafka
 
 ## 展示
 
 ![](/img/wind_map.png)
+
+----------------------
+
 ![](/img/aqi_map.png)
+
+----------------------
+
 ![](/img/line.png)
 
+----------------------
 ![](/img/city_rank.png)
 
 
