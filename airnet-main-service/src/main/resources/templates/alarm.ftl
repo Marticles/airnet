@@ -248,6 +248,7 @@
                             <li><a href="/viz/radar">标准雷达图</a></li>
                             <li><a href="/viz/funnel">标准漏斗图</a></li>
                             <li><a href="/viz/rose">南丁格尔玫瑰图</a></li>
+
                         </ul>
                     </li>
 
@@ -278,8 +279,7 @@
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="/export" aria-expanded="false"><i
-                                class="mdi mdi-folder-download"></i>
+                        <a class="has-arrow " href="/export" aria-expanded="false"><i class="mdi mdi-folder-download"></i>
                             <span class="hide-menu">历史数据导出</span></a>
                     </li>
 
@@ -289,14 +289,12 @@
                     </li>
                     </#if>
                     <li>
-                        <a class="has-arrow " href="/info" aria-expanded="false"><i
-                                class="mdi mdi-book-open-variant"></i>
+                        <a class="has-arrow " href="/info" aria-expanded="false"><i class="mdi mdi-book-open-variant"></i>
                             <span class="hide-menu">相关知识</span></a>
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="/about-airnet" aria-expanded="false"><i
-                                class="mdi mdi-cloud-outline"></i>
+                        <a class="has-arrow " href="/about-airnet" aria-expanded="false"><i class="mdi mdi-cloud-outline"></i>
                             <span class="hide-menu">关于AirNet</span></a>
                     </li>
 
@@ -324,7 +322,7 @@
                 <div class="col-md-5 col-8 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">主页</a></li>
-                        <li class="breadcrumb-item">全国空气质量指数(AQI)地图</li>
+                        <li class="breadcrumb-item">污染物预警</li>
                     </ol>
                 </div>
 
@@ -343,24 +341,11 @@
             <!-- Row -->
             <div class="row">
                 <!-- Column -->
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <span>全国空气质量指数(AQI)地图 (更新时间:${updatedTime!'未知'})</span>
-                            <div class="card-actions">
-                                <a class="" data-action="collapse"><i class="ti-minus"></i></a>
-                                <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
-                                <a class="btn-close" data-action="close"><i class="ti-close"></i></a>
-                            </div>
-                        </div>
-                        <div class="card-body ">
-                            <div class="col-md-12" align="center">
-                                <img src="${imgURL}"/>
-                            </div>
-                        </div>
 
-                    </div>
-                </div>
+
+
+
+
             </div>
 
 

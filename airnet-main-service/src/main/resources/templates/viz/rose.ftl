@@ -271,9 +271,13 @@
                     <#if isLogin=="true">
 
                     <li>
-                        <a class="has-arrow " href="/forecast" aria-expanded="false"><i
-                                class="mdi mdi-chemical-weapon"></i>
-                            <span class="hide-menu">PM2.5预测</span></a>
+                        <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-chemical-weapon"></i><span
+                                class="hide-menu">污染物预测</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="/forecast/sh">上海市PM2.5浓度预测</a></li>
+                            <li><a href="/forecast/cn">全国空气质量预报地图</a></li>
+                            <li><a href="/forecast/csj">长三角空气质量预报地图</a></li>
+                        </ul>
                     </li>
 
                     <li>

@@ -123,7 +123,7 @@ public class IndexService {
         DecimalFormat df = new DecimalFormat("#.00");
         int i = 0;
         int counter = 1;
-        while (pm25Array.size() <= 7) {
+        while (pm25Array.size() < 7) {
             if (null != pm25JSONArray.get(i)) {
                 temp += Float.valueOf(pm25JSONArray.get(i).toString());
                 counter++;
