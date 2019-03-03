@@ -12,12 +12,15 @@ AirNet 是一个环境污染物数据分析与预测平台，采用微服务架�
 
 | 服务                  | 端口 | 描述                 |
 | --------------------- | ---- | -------------------- |
-| consule | 8500 | 服务注册中心 |
+| spring-cloud-consul | 8500 | 服务注册中心 |
 | airnet-config-service | 8888 | 服务配置中心         |
-| airnet-zuul-gateway   | 9000 | Zuul 网关            |
-| airnet-main-service   | 8080 | 前端页面展示、注册登录 |
+| airnet-zuul-gateway   | 9000 | 服务网关          |
+| airnet-main-service   | 8080 | 前端展示、注册/登录服务(未完全前后端分离) |
 | airnet-data-service   | 8081 | 污染物数据服务     |
 | airnet-mail-service | 8082 | 邮件服务 |
+| airnet-export-service | 8083 | 数据导出服务 |
+| airnet-forecast-service | 8084 | PM2.5 预测服务(Flask) |
+| airnet-api-service | 8085 | API 服务 |
 
 
 ## 功能
@@ -38,10 +41,8 @@ AirNet 是一个环境污染物数据分析与预测平台，采用微服务架�
 
 ### 空气质量排行
 
-- 上海市空气质量实时/历史排行
-- 全国空气质量预报地图
-- 长三角空气质量预报地图
-
+- 上海市空气质量实时 / 历史排行
+- 全国空气质量实时排行
 
 ### 污染物预测
 
@@ -64,7 +65,7 @@ TODO
 ## 技术
 
 - FrontEnd: Freemarker / BootStrap / Echarts
-- BackEnd: Spring Cloud Config / Zuul / Feign / Hystrix / Quartz / Mybatis
+- BackEnd: Spring Cloud Config / Zuul / Ribbon / Feign / Hystrix / Quartz / Mybatis
 - DB: MySQL / Redis
 - MQ: Kafka
 
@@ -82,6 +83,9 @@ TODO
 
 ----------------------
 ![](/img/city_rank.png)
+
+----------------------
+![](/img/login.png)
 
 
 
