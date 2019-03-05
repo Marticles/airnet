@@ -67,6 +67,8 @@ public class PollutionService {
     }
 
     public HashMap<String, Object> getSiteUpdatedTime(String site) {
+
+
         return pollutionDAO.getSiteUpdatedTime(site);
     }
 

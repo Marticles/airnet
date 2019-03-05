@@ -34,6 +34,7 @@ public class IndexController {
     @Autowired
     UserLocal userLocal;
 
+
     @GetMapping("/")
     public String index(HttpServletRequest request,Model model) throws Exception{
         User user = userLocal.getUser();

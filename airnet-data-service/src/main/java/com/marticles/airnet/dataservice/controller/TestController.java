@@ -24,9 +24,6 @@ public class TestController {
         ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
         valueOperations.set("sad","adasdada");
         System.out.println(stringRedisTemplate.keys("*"));
-
-
-
         return "1";
     }
 
