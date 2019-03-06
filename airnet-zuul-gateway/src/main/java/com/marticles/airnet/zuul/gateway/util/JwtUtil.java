@@ -37,5 +37,4 @@ public class JwtUtil {
         }
         return user;
     }
-
 }
