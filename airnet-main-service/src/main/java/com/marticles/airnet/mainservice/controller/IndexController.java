@@ -26,14 +26,13 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    HeWeatherService heWeatherService;
+    private HeWeatherService heWeatherService;
 
     @Autowired
-    IndexService indexService;
+    private IndexService indexService;
 
     @Autowired
-    UserLocal userLocal;
-
+    private UserLocal userLocal;
 
     @GetMapping("/")
     public String index(HttpServletRequest request,Model model) throws Exception{

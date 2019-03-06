@@ -139,7 +139,7 @@ public class IndexService {
             JSONArray pm25JSONArray = data.getJSONArray("pollution");
             Float temp = 0F;
             int nullValueCounter = 0;
-            DecimalFormat df = new DecimalFormat("#.00");
+            DecimalFormat df = new DecimalFormat("#.0");
             int i = 0;
             int counter = 1;
             while (pm25Array.size() < 7) {
@@ -147,7 +147,7 @@ public class IndexService {
                     temp += Float.valueOf(pm25JSONArray.get(i).toString());
                     counter++;
                 }
-                if (i % 24 == 0) {
+                if ((i + 1) % 24 == 0) {
                     pm25Array.add(Float.valueOf(df.format(temp / (24 - nullValueCounter))));
                     temp = 0F;
                     counter = 1;

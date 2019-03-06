@@ -31,13 +31,13 @@ public class RankController {
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
-    RankService rankService;
+    private RankService rankService;
 
     @Autowired
-    DataService dataService;
+    private DataService dataService;
 
     @Autowired
-    IndexService indexService;
+    private IndexService indexService;
 
     @PostMapping("")
     @ResponseBody
@@ -54,7 +54,7 @@ public class RankController {
     }
 
     @GetMapping("/cn")
-    public String cnRank(Model model) {
+    public String cnRank(Model model) throws Exception{
         List<CityRank> cityRanks = rankService.getCNRank(false);
         List<CityRank> reverseCityRanks = rankService.getCNRank(true);
         model.addAttribute("cityRanks", cityRanks);

@@ -29,13 +29,13 @@ public class VizController {
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
-    DataService dataService;
+    private DataService dataService;
 
     @Autowired
-    MapService mapService;
+    private MapService mapService;
 
     @Autowired
-    IndexService indexService;
+    private IndexService indexService;
 
     @GetMapping("/default")
     @ResponseBody

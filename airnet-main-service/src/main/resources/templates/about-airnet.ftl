@@ -13,13 +13,6 @@
     <title>AirNet</title>
     <!-- Bootstrap Core CSS -->
     <link href="/static/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Page plugins css -->
-    <link href="/static/plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
-    <!-- Date picker plugins css -->
-    <link href="/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css"/>
-    <!-- Daterange picker plugins css -->
-    <link href="/static/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
-    <link href="/static/plugins/daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- chartist CSS -->
     <link href="/static/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
     <link href="/static/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
@@ -29,7 +22,6 @@
     <link href="/static/css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="/static/css/colors/purple.css" id="theme" rel="stylesheet">
-    <link href="/static/css/bootstrap-select.min.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -122,13 +114,13 @@
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
-            <ul class="navbar-nav my-lg-0">
+                <ul class="navbar-nav my-lg-0">
 
                     <#if isLogin=="false">
                      <li class="nav-item dropdown">
-                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             <i class="icon-login"></i><a href="/login" style="color: white"">登录</a>
+                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="icon-login"></i><a href="/login" style="color: white"">登录</a>
                      </li>
 
                     <li class="nav-item dropdown">
@@ -225,7 +217,7 @@
 
                 </ul>
 
-                    </#if>
+</#if>
             </div>
         </nav>
     </header>
@@ -271,15 +263,15 @@
 
                     <#if isLogin=="true">
 
-                    <li>
-                        <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-chemical-weapon"></i><span
-                                class="hide-menu">污染物预测</span></a>
-                        <ul aria-expanded="false" class="collapse">
-                            <li><a href="/forecast/sh">上海市PM2.5浓度预测</a></li>
-                            <li><a href="/forecast/cn">全国空气质量预报地图</a></li>
-                            <li><a href="/forecast/csj">长三角空气质量预报地图</a></li>
-                        </ul>
-                    </li>
+                      <li>
+                          <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-chemical-weapon"></i><span
+                                  class="hide-menu">污染物预测</span></a>
+                          <ul aria-expanded="false" class="collapse">
+                              <li><a href="/forecast/sh">上海市PM2.5浓度预测</a></li>
+                              <li><a href="/forecast/cn">全国空气质量预报地图</a></li>
+                              <li><a href="/forecast/csj">长三角空气质量预报地图</a></li>
+                          </ul>
+                      </li>
 
                     <li>
                         <a class="has-arrow " href="/alarm" aria-expanded="false"><i class="mdi mdi-alert"></i>
@@ -330,7 +322,7 @@
                 <div class="col-md-5 col-8 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">主页</a></li>
-                        <li class="breadcrumb-item">污染物预警</li>
+                        <li class="breadcrumb-item">关于AirNet</li>
                     </ol>
                 </div>
 
@@ -349,130 +341,8 @@
             <!-- Row -->
             <div class="row">
                 <!-- Column -->
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-md-3" style=" margin-left:50px;">
-                                    <select class="selectpicker " id="site_picker"
-                                            data-style="btn btn-block btn-outline-secondary" title="选择监测站(默认上海杨浦)">
-                                        <optgroup label="静安">
-                                            <option value="jingan">静安监测站</option>
-                                        </optgroup>
-                                        <optgroup label="虹口">
-                                            <option value="hongkou">虹口监测站</option>
-                                        </optgroup>
-                                        <optgroup label="浦东">
-                                            <option value="pudongchuansha">浦东川沙监测站</option>
-                                            <option value="pudongxinqu">浦东新区监测站</option>
-                                            <option value="pudongzhangjiang">浦东张江监测站</option>
-                                        </optgroup>
-                                        <optgroup label="普陀">
-                                            <option value="putuo">普陀监测站</option>
-                                        </optgroup>
-                                        <optgroup label="黄埔">
-                                            <option value="shiwuchang">十五厂(卢湾师专附小)监测站</option>
-                                        </optgroup>
-                                        <optgroup label="杨浦">
-                                            <option value="yangpusipiao">杨浦四漂监测站</option>
-                                        </optgroup>
-                                        <optgroup label="徐汇">
-                                            <option value="xuhuishangshida">徐汇上师大监测站</option>
-                                        </optgroup>
-                                        <optgroup label="青浦">
-                                            <option value="qingpudianshanhu">青浦淀山湖监测站</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                                <div class="col-md-3" style=" margin-left:-20px;">
-                                    <select class="selectpicker " id="pollution_picker"
-                                            data-style="btn btn-block btn-outline-secondary" title="选择污染物(默认PM2.5)">
-                                        <optgroup label="AQI/每小时平均">
-                                            <option value="aqi">AQI</option>
-                                        </optgroup>
-                                        <optgroup label="PM2.5/每小时平均">
-                                            <option value="pm25">PM2.5</option>
-                                        </optgroup>
-                                        <optgroup label="PM10/每小时平均">
-                                            <option value="pm10">PM10</option>
-                                        </optgroup>
-                                        <optgroup label="SO2/每小时平均">
-                                            <option value="so2">SO2</option>
-                                        </optgroup>
-                                        <optgroup label="NO2/每小时平均">
-                                            <option value="no2">NO2</option>
-                                        </optgroup>
-                                        <optgroup label="CO/每小时平均">
-                                            <option value="co">CO</option>
-                                        </optgroup>
-                                        <optgroup label="O3/每小时平均">
-                                            <option value="ozone">O3</option>
-                                        </optgroup>
 
-                                    </select>
-                                </div>
 
-                                <div class="col-md-2" style="margin-left:-30px;">
-                                    <div class="form-group">
-
-                                        <input type="text" id="input_threshold" class="form-control" placeholder="预警阈值">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2" style="margin-left:20px;">
-                                    <div class="form-group">
-
-                                        <input type="text" id="input_email" class="form-control" placeholder="预警发送邮箱">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1" style="margin-left:30px;">
-                                    <button type="button" id="request_button"
-                                            class="btn waves-effect waves-light btn-primary "><i
-                                            class="fa fa-check"></i>&nbsp确认
-                                    </button>
-                                </div>
-                            </div>
-                            <hr style=" margin-top:-5px;">
-
-                            <div class="table-responsive">
-                                <table id="tb" class="table color-table primary-table hover-table">
-                                    <thead>
-                                    <tr style="text-align:center;">
-                                        <th>#</th>
-                                        <th>预警开始日期</th>
-                                        <th>监测站</th>
-                                        <th>污染物</th>
-                                        <th>预警阈值</th>
-                                        <th>Email</th>
-                                        <th>上次预警发送日期</th>
-                                        <th>停止预警</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody style="text-align:center;">
-                                    <#assign i = 1>
-                                    <#list alarmList as alarm>
-                                        <tr>
-                                            <td>${i}</td>
-                                            <td>${alarm.startTime?string('yyyy-MM-dd hh:mm')}</td>
-                                            <td>${alarm.site}</td>
-                                            <td>${alarm.pollutant}</td>
-                                            <td>${alarm.threshold}</td>
-                                            <td>${alarm.email}</td>
-                                            <td>${alarm.lastTime?string('yyyy-MM-dd hh:mm')}</td>
-                                            <td><button type="button" id="del-${alarm.id}" value=${alarm.id}
-                                                        class="btn waves-effect waves-light btn-danger btn-xs"></i>停止预警
-                                            </button></td>
-
-                                        </tr
-                                        <#assign i += 1>
-                                    </#list>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                    </div>
-                </div>
 
 
 
@@ -568,23 +438,6 @@
 <!-- Style switcher -->
 <!-- ============================================================== -->
 <script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-<!-- Echarts -->
-<script src="/static/js/echarts.js"></script>
-<script src="/static/js/macarons.js"></script>
-<!-- DateTime -->
-<script src="/static/plugins/moment/moment.js"></script>
-<script src="/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-<!-- Clock Plugin JavaScript -->
-<script src="/static/plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
-<!-- Date Picker Plugin JavaScript -->
-<script src="/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-<!-- Date range Plugin JavaScript -->
-<script src="/static/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
-<script src="/static/plugins/moment/moment.js"></script>
-<!-- 自定义时间 -->
-<script src="/static/js/datetime.js"></script>
-<script src="/static/js/bootstrap-select.min.js"></script>
 
 </body>
 
