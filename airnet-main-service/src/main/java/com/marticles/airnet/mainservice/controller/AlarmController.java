@@ -1,7 +1,7 @@
 package com.marticles.airnet.mainservice.controller;
 
-import com.marticles.airnet.mainservice.model.Alarm;
-import com.marticles.airnet.mainservice.model.AlarmRequest;
+import com.alibaba.fastjson.JSONObject;
+import com.marticles.airnet.mainservice.model.*;
 import com.marticles.airnet.mainservice.service.AlarmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,20 +29,28 @@ public class AlarmController {
     public String alarm(Model model) {
         List<Alarm> alarmList = alarmService.getAlarmList();
         model.addAttribute("alarmList", alarmList);
-
         return "/alarm";
     }
 
 
     @PostMapping("")
-    public String addAlarm(@RequestBody AlarmRequest alarmRequest) {
-
-        return null;
+    @ResponseBody
+    public Response addAlarm(@RequestBody AlarmRequest alarmRequest) {
+        Response response = new Response();
+        alarmService.addAlarm(alarmRequest);
+        response.setCode(200);
+        response.setMsg("success");
+        return response;
     }
 
     @DeleteMapping("")
-    public String delAlarm() {
-        return null;
+    @ResponseBody
+    public Response delAlarm(@RequestBody JSONObject jsonParam) {
+        Response response = new Response();
+        alarmService.delAlarm(Integer.valueOf(jsonParam.getString("id")));
+        response.setCode(200);
+        response.setMsg("success");
+        return response;
     }
 
 

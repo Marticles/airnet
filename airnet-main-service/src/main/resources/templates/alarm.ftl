@@ -287,7 +287,8 @@
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="/export" aria-expanded="false"><i class="mdi mdi-folder-download"></i>
+                        <a class="has-arrow " href="/export" aria-expanded="false"><i
+                                class="mdi mdi-folder-download"></i>
                             <span class="hide-menu">历史数据导出</span></a>
                     </li>
 
@@ -297,12 +298,14 @@
                     </li>
                     </#if>
                     <li>
-                        <a class="has-arrow " href="/info" aria-expanded="false"><i class="mdi mdi-book-open-variant"></i>
+                        <a class="has-arrow " href="/info" aria-expanded="false"><i
+                                class="mdi mdi-book-open-variant"></i>
                             <span class="hide-menu">相关知识</span></a>
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="/about-airnet" aria-expanded="false"><i class="mdi mdi-cloud-outline"></i>
+                        <a class="has-arrow " href="/about-airnet" aria-expanded="false"><i
+                                class="mdi mdi-cloud-outline"></i>
                             <span class="hide-menu">关于AirNet</span></a>
                     </li>
 
@@ -455,15 +458,42 @@
                                         <tr>
                                             <td>${i}</td>
                                             <td>${alarm.startTime?string('yyyy-MM-dd hh:mm')}</td>
-                                            <td>${alarm.site}</td>
+                                            <#if alarm.site=="hongkou">
+                                            <td>虹口</td>
+                                            <#elseif alarm.site=="jingan">
+                                            <td>静安</td>
+                                            <#elseif alarm.site=="pudongchuansha">
+                                            <td>浦东川沙</td>
+                                            <#elseif alarm.site=="pudongxinqu">
+                                            <td>浦东新区</td>
+                                            <#elseif alarm.site=="pudongzhangjiang">
+                                            <td>浦东张江</td>
+                                            <#elseif alarm.site=="putuo">
+                                            <td>普陀</td>
+                                            <#elseif alarm.site=="qingpudianshanhu">
+                                            <td>青浦淀山湖</td>
+                                            <#elseif alarm.site=="shiwuchang">
+                                            <td>十五厂</td>
+                                            <#elseif alarm.site=="xuhuishangshida">
+                                            <td>徐汇上师大</td>
+                                            <#elseif alarm.site=="yangpusipiao">
+                                            <td>杨浦四漂</td>
+                                            </#if>
+
+
                                             <td>${alarm.pollutant}</td>
                                             <td>${alarm.threshold}</td>
                                             <td>${alarm.email}</td>
-                                            <td>${alarm.lastTime?string('yyyy-MM-dd hh:mm')}</td>
-                                            <td><button type="button" id="del-${alarm.id}" value=${alarm.id}
-                                                        class="btn waves-effect waves-light btn-danger btn-xs"></i>停止预警
-                                            </button></td>
-
+                                            <#if alarm.lastTime??>
+                                                <td>${alarm.lastTime?string('yyyy-MM-dd hh:mm')}</td>
+                                            <#else>
+                                                <td>暂无发送记录</td>
+                                            </#if>
+                                            <td>
+                                                <button type="button" id="del-${alarm.id}" value=${alarm.id}
+                                                        class="btn waves-effect waves-light btn-danger btn-xs
+                                                "></i>停止预警
+                                                </button></td>
                                         </tr
                                         <#assign i += 1>
                                     </#list>
@@ -471,121 +501,172 @@
                                 </table>
                             </div>
 
+                        </div>
                     </div>
+
+
                 </div>
 
 
-
-            </div>
-
-
-            <!-- ============================================================== -->
-            <!-- End PAge Content -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Right sidebar -->
-            <!-- ============================================================== -->
-            <!-- .right-sidebar -->
-            <div class="right-sidebar">
-                <div class="slimscrollright">
-                    <div class="rpanel-title"> 配色 <span><i class="ti-close right-side-toggle"></i></span></div>
-                    <div class="r-panel-body">
-                        <ul id="themecolors" class="m-t-20">
-                            <li><b>亮色</b></li>
-                            <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
-                            <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
-                            <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
-                            <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
-                            <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
-                            <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
-                            <li class="d-block m-t-30"><b>暗色</b></li>
-                            <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a>
-                            </li>
-                            <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
-                            <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
-                            <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
-                            <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a>
-                            </li>
-                            <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a>
-                            </li>
-                        </ul>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <div class="right-sidebar">
+                    <div class="slimscrollright">
+                        <div class="rpanel-title"> 配色 <span><i class="ti-close right-side-toggle"></i></span></div>
+                        <div class="r-panel-body">
+                            <ul id="themecolors" class="m-t-20">
+                                <li><b>亮色</b></li>
+                                <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
+                                <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
+                                <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
+                                <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
+                                <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
+                                <li class="d-block m-t-30"><b>暗色</b></li>
+                                <li><a href="javascript:void(0)" data-theme="default-dark"
+                                       class="default-dark-theme">7</a>
+                                </li>
+                                <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a>
+                                </li>
+                                <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a>
+                                </li>
+                                <li><a href="javascript:void(0)" data-theme="purple-dark"
+                                       class="purple-dark-theme">11</a>
+                                </li>
+                                <li><a href="javascript:void(0)" data-theme="megna-dark"
+                                       class="megna-dark-theme ">12</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
             </div>
             <!-- ============================================================== -->
-            <!-- End Right sidebar -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer">
+                © 2019 LJH's Graduation Project
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
-        <footer class="footer">
-            © 2019 LJH's Graduation Project
-        </footer>
-        <!-- ============================================================== -->
-        <!-- End footer -->
+        <!-- End Page wrapper  -->
         <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
-    <!-- End Page wrapper  -->
+    <!-- End Wrapper -->
     <!-- ============================================================== -->
-</div>
-<!-- ============================================================== -->
-<!-- End Wrapper -->
-<!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- All Jquery -->
-<!-- ============================================================== -->
-<script src="/static/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap tether Core JavaScript -->
-<script src="/static/plugins/popper/popper.min.js"></script>
-<script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
-<!-- slimscrollbar scrollbar JavaScript -->
-<script src="/static/js/jquery.slimscroll.js"></script>
-<!--Wave Effects -->
-<script src="/static/js/waves.js"></script>
-<!--Menu sidebar -->
-<script src="/static/js/sidebarmenu.js"></script>
-<!--stickey kit -->
-<script src="/static/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
-<script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
-<script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
-<!--Custom JavaScript -->
-<script src="/static/js/custom.min.js"></script>
-<!-- ============================================================== -->
-<!-- This page plugins -->
-<!-- ============================================================== -->
-<!--c3 JavaScript -->
-<script src="/static/plugins/d3/d3.min.js"></script>
-<script src="/static/plugins/c3-master/c3.min.js"></script>
-<!-- chartist chart -->
-<script src="/static/plugins/chartist-js/dist/chartist.min.js"></script>
-<script src="/static/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
-<!-- ============================================================== -->
-<!-- Style switcher -->
-<!-- ============================================================== -->
-<script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-<!-- Echarts -->
-<script src="/static/js/echarts.js"></script>
-<script src="/static/js/macarons.js"></script>
-<!-- DateTime -->
-<script src="/static/plugins/moment/moment.js"></script>
-<script src="/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-<!-- Clock Plugin JavaScript -->
-<script src="/static/plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
-<!-- Date Picker Plugin JavaScript -->
-<script src="/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-<!-- Date range Plugin JavaScript -->
-<script src="/static/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
-<script src="/static/plugins/moment/moment.js"></script>
-<!-- 自定义时间 -->
-<script src="/static/js/datetime.js"></script>
-<script src="/static/js/bootstrap-select.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="/static/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/static/plugins/popper/popper.min.js"></script>
+    <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="/static/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="/static/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="/static/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="/static/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/static/js/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!--c3 JavaScript -->
+    <script src="/static/plugins/d3/d3.min.js"></script>
+    <script src="/static/plugins/c3-master/c3.min.js"></script>
+    <!-- chartist chart -->
+    <script src="/static/plugins/chartist-js/dist/chartist.min.js"></script>
+    <script src="/static/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+    <!-- Echarts -->
+    <script src="/static/js/echarts.js"></script>
+    <script src="/static/js/macarons.js"></script>
+    <!-- DateTime -->
+    <script src="/static/plugins/moment/moment.js"></script>
+    <script src="/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <!-- Clock Plugin JavaScript -->
+    <script src="/static/plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
+    <!-- Date Picker Plugin JavaScript -->
+    <script src="/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <!-- Date range Plugin JavaScript -->
+    <script src="/static/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="/static/plugins/moment/moment.js"></script>
+    <!-- 自定义时间 -->
+    <script src="/static/js/datetime.js"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
 
 </body>
+
+<script>
+
+    $("#tb").on('click', "button[id^='del-']", function () {
+        var request = {};
+        request.id = this.value;
+        $.ajax({
+            url: '/alarm',
+            type: 'DELETE',
+            dataType: 'json',
+            data: JSON.stringify(request),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data) {
+                window.location.reload();
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+    });
+
+    $("#request_button").click(function () {
+        var request = {};
+        request.site = $('#site_picker').val();
+        request.pollutant = $('#pollution_picker').val();
+        request.threshold = $('#input_threshold').val();
+        request.email = $('#input_email').val();
+        $.ajax({
+            url: '/alarm',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(request),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data) {
+                window.location.reload();
+                console.log(data);
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+    });
+
+
+
+
+</script>
 
 </html>
