@@ -29,7 +29,6 @@ public class AuthFliter extends ZuulFilter {
 
     private final String dataServiceURL = "/data";
 
-
     @Override
     public String filterType() {
         return PRE_TYPE;
@@ -57,9 +56,10 @@ public class AuthFliter extends ZuulFilter {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
         String authToken = request.getHeader("Authorization");
-
-        System.out.println(request.getRequestURL());
-
+        String apiKey = request.getHeader("ApiKey");
+        // TODO 这里要拿到API的Key，而且需要设置访问频率（RateLimiter）
+        // TODO 一天内访问次数可以通过Redis来进行统计
+        // System.out.println(request.getRequestURL());
         // Token为空
         if (null == authToken) {
             requestContext.setSendZuulResponse(false);
