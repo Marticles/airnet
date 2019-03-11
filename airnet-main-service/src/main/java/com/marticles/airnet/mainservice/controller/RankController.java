@@ -1,8 +1,6 @@
 package com.marticles.airnet.mainservice.controller;
 
-import com.marticles.airnet.mainservice.model.CityRank;
-import com.marticles.airnet.mainservice.model.RankRequest;
-import com.marticles.airnet.mainservice.model.SiteRank;
+import com.marticles.airnet.mainservice.model.*;
 import com.marticles.airnet.mainservice.service.DataService;
 import com.marticles.airnet.mainservice.service.IndexService;
 import com.marticles.airnet.mainservice.service.RankService;
@@ -39,6 +37,9 @@ public class RankController {
     @Autowired
     private IndexService indexService;
 
+    @Autowired
+    private UserLocal userLocal;
+
     @PostMapping("")
     @ResponseBody
     public List<SiteRank> rank(@RequestHeader(value = "Authorization") String jwtToken,
@@ -49,12 +50,24 @@ public class RankController {
 
     @GetMapping("/sh")
     public String shRank(Model model) {
+        User user = userLocal.getUser();
+        if (null != user) {
+            model.addAttribute("isLogin", "true");
+        } else {
+            model.addAttribute("isLogin", "false");
+        }
         model.addAttribute("updatedTime",indexService.getIndexUpdatedTime());
         return "/rank/sh";
     }
 
     @GetMapping("/cn")
     public String cnRank(Model model) throws Exception{
+        User user = userLocal.getUser();
+        if (null != user) {
+            model.addAttribute("isLogin", "true");
+        } else {
+            model.addAttribute("isLogin", "false");
+        }
         List<CityRank> cityRanks = rankService.getCNRank(false);
         List<CityRank> reverseCityRanks = rankService.getCNRank(true);
         model.addAttribute("cityRanks", cityRanks);

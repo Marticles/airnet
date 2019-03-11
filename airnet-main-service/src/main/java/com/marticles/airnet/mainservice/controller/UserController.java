@@ -54,11 +54,15 @@ public class UserController {
         User user = userService.checkUser(userRequest);
         if (null != user){
             String jwt_token = JwtUtil.generateJwt(user);
-            Cookie cookie = new Cookie("jwt_token", jwt_token);
-            cookie.setPath("/");
+            Cookie jwtCookie =new Cookie("jwt_token", jwt_token);
+            Cookie userIdCookie =new Cookie("user_id", user.getId().toString());
+            jwtCookie.setPath("/");
+            userIdCookie.setPath("/");
             // 7天有效
-            cookie.setMaxAge(3600*24*7);
-            response.addCookie(cookie);
+            jwtCookie.setMaxAge(3600*24*7);
+            userIdCookie.setMaxAge(3600*24*7);
+            response.addCookie(jwtCookie);
+            response.addCookie(userIdCookie);
             response.addHeader("Set-Cookie", "HttpOnly");
             log.info("用户："+user.getName()+"登录");
             return "success";
@@ -70,10 +74,14 @@ public class UserController {
 
     @GetMapping("/logout")
     public String logout(HttpServletResponse response) {
-        Cookie cookie = new Cookie("jwt_token", null);
-        cookie.setPath("/");
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+        Cookie jwtCookie = new Cookie("jwt_token", null);
+        Cookie userIdCookie =new Cookie("user_id", "");
+        jwtCookie.setPath("/");
+        userIdCookie.setPath("/");
+        jwtCookie.setMaxAge(0);
+        userIdCookie.setMaxAge(0);
+        response.addCookie(jwtCookie);
+        response.addCookie(userIdCookie);
         response.addHeader("Set-Cookie", "HttpOnly");
         return "redirect:/";
     }

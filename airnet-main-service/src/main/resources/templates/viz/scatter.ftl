@@ -146,42 +146,17 @@
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="mdi mdi-email"></i>
-                            <div class="notify">
+                            <div class="notify" id="notify">
                                 <!-- 新消息通知 -->
-                                <span class="heartbit"></span>
-                                <span class="point"></span></div>
+                            </div>
                         </a>
                         <div class="dropdown-menu mailbox dropdown-menu-right scale-up" aria-labelledby="2">
                             <ul>
                                 <li>
-                                    <div class="drop-title">你有3条新通知</div>
+                                    <div class="drop-title"><span id="notification_title">你有 ? 条新通知</span></div>
                                 </li>
                                 <li>
-                                    <div class="message-center">
-
-                                        <a href="#">
-                                            <div class="mail-contnet">
-                                                <h5>严重污染警告</h5>
-                                                <h5>静安SO2已超标23.2%</h5> <span class="mail-desc">当前监测值：25.2；设定阈值：20</span>
-                                                <span class="time">2019-01-22 22:14</span></div>
-                                        </a>
-
-                                        <a href="#">
-                                            <div class="mail-contnet">
-                                                <h5>污染物预警通知</h5>
-                                                <h6>浦东新区PM2.5已超标23.2%</h6> <span
-                                                    class="mail-desc">当前监测值：25.2；设定阈值：20</span> <span class="time">2019-01-21 12:14</span>
-                                            </div>
-                                        </a>
-
-                                        <a href="#">
-                                            <div class="mail-contnet">
-                                                <h5>污染物预警通知</h5>
-                                                <h6>杨浦区PM2.5已超标23.2%</h6> <span
-                                                    class="mail-desc">当前监测值：25.2；设定阈值：20</span> <span class="time">2019-01-21 12:14</span>
-                                            </div>
-                                        </a>
-
+                                    <div class="message-center" id="notification">
 
                                     </div>
                                 </li>
@@ -246,6 +221,7 @@
                         <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span
                                 class="hide-menu">数据可视化</span></a>
                         <ul aria-expanded="false" class="collapse">
+                        <#if isLogin=="true">
                             <li><a href="/viz/airflowmap">上海市高空气流图</a></li>
                             <li><a href="/viz/aqimap">全国空气质量指数(AQI)地图</a></li>
                             <li><a href="/viz/globalmap">全球污染物分布图</a></li>
@@ -256,6 +232,12 @@
                             <li><a href="/viz/radar">标准雷达图</a></li>
                             <li><a href="/viz/funnel">标准漏斗图</a></li>
                             <li><a href="/viz/rose">南丁格尔玫瑰图</a></li>
+                        </#if>
+                            <#if isLogin=="false">
+                            <li><a href="/viz/airflowmap">上海市高空气流图</a></li>
+                            <li><a href="/viz/aqimap">全国空气质量指数(AQI)地图</a></li>
+                            <li><a href="/viz/globalmap">全球污染物分布图</a></li>
+                            </#if>
                         </ul>
                     </li>
 
@@ -263,8 +245,13 @@
                         <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span
                                 class="hide-menu">空气质量排行</span></a>
                         <ul aria-expanded="false" class="collapse">
+                              <#if isLogin=="true">
                             <li><a href="/rank/sh">上海市空气质量实时/历史排行</a></li>
                             <li><a href="/rank/cn">全国空气质量实时排行</a></li>
+                              </#if>
+                            <#if isLogin=="false">
+                            <li><a href="/rank/cn">全国空气质量实时排行</a></li>
+                            </#if>
                         </ul>
                     </li>
 
@@ -753,6 +740,70 @@
                 console.log(msg);
             }
         });
+    });
+
+    // 通知记数
+    var msg_count = 0;
+
+    function get_notification() {
+        if (getCookie("user_id") != null) {
+            $.ajax({
+                url: '/notification/' + getCookie("user_id") + '?read-status=0',
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    Authorization: getCookie("jwt_token")
+                },
+                contentType: 'application/json; charset=UTF-8',
+                success: function (data) {
+                    if (data.length > 0) {
+                        var content = ''
+                        $('#notification_title').html("你有 " + data.length + " 条未读通知");
+                        msg_count = data.length;
+                        $('#notify').html("<span class=\"heartbit\"></span><span class=\"point\"></span>");
+                        for (let i of data) {
+                            content += "<a id=\"notification-" + i.id + "\"><div class=\"mail-contnet\"> <h5>" + i.title + "</h5><h6>" + i.subTitle
+                                    + "</h6><span class=\"mail-desc\">" + i.content + "</span> <span class=\"time\">2019-01-21 12:14</span></div>"
+                                    + "<span style=\"margin-top:25px;float:right\"> <button type=\"button\" id=\"read-" + i.id + "\" class=\"btn waves-effect waves-light btn-primary btn-sm \" value=" + i.id + ">标为已读</button></span>" + "</a>"
+                        }
+                        $('#notification').html(content);
+                    } else {
+                        $('#notification_title').html("暂无未读通知");
+                        $('#notify').html("");
+                        $('#notification').remove();
+                    }
+
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
+            });
+        }
+    }
+
+    get_notification();
+
+    $("#notification").on('click', "button[id^='read-']", function () {
+        var id = this.value;
+        $.ajax({
+            url: '/notification/' + id,
+            type: 'PUT',
+            headers: {
+                Authorization: getCookie("jwt_token")
+            },
+            success: function (data) {
+                var count = $('#notification_title').val();
+                $("#notification-" + id).remove();
+                msg_count -= 1;
+                $('#notification_title').html("你有 " + msg_count + " 条未读通知");
+                $('#notification_title').val(msg_count);
+
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+
     });
 
     function getCookie(name) {

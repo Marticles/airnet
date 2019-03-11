@@ -106,76 +106,45 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
                             <span>USST | 环境污染物数据平台</span>
                         </a>
                     </li>
-
                 </ul>
-
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
             <ul class="navbar-nav my-lg-0">
-
                     <#if isLogin=="false">
                      <li class="nav-item dropdown">
-                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
+                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="nav-link-1"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                              <i class="icon-login"></i><a href="/login" style="color: white"">登录</a>
                      </li>
-
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
+                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="nav-link-2"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="icon-user-follow"></i><a href="/register" style="color: white"">注册</a>
                     </li>
-
                     </#if>
                     <#if isLogin=="true">
                     <!-- ============================================================== -->
                     <!-- Messages -->
                     <!-- ============================================================== -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
+                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="nav-link-3"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="mdi mdi-email"></i>
-                            <div class="notify">
+                            <div class="notify" id="notify">
                                 <!-- 新消息通知 -->
-                                <span class="heartbit"></span>
-                                <span class="point"></span></div>
+                            </div>
                         </a>
                         <div class="dropdown-menu mailbox dropdown-menu-right scale-up" aria-labelledby="2">
                             <ul>
                                 <li>
-                                    <div class="drop-title">你有3条新通知</div>
+                                    <div class="drop-title"><span id="notification_title">你有 ? 条新通知</span></div>
                                 </li>
                                 <li>
-                                    <div class="message-center">
-
-                                        <a href="#">
-                                            <div class="mail-contnet">
-                                                <h5>严重污染警告</h5>
-                                                <h5>静安SO2已超标23.2%</h5> <span class="mail-desc">当前监测值：25.2；设定阈值：20</span>
-                                                <span class="time">2019-01-22 22:14</span></div>
-                                        </a>
-
-                                        <a href="#">
-                                            <div class="mail-contnet">
-                                                <h5>污染物预警通知</h5>
-                                                <h6>浦东新区PM2.5已超标23.2%</h6> <span
-                                                    class="mail-desc">当前监测值：25.2；设定阈值：20</span> <span class="time">2019-01-21 12:14</span>
-                                            </div>
-                                        </a>
-
-                                        <a href="#">
-                                            <div class="mail-contnet">
-                                                <h5>污染物预警通知</h5>
-                                                <h6>杨浦区PM2.5已超标23.2%</h6> <span
-                                                    class="mail-desc">当前监测值：25.2；设定阈值：20</span> <span class="time">2019-01-21 12:14</span>
-                                            </div>
-                                        </a>
-
+                                    <div class="message-center" id="notification">
 
                                     </div>
                                 </li>
@@ -218,8 +187,7 @@
                     </li>
 
                 </ul>
-
-                    </#if>
+                </#if>
             </div>
         </nav>
     </header>
@@ -240,6 +208,7 @@
                         <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span
                                 class="hide-menu">数据可视化</span></a>
                         <ul aria-expanded="false" class="collapse">
+                            <#if isLogin=="true">
                             <li><a href="/viz/airflowmap">上海市高空气流图</a></li>
                             <li><a href="/viz/aqimap">全国空气质量指数(AQI)地图</a></li>
                             <li><a href="/viz/globalmap">全球污染物分布图</a></li>
@@ -250,6 +219,12 @@
                             <li><a href="/viz/radar">标准雷达图</a></li>
                             <li><a href="/viz/funnel">标准漏斗图</a></li>
                             <li><a href="/viz/rose">南丁格尔玫瑰图</a></li>
+                            </#if>
+                            <#if isLogin=="false">
+                            <li><a href="/viz/airflowmap">上海市高空气流图</a></li>
+                            <li><a href="/viz/aqimap">全国空气质量指数(AQI)地图</a></li>
+                            <li><a href="/viz/globalmap">全球污染物分布图</a></li>
+                            </#if>
                         </ul>
                     </li>
 
@@ -257,8 +232,13 @@
                         <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span
                                 class="hide-menu">空气质量排行</span></a>
                         <ul aria-expanded="false" class="collapse">
+                            <#if isLogin=="true">
                             <li><a href="/rank/sh">上海市空气质量实时/历史排行</a></li>
                             <li><a href="/rank/cn">全国空气质量实时排行</a></li>
+                            </#if>
+                            <#if isLogin=="false">
+                            <li><a href="/rank/cn">全国空气质量实时排行</a></li>
+                            </#if>
                         </ul>
                     </li>
 
@@ -302,6 +282,14 @@
                                 class="mdi mdi-cloud-outline"></i>
                             <span class="hide-menu">关于AirNet</span></a>
                     </li>
+
+                    <#if isLogin=="false">
+                    <li>
+                        <a class="has-arrow"  href="/login" aria-expanded="false"><i
+                                class="mdi mdi-arrow-right-bold-circle-outline"></i>
+                            <span class="hide-menu">登录后可体验更多功能(测试用户：test/test)</span></a>
+                    </li>
+                    </#if>
 
                 </ul>
             </nav>
@@ -450,7 +438,6 @@
                         </div>
                     </div>
 
-
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-wrap">
@@ -571,6 +558,76 @@
 
 </html>
 <script>
+    // 通知记数
+    var msg_count = 0;
+
+    function get_notification() {
+        if (getCookie("user_id") != null) {
+            $.ajax({
+                url: '/notification/' + getCookie("user_id") + '?read-status=0',
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    Authorization: getCookie("jwt_token")
+                },
+                contentType: 'application/json; charset=UTF-8',
+                success: function (data) {
+                    if (data.length > 0) {
+                        var content = ''
+                        $('#notification_title').html("你有 " + data.length + " 条未读通知");
+                        msg_count = data.length;
+                        $('#notify').html("<span class=\"heartbit\"></span><span class=\"point\"></span>");
+                        for (let i of data) {
+                            content += "<a id=\"notification-" + i.id + "\"><div class=\"mail-contnet\"> <h5>" + i.title + "</h5><h6>" + i.subTitle
+                                    + "</h6><span class=\"mail-desc\">" + i.content + "</span> <span class=\"time\">2019-01-21 12:14</span></div>"
+                                    + "<span style=\"margin-top:25px;float:right\"> <button type=\"button\" id=\"read-" + i.id + "\" class=\"btn waves-effect waves-light btn-primary btn-sm \" value=" + i.id + ">标为已读</button></span>" + "</a>"
+                        }
+                        $('#notification').html(content);
+                    } else {
+                        $('#notification_title').html("暂无未读通知");
+                        $('#notify').html("");
+                        $('#notification').remove();
+                    }
+
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
+            });
+        }
+    }
+
+    get_notification();
+
+    $("#notification").on('click', "button[id^='read-']", function () {
+        var id = this.value;
+        $.ajax({
+            url: '/notification/' + id,
+            type: 'PUT',
+            headers: {
+                Authorization: getCookie("jwt_token")
+            },
+            success: function (data) {
+                var count = $('#notification_title').val();
+                $("#notification-" + id).remove();
+                msg_count -= 1;
+                $('#notification_title').html("你有 " + msg_count + " 条未读通知");
+                $('#notification_title').val(msg_count);
+
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+
+    });
+
+    function getCookie(name) {
+        var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+        if (arr != null)
+            return unescape(arr[2]);
+        return null;
+    }
 
     var map = new BMap.Map("allmap");    // 创建Map实例
     map.centerAndZoom(new BMap.Point(121.544779, 31.232901), 12);  // 初始化地图,设置中心点坐标和地图级别
@@ -649,7 +706,7 @@
                 fillColor: color,//填充颜色
                 fillOpacity: 1,//填充透明度
                 strokeWeight: 0.5,
-                strokeColor:"#696969",
+                strokeColor: "#696969",
             })
         });
         return marker;
@@ -679,14 +736,14 @@
 
     function gen_label(aqi, site, level) {
         var color = gen_color(aqi);
-        var label = new BMap.Label(site+"("+level+")", {offset: new BMap.Size(25, -10)});
+        var label = new BMap.Label(site + "(" + level + ")", {offset: new BMap.Size(25, -10)});
         label.setStyle({
             color: color,
             fontSize: "12px",
             height: "20px",
             lineHeight: "20px",
             fontFamily: "微软雅黑",
-            border: "1px solid"+color,
+            border: "1px solid" + color,
         });
         return label;
     }
@@ -716,16 +773,16 @@
         return level;
     }
 
-    var jingan_label = gen_label(${jingan.aqi!'0'},"静安监测站",get_level(${jingan.aqi!'0'}));
-    var hongkou_label = gen_label(${hongkou.aqi!'0'},"虹口监测站",get_level(${hongkou.aqi!'0'}));
-    var pdchuansha_label = gen_label(${pdchuansha.aqi!'0'},"浦东川沙监测站",get_level(${pdchuansha.aqi!'0'}));
-    var pdxinqu_label = gen_label(${pdxinqu.aqi!'0'},"浦东新区监测站",get_level(${pdxinqu.aqi!'0'}));
-    var pdzhangjiang_label = gen_label(${pdzhangjiang.aqi!'0'},"浦东张江监测站",get_level(${pdzhangjiang.aqi!'0'}));
-    var putuo_label = gen_label(${putuo.aqi!'0'},"普陀监测站",get_level(${putuo.aqi!'0'}));
-    var qingpu_label = gen_label(${qingpu.aqi!'0'},"青浦淀山湖监测站",get_level(${qingpu.aqi!'0'}));
-    var shiwuchang_label = gen_label(${shiwuchang.aqi!'0'},"黄埔十五厂监测站",get_level(${shiwuchang.aqi!'0'}));
-    var xuhui_label = gen_label(${xuhui.aqi!'0'},"徐汇上师大监测站",get_level(${xuhui.aqi!'0'}));
-    var yangpu_label = gen_label(${yangpu.aqi!'0'},"杨浦四漂监测站",get_level(${yangpu.aqi!'0'}));
+    var jingan_label = gen_label(${jingan.aqi!'0'}, "静安监测站", get_level(${jingan.aqi!'0'}));
+    var hongkou_label = gen_label(${hongkou.aqi!'0'}, "虹口监测站", get_level(${hongkou.aqi!'0'}));
+    var pdchuansha_label = gen_label(${pdchuansha.aqi!'0'}, "浦东川沙监测站", get_level(${pdchuansha.aqi!'0'}));
+    var pdxinqu_label = gen_label(${pdxinqu.aqi!'0'}, "浦东新区监测站", get_level(${pdxinqu.aqi!'0'}));
+    var pdzhangjiang_label = gen_label(${pdzhangjiang.aqi!'0'}, "浦东张江监测站", get_level(${pdzhangjiang.aqi!'0'}));
+    var putuo_label = gen_label(${putuo.aqi!'0'}, "普陀监测站", get_level(${putuo.aqi!'0'}));
+    var qingpu_label = gen_label(${qingpu.aqi!'0'}, "青浦淀山湖监测站", get_level(${qingpu.aqi!'0'}));
+    var shiwuchang_label = gen_label(${shiwuchang.aqi!'0'}, "黄埔十五厂监测站", get_level(${shiwuchang.aqi!'0'}));
+    var xuhui_label = gen_label(${xuhui.aqi!'0'}, "徐汇上师大监测站", get_level(${xuhui.aqi!'0'}));
+    var yangpu_label = gen_label(${yangpu.aqi!'0'}, "杨浦四漂监测站", get_level(${yangpu.aqi!'0'}));
 
     jingan_marker.setLabel(jingan_label);
     hongkou_marker.setLabel(hongkou_label);
@@ -738,46 +795,46 @@
     xuhui_marker.setLabel(xuhui_label);
     yangpu_marker.setLabel(yangpu_label);
 
-    var jingan_infowindow = new BMap.InfoWindow("静安监测站  地址:静安区武定西路1480号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${jingan.info!}");
-    var hongkou_infowindow = new BMap.InfoWindow("虹口凉城监测站  地址:虹口区凉城路854号凉城社区卫生中心<br>更新时间:"+"${updatedTime!}"+"<br>"+"${hongkou.info!}");
-    var pdchuansha_infowindow = new BMap.InfoWindow("浦东川沙监测站  地址:浦东新区川环南路319号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${pdchuansha.info!}");
-    var pdxinqu_infowindow = new BMap.InfoWindow("浦东新区监测站  地址:浦东新区灵山路51号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${pdxinqu.info!}");
-    var pdzhangjiang_infowindow = new BMap.InfoWindow("浦东张江监测站  地址:浦东新区祖冲之路295号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${pdzhangjiang.info!}");
-    var putuo_infowindow = new BMap.InfoWindow("普陀监测站  地址:普陀区杏山路317号曹杨社区文化中心<br>更新时间:"+"${updatedTime!}"+"<br>"+"${putuo.info!}");
-    var qingpu_infowindow = new BMap.InfoWindow("青浦淀山湖监测站  地址:青浦区淀峰渔民村1号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${qingpu.info!}");
-    var shiwuchang_infowindow = new BMap.InfoWindow("黄埔十五厂(卢湾师专附小)监测站  地址:黄埔区局门路478号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${shiwuchang.info!}");
-    var xuhui_infowindow = new BMap.InfoWindow("徐汇上师大监测站  地址:徐汇区桂林路100号上师大<br>更新时间:"+"${updatedTime!}"+"<br>"+"${xuhui.info!}");
-    var yangpu_infowindow = new BMap.InfoWindow("杨浦四漂监测站  地址:杨浦区平凉路1398号<br>更新时间:"+"${updatedTime!}"+"<br>"+"${yangpu.info!}");
+    var jingan_infowindow = new BMap.InfoWindow("静安监测站  地址:静安区武定西路1480号<br>更新时间:" + "${updatedTime!}" + "<br>" + "${jingan.info!}");
+    var hongkou_infowindow = new BMap.InfoWindow("虹口凉城监测站  地址:虹口区凉城路854号凉城社区卫生中心<br>更新时间:" + "${updatedTime!}" + "<br>" + "${hongkou.info!}");
+    var pdchuansha_infowindow = new BMap.InfoWindow("浦东川沙监测站  地址:浦东新区川环南路319号<br>更新时间:" + "${updatedTime!}" + "<br>" + "${pdchuansha.info!}");
+    var pdxinqu_infowindow = new BMap.InfoWindow("浦东新区监测站  地址:浦东新区灵山路51号<br>更新时间:" + "${updatedTime!}" + "<br>" + "${pdxinqu.info!}");
+    var pdzhangjiang_infowindow = new BMap.InfoWindow("浦东张江监测站  地址:浦东新区祖冲之路295号<br>更新时间:" + "${updatedTime!}" + "<br>" + "${pdzhangjiang.info!}");
+    var putuo_infowindow = new BMap.InfoWindow("普陀监测站  地址:普陀区杏山路317号曹杨社区文化中心<br>更新时间:" + "${updatedTime!}" + "<br>" + "${putuo.info!}");
+    var qingpu_infowindow = new BMap.InfoWindow("青浦淀山湖监测站  地址:青浦区淀峰渔民村1号<br>更新时间:" + "${updatedTime!}" + "<br>" + "${qingpu.info!}");
+    var shiwuchang_infowindow = new BMap.InfoWindow("黄埔十五厂(卢湾师专附小)监测站  地址:黄埔区局门路478号<br>更新时间:" + "${updatedTime!}" + "<br>" + "${shiwuchang.info!}");
+    var xuhui_infowindow = new BMap.InfoWindow("徐汇上师大监测站  地址:徐汇区桂林路100号上师大<br>更新时间:" + "${updatedTime!}" + "<br>" + "${xuhui.info!}");
+    var yangpu_infowindow = new BMap.InfoWindow("杨浦四漂监测站  地址:杨浦区平凉路1398号<br>更新时间:" + "${updatedTime!}" + "<br>" + "${yangpu.info!}");
 
-    jingan_marker.addEventListener("click", function(){
-        map.openInfoWindow(jingan_infowindow,jingan_point);
+    jingan_marker.addEventListener("click", function () {
+        map.openInfoWindow(jingan_infowindow, jingan_point);
     });
-    hongkou_marker.addEventListener("click", function(){
-        map.openInfoWindow(hongkou_infowindow,hongkou_point);
+    hongkou_marker.addEventListener("click", function () {
+        map.openInfoWindow(hongkou_infowindow, hongkou_point);
     });
-    pdchuansha_marker.addEventListener("click", function(){
-        map.openInfoWindow(pdchuansha_infowindow,pdchuansha_point);
+    pdchuansha_marker.addEventListener("click", function () {
+        map.openInfoWindow(pdchuansha_infowindow, pdchuansha_point);
     });
-    pdxinqu_marker.addEventListener("click", function(){
-        map.openInfoWindow(pdxinqu_infowindow,pdxinqu_point);
+    pdxinqu_marker.addEventListener("click", function () {
+        map.openInfoWindow(pdxinqu_infowindow, pdxinqu_point);
     });
-    pdzhangjiang_marker.addEventListener("click", function(){
-        map.openInfoWindow(pdzhangjiang_infowindow,pdzhangjiang_point);
+    pdzhangjiang_marker.addEventListener("click", function () {
+        map.openInfoWindow(pdzhangjiang_infowindow, pdzhangjiang_point);
     });
-    putuo_marker.addEventListener("click", function(){
-        map.openInfoWindow(putuo_infowindow,putuo_point);
+    putuo_marker.addEventListener("click", function () {
+        map.openInfoWindow(putuo_infowindow, putuo_point);
     });
-    qingpu_marker.addEventListener("click", function(){
-        map.openInfoWindow(qingpu_infowindow,qingpu_point);
+    qingpu_marker.addEventListener("click", function () {
+        map.openInfoWindow(qingpu_infowindow, qingpu_point);
     });
-    shiwuchang_marker.addEventListener("click", function(){
-        map.openInfoWindow(shiwuchang_infowindow,shiwuchang_point);
+    shiwuchang_marker.addEventListener("click", function () {
+        map.openInfoWindow(shiwuchang_infowindow, shiwuchang_point);
     });
-    xuhui_marker.addEventListener("click", function(){
-        map.openInfoWindow(xuhui_infowindow,xuhui_point);
+    xuhui_marker.addEventListener("click", function () {
+        map.openInfoWindow(xuhui_infowindow, xuhui_point);
     });
-    yangpu_marker.addEventListener("click", function(){
-        map.openInfoWindow(yangpu_infowindow,yangpu_point);
+    yangpu_marker.addEventListener("click", function () {
+        map.openInfoWindow(yangpu_infowindow, yangpu_point);
     });
 
     // PM2.5首页数据
@@ -818,38 +875,56 @@
 
 
 <style type="text/css">
-    .anchorBL{
-    display:none;
+    .anchorBL {
+        display: none;
     }
-    .BMap_bubble_title{
-    color:black;
-    font-size:10px;
-    font-weight: bold;
-    text-align:left;
+
+    .BMap_bubble_title {
+        color: black;
+        font-size: 10px;
+        font-weight: bold;
+        text-align: left;
     }
-    .BMap_pop div:nth-child(1){
-    border-radius:7px 0 0 0;
+
+    .BMap_pop div:nth-child(1) {
+        border-radius: 7px 0 0 0;
     }
-    .BMap_pop div:nth-child(3){
-    border-radius:0 7px 0 0;background:#ABABAB;;
-    /*background: #ABABAB;*/
-    width:23px;
-    width:0px;height;0px;
+
+    .BMap_pop div:nth-child(3) {
+        border-radius: 0 7px 0 0;
+        background: #ABABAB;;
+        /*background: #ABABAB;*/
+        width: 23px;
+        width: 0px;
+        height;
+        0px;
     }
-    .BMap_pop div:nth-child(3) div{
-    border-radius:7px;
+
+    .BMap_pop div:nth-child(3) div {
+        border-radius: 7px;
     }
-    .BMap_pop div:nth-child(5){
-    border-radius:0 0 0 7px;
+
+    .BMap_pop div:nth-child(5) {
+        border-radius: 0 0 0 7px;
     }
-    .BMap_pop div:nth-child(5) div{
-    border-radius:7px;
+
+    .BMap_pop div:nth-child(5) div {
+        border-radius: 7px;
     }
-    .BMap_pop div:nth-child(7){
-    border-radius:0 0 7px 0 ;
+
+    .BMap_pop div:nth-child(7) {
+        border-radius: 0 0 7px 0;
     }
-    .BMap_pop div:nth-child div(7){
-    border-radius:7px ;
+
+    .BMap_pop div:nth-child
+    div
+
+    (
+    7
+    )
+    {
+        border-radius: 7px
+    ;
     }
 
 </style>

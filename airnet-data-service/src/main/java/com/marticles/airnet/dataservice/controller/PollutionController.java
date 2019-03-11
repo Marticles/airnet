@@ -65,9 +65,9 @@ public class PollutionController {
      * 获取监测站数据最后更新时间
      *
      * @param site
-     * @return java.util.List<java.util.HashMap   <   java.lang.String   ,   java.lang.Object>>
+     * @return java.util.HashMap<java.lang.String,java.lang.Object>
      * @author Marticles
-     * @date 2019/1/25
+     * @date 2019/3/10
      */
     @GetMapping("/{site}/updated-time")
     public HashMap<String, Object> getSiteUpdatedTime(@PathVariable String site) {

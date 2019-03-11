@@ -52,7 +52,8 @@ AirNet 是一个环境污染物数据分析与预测平台，采用微服务架�
 
 ### 污染物预警
 
-TODO
+- 站内信通知
+- 邮件通知
 
 ### 历史数据导出
 
@@ -62,10 +63,11 @@ TODO
 
 TODO
 
+
 ## 技术
 
-- FrontEnd: Freemarker / BootStrap / Echarts
-- BackEnd: Spring Cloud Config / Zuul / Ribbon / Feign / Hystrix / Quartz / Mybatis
+- FrontEnd: BootStrap / Echarts / Freemarker
+- BackEnd: Spring Cloud Config / Zuul / Ribbon / Feign / Hystrix / Mybatis
 - DB: MySQL / Redis
 - MQ: Kafka
 
@@ -83,6 +85,9 @@ TODO
 
 ----------------------
 ![](/img/city_rank.png)
+
+----------------------
+![](/img/alarm.png)
 
 ----------------------
 ![](/img/login.png)

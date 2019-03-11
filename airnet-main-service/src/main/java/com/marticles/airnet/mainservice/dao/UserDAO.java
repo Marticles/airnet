@@ -14,9 +14,9 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface UserDAO {
 
-    @Insert({"insert into user (name, email,password,type) values (#{name},#{email},#{password},#{type})"})
+    @Insert({"insert into user (name, email,password,type) values (#{name}, #{email}, #{password}, #{type})"})
     Integer addUser(UserRequest user);
 
-    @Select({"select id, name, email, type from user where name=#{name} and password=#{password}"})
+    @Select({"select id, name, email, type from user where name = #{name} and password = #{password}"})
     User checkUser(UserRequest user);
 }

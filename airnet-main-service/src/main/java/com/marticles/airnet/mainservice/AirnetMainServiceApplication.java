@@ -17,6 +17,5 @@ public class AirnetMainServiceApplication {
         SpringApplication.run(AirnetMainServiceApplication.class, args);
     }
 
-
 }
 

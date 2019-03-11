@@ -16,7 +16,7 @@ public class Alarm {
     private String pollutant;
     private Float threshold;
     private String email;
-    private String userId;
+    private Integer userId;
     private Date startTime;
     private Date lastTime;
 }

@@ -19,7 +19,7 @@ public class TestController {
     @RequestMapping("test")
     public String test(){
         alarmService.checkAlarm();
-        return "0";
+        return "";
     }
 
 }

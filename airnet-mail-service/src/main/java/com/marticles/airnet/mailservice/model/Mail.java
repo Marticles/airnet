@@ -9,9 +9,11 @@ import lombok.Data;
  */
 @Data
 public class Mail {
+    Integer userId;
     String title;
     String email;
     String content;
     String pollutant;
     String send_time;
+    Integer alarmId;
 }
