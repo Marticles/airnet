@@ -336,14 +336,21 @@
             <!-- Row -->
             <div class="row">
                 <!-- Column -->
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body ">
 
-
-
-
-
+                                <div class="text-center">
+                                <h1>AirNet</h1>
+                                    <br>
+                                <h3>致力于提供高效可靠的环境监测与预测服务</h3>
+                                <h4>2019 LJH's Graduation Project</h4>
+                                </div>
+                    </div>
+                </div>
             </div>
 
-
+            </div>
             <!-- ============================================================== -->
             <!-- End PAge Content -->
             <!-- ============================================================== -->

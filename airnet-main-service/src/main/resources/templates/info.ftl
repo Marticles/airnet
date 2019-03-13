@@ -336,7 +336,151 @@
             <!-- Row -->
             <div class="row">
                 <!-- Column -->
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body ">
+                            <h4 class="card-title" align="center">环境污染物相关知识</h4>
 
+                            <!-- Nav tabs -->
+                            <div class="vtabs customvtab">
+                                <ul class="nav nav-tabs tabs-vertical" role="tablist">
+                                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#aqi" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">关于AQI</span> </a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#aqi-table" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">空气质量标准表</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#pm25" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">PM2.5介绍</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#pm25-1" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">PM2.5来源</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#pm25-2" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">PM2.5危害</span></a> </li>
+
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="aqi" role="tabpanel">
+                                        <div class="p-20">
+                                            <h4>
+                                                <p style="text-indent:2em">
+                                                    空气质量（air
+                                                    quality）的好坏反映了空气污染程度，它是依据空气中污染物浓度的高低来判断的。空气污染是一个复杂的现象，在特定时间和地点空气污染物浓度受到许多因素影响。来自固定和流动污染源的人为污染物排放大小是影响空气质量的最主要因素之一，其中包括车辆、船舶、飞机的尾气、工业企业生产排放、居民生活和取暖、垃圾焚烧等。城市的发展密度、地形地貌和气象等也是影响空气质量的重要因素。
+                                                </p>
+                                            </h4>
+                                            <h4>
+                                                <p style="text-indent:2em">
+                                                    空气质量指数（Air Quality
+                                                    Index，简称AQI）是定量描述空气质量状况的无量纲指数，针对单项污染物的还规定了空气质量分指数，参与空气质量评价的主要污染物为细颗粒物、可吸入颗粒物、二氧化硫、二氧化氮、臭氧、一氧化碳等六项。
+                                                </p>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane  p-20" id="aqi-table" role="tabpanel">
+                                        <table class="table table-bordered table-hover">
+                                            <thead style="text-align:center;vertical-align:middle">
+                                            <tr>
+                                                <th>空气质量指数</th>
+                                                <th>空气质量级别</th>
+                                                <th>空气质量类别</th>
+                                                <th style="text-align:center;">对健康影响情况</th>
+                                                <th style="text-align:center;">建议采取措施</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody style="text-align:center;">
+                                            <tr>
+                                                <td>0~50</td>
+                                                <td>一级</td>
+                                                <td bgcolor="#7CCD7C">优</td>
+                                                <td>空气质量令人满意，基本无空气污染</td>
+                                                <td>各类人群可正常活动</td>
+                                            </tr>
+                                            <tr>
+                                                <td>51~100</td>
+                                                <td>二级</td>
+                                                <td bgcolor="#B0E2FF">良</td>
+                                                <td>空气质量可接受，但某些污染物可能对极少数异常敏感人群健康有较弱影响</td>
+                                                <td>极少数异常敏感人群应减少户外活动</td>
+                                            </tr>
+                                            <tr>
+                                                <td>101~150</td>
+                                                <td>三级</td>
+                                                <td bgcolor="#FFF68F">轻度污染</td>
+                                                <td>易感人群症状有轻度加剧，健康人群出现刺激症状</td>
+                                                <td>儿童、老年人及心脏病、呼吸系统疾病患者应减少长时间、高强度的户外锻炼</td>
+                                            </tr>
+                                            <tr>
+                                                <td>151~200</td>
+                                                <td>四级</td>
+                                                <td bgcolor="#F4A460">中度污染</td>
+                                                <td>进一步加剧易感人群症状，可能对健康人群心脏、呼吸系统有影响</td>
+                                                <td>儿童、老年人及心脏病、呼吸系统疾病患者避免长时间、高强度的户外锻炼，一般人群适量减少户外运动</td>
+                                            </tr>
+                                            <tr>
+                                                <td>201~300</td>
+                                                <td>五级</td>
+                                                <td bgcolor="#FF6A6A">重度污染</td>
+                                                <td>心脏病和肺病患者症状显著加剧，运动耐受力降低，健康人群普遍出现症状</td>
+                                                <td>儿童、老年人和心脏病、肺病患者应停留在室内，停止户外运动，一般人群减少户外运动</td>
+                                            </tr>
+                                            <tr>
+                                                <td>>300</td>
+                                                <td>六级</td>
+                                                <td bgcolor="#EE3B3B">严重污染</td>
+                                                <td>健康人群运动耐受力降低，有明显强烈症状，提前出现某些疾病</td>
+                                                <td>儿童、老年人和病人应当留在室内，避免体力消耗，一般人群应避免户外活动</td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="tab-pane p-20" id="pm25" role="tabpanel">
+                                        <h4>
+                                            <p style="text-indent:2em ">
+                                                PM2.5即细颗粒物，指环境空气中空气动力学当量直径小于等于 2.5
+                                                微米的颗粒物。它能较长时间悬浮于空气中，其在空气中含量浓度越高，就代表空气污染越严重。虽然PM2.5只是地球大气成分中含量很少的组分，但它对空气质量和能见度等有重要的影响。与较粗的大气颗粒物相比，PM2.5粒径小，面积大，活性强，易附带有毒、有害物质（例如，重金属、微生物等），且在大气中的停留时间长、输送距离远，因而对人体健康和大气环境质量的影响更大。
+
+                                            </p>
+                                        </h4>
+
+                                        <h4>
+                                            <p style="text-indent:2em">
+                                                2013年2月，全国科学技术名词审定委员会将PM2.5的中文名称命名为细颗粒物。细颗粒物的化学成分主要包括有机碳（OC）、元素碳（EC）、硝酸盐、硫酸盐、铵盐、钠盐（Na+）等。
+                                            </p>
+                                        </h4></div>
+                                    <div class="tab-pane p-20" id="pm25-1" role="tabpanel">
+                                        <h4>
+                                            <p style="text-indent:2em ">
+                                                虽然自然过程也会产生PM2.5，但其主要来源还是人为排放。人类既直接排放PM2.5，也排放某些气体污染物，在空气中转变成PM2.5。直接排放主要来自燃烧过程，比如化石燃料（煤、汽油、柴油）的燃烧、生物质（秸秆、木柴）的燃烧、垃圾焚烧。在空气中转化成PM2.5的气体污染物主要有二氧化硫、氮氧化物、氨气、挥发性有机物。其它的人为来源包括：道路扬尘、建筑施工扬尘、工业粉尘、厨房烟气。自然来源则包括：风扬尘土、火山灰、森林火灾、漂浮的海盐、花粉、真菌孢子、细菌。
+
+                                            </p>
+                                        </h4>
+
+                                        <h4>
+                                            <p style="text-indent:2em">
+                                                PM2.5的来源复杂，成分自然也很复杂。主要成分是元素碳、有机碳化合物、硫酸盐、硝酸盐、铵盐。其它的常见的成分包括各种金属元素，既有钠、镁、钙、铝、铁等地壳中含量丰富的元素，也有铅、锌、砷、镉、铜等主要源自人类污染的重金属元素。
+                                            </p>
+                                        </h4>
+
+                                        <h4>
+                                            <p style="text-indent:2em">
+                                                2000年有研究人员测定了北京的PM2.5来源：尘土占20%；由气态污染物转化而来的硫酸盐、硝酸盐、氨盐各占17%、10%、6%；烧煤产生7%；使用柴油、汽油而排放的废气贡献7%；农作物等生物质贡献6%；植物碎屑贡献1%。有趣的是，吸烟也贡献了1%，不过这只是个粗略的科学估算，并不一定准确。该研究中也测定了北京PM2.5的成分：含碳的颗粒物，硫酸根，硝酸根，铵根加在一起占了重量了69%
+                                                。类似地，1999年测定的上海PM2.5中有41.6%是硫酸铵、硝酸铵，41.4%是含碳的物质。
+
+                                            </p></div>
+                                    <div class="tab-pane p-20" id="pm25-2" role="tabpanel">
+                                        <h4>
+                                            <p style="text-indent:2em ">
+                                                虽然细颗粒物只是地球大气成分中含量很少的组分，但它对空气质量和能见度等有重要的影响。与较粗的大气颗粒物相比，细颗粒物粒径小，富含大量的有毒、有害物质且在大气中的停留时间长、输送距离远，因而对人体健康和大气环境质量的影响更大。研究表明，颗粒越小对人体健康的危害越大。细颗粒物能飘到较远的地方，因此影响范围较大。
+
+                                            </p>
+                                        </h4>
+
+                                        <h4>
+                                            <p style="text-indent:2em">
+                                                细颗粒物对人体健康的危害要更大，因为直径越小，进入呼吸道的部位越深。10μm直径的颗粒物通常沉积在上呼吸道，2μm以下的可深入到细支气管和肺泡。细颗粒物进入人体到肺泡后，直接影响肺的通气功能，使机体容易处在缺氧状态。
+
+                                            </p>
+                                        </h4></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
 

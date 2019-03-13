@@ -1,8 +1,9 @@
 package com.marticles.airnet.zuul.gateway.fliter;
 
-import com.marticles.airnet.zuul.gateway.util.JwtUtil;
+import com.google.common.util.concurrent.RateLimiter;
 import com.marticles.airnet.zuul.gateway.model.User;
 import com.marticles.airnet.zuul.gateway.model.UserType;
+import com.marticles.airnet.zuul.gateway.util.JwtUtil;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
@@ -10,15 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_DECORATION_FILTER_ORDER;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
 /**
- * 权限校验
- * 防止没有权限的用户直接访问内部微服务API
- * 但实际上线时也不会直接暴露微服务的端口
- * 保险起见还是多做一次校验吧
+ * 权限校验与限流
  *
  * @author Marticles
  * @description AuthFliter
@@ -27,7 +26,13 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 @Slf4j
 public class AuthFliter extends ZuulFilter {
 
-    private final String dataServiceURL = "/data";
+
+
+    private final String DATASERVICE_URL = "/data";
+
+    private final String APIKEY_PREFIX = "ApiKey-";
+
+    private final ConcurrentHashMap<String, RateLimiter> rateLimiterMap = new ConcurrentHashMap<>();
 
     @Override
     public String filterType() {
@@ -44,7 +49,7 @@ public class AuthFliter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String requestUrl = request.getRequestURL().toString();
-        if (requestUrl.contains(dataServiceURL)) {
+        if (requestUrl.contains(DATASERVICE_URL)) {
             // log.info(requestUrl);
             return true;
         }
@@ -56,20 +61,14 @@ public class AuthFliter extends ZuulFilter {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
         String authToken = request.getHeader("Authorization");
-        String apiKey = request.getHeader("ApiKey");
-        // TODO 这里要拿到API的Key，而且需要设置访问频率（RateLimiter）
-        // TODO 一天内访问次数可以通过Redis来进行统计
         // System.out.println(request.getRequestURL());
-        // Token为空
         if (null == authToken) {
             requestContext.setSendZuulResponse(false);
             requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
             requestContext.setResponseBody("Authorization token is empty");
-        // 校验Token
         } else {
             User user = JwtUtil.getUserInfoByJwt(authToken);
-            if (null == user || user.getType().equals(UserType.USER_COMMON)
-                    || user.getType().equals(UserType.USER_VISITOR)) {
+            if (null == user || user.getType().equals(UserType.USER_VISITOR)) {
                 requestContext.setSendZuulResponse(false);
                 requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
                 requestContext.setResponseBody("Unauthorized Token");
@@ -78,3 +77,4 @@ public class AuthFliter extends ZuulFilter {
         return null;
     }
 }
+
