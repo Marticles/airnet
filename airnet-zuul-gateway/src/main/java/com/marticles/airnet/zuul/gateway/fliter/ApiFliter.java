@@ -2,11 +2,13 @@ package com.marticles.airnet.zuul.gateway.fliter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.util.concurrent.RateLimiter;
+import com.marticles.airnet.zuul.gateway.model.ApiCount;
 import com.marticles.airnet.zuul.gateway.model.ApiKey;
 import com.marticles.airnet.zuul.gateway.service.ApiKeyService;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -23,11 +25,14 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
  * @description ApiFliter
  * @date 2019/3/13
  */
+@Slf4j
 public class ApiFliter extends ZuulFilter {
 
     private final String APISERVICE_URL = "/api";
 
     private final String APIKEY_PREFIX = "ApiKey-";
+
+    private final String APICOUNT_PREFIX = "ApiCount-";
 
     private final ConcurrentHashMap<String, RateLimiter> rateLimiterMap = new ConcurrentHashMap<>();
 
@@ -63,32 +68,65 @@ public class ApiFliter extends ZuulFilter {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
         String apiKey = request.getParameter("key");
-        // TODO 一天内访问次数
+        log.info(request.getRequestURL().toString());
         if (null == apiKey || !checkApiKey(apiKey)) {
             requestContext.setSendZuulResponse(false);
             requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
-            requestContext.setResponseBody("Api key is empty");
+            requestContext.setResponseBody("Your key is illegal");
         } else {
             if (stringRedisTemplate.hasKey(APIKEY_PREFIX + apiKey)) {
                 ApiKey apiKeyInfo = JSONObject.parseObject(stringRedisTemplate.opsForValue().get(APIKEY_PREFIX + apiKey), ApiKey.class);
-                // 查看当天的流量
-                RateLimiter limiter = rateLimiterMap.get(apiKey);
+                // 校验当月的累计请求次数
+                if (stringRedisTemplate.hasKey(APICOUNT_PREFIX + apiKey)) {
+                    ApiCount apiCount = JSONObject.parseObject(stringRedisTemplate.opsForValue().get(APICOUNT_PREFIX + apiKey), ApiCount.class);
+                    if (apiCount.getMonthlyRequestCount() >= apiCount.getMonthlyRequestLimit()) {
+                        requestContext.setSendZuulResponse(false);
+                        requestContext.setResponseStatusCode(HttpStatus.TOO_MANY_REQUESTS.value());
+                        requestContext.setResponseBody("The api requests limit of this month has been reached");
+                    } else {
+                        apiCount.setMonthlyRequestCount(apiCount.getMonthlyRequestCount() + 1);
+                        stringRedisTemplate.opsForValue().set(APICOUNT_PREFIX + apiKey, JSONObject.toJSONString(apiCount));
+                    }
+                } else {
+                    ApiCount apiCount = new ApiCount();
+                    apiCount.setMonthlyRequestLimit(apiKeyInfo.getMonthlyRequestLimit());
+                    apiCount.setMonthlyRequestCount(1);
+                    stringRedisTemplate.opsForValue().set(APICOUNT_PREFIX + apiKey, JSONObject.toJSONString(apiCount));
+                }
+                RateLimiter limiter = null != rateLimiterMap.get(apiKey) ? rateLimiterMap.get(apiKey) : RateLimiter.create(apiKeyInfo.getPreSecondRequestLimit());
                 // 1秒内被阻塞，直接返回429
-                if(!limiter.tryAcquire(1000, TimeUnit.MILLISECONDS)){
+                if (!limiter.tryAcquire(1000, TimeUnit.MILLISECONDS)) {
                     requestContext.setSendZuulResponse(false);
                     requestContext.setResponseStatusCode(HttpStatus.TOO_MANY_REQUESTS.value());
-                    requestContext.setResponseBody("Too Many Requests");
+                    requestContext.setResponseBody("Too many requests");
                 }
             } else {
                 ApiKey apiKeyInfo = apiKeyService.getApiKey(apiKey);
                 stringRedisTemplate.opsForValue().set(APIKEY_PREFIX + apiKey, JSONObject.toJSONString(apiKeyInfo));
-                // 查看当天的流量
-                RateLimiter limiter = RateLimiter.create(apiKeyInfo.getPreSecondRequestLimit());
+                // 校验当月的累计请求次数
+                if (stringRedisTemplate.hasKey(APICOUNT_PREFIX + apiKey)) {
+                    ApiCount apiCount = JSONObject.parseObject(stringRedisTemplate.opsForValue().get(APICOUNT_PREFIX + apiKey), ApiCount.class);
+                    if (apiCount.getMonthlyRequestCount() >= apiCount.getMonthlyRequestLimit()) {
+                        requestContext.setSendZuulResponse(false);
+                        requestContext.setResponseStatusCode(HttpStatus.TOO_MANY_REQUESTS.value());
+                        requestContext.setResponseBody("The Api requests limit of this month has been reached");
+                    } else {
+                        apiCount.setMonthlyRequestCount(apiCount.getMonthlyRequestCount() + 1);
+                        stringRedisTemplate.opsForValue().set(APICOUNT_PREFIX + apiKey, JSONObject.toJSONString(apiCount));
+                    }
+                } else {
+                    ApiCount apiCount = new ApiCount();
+                    apiCount.setMonthlyRequestLimit(apiKeyInfo.getMonthlyRequestLimit());
+                    apiCount.setMonthlyRequestCount(1);
+                    stringRedisTemplate.opsForValue().set(APICOUNT_PREFIX + apiKey, JSONObject.toJSONString(apiCount));
+
+                }
+                RateLimiter limiter = null != rateLimiterMap.get(apiKey) ? rateLimiterMap.get(apiKey) : RateLimiter.create(apiKeyInfo.getPreSecondRequestLimit());
                 rateLimiterMap.put(apiKey, limiter);
-                if(!limiter.tryAcquire(1000, TimeUnit.MILLISECONDS)){
+                if (!limiter.tryAcquire(1000, TimeUnit.MILLISECONDS)) {
                     requestContext.setSendZuulResponse(false);
                     requestContext.setResponseStatusCode(HttpStatus.TOO_MANY_REQUESTS.value());
-                    requestContext.setResponseBody("Too Many Requests");
+                    requestContext.setResponseBody("Too many requests");
                 }
             }
         }
@@ -105,7 +143,4 @@ public class ApiFliter extends ZuulFilter {
         }
         return false;
     }
-
-
-
 }

@@ -61,7 +61,7 @@ public class AuthFliter extends ZuulFilter {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
         String authToken = request.getHeader("Authorization");
-        // System.out.println(request.getRequestURL());
+        log.info(request.getRequestURL().toString());
         if (null == authToken) {
             requestContext.setSendZuulResponse(false);
             requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());

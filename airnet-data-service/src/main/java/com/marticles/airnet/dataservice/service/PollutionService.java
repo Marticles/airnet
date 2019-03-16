@@ -20,6 +20,11 @@ public class PollutionService {
     @Autowired
     PollutionDAO pollutionDAO;
 
+
+    public List<HashMap<String, Object>> getAllPollutionForApi(String site, Date start, Date end) {
+        return pollutionDAO.getAllPollution(site, start, end);
+    }
+
     public PollutionResponse getAllPollution(String site, Date start, Date end) {
         PollutionResponse pollutionResponse = new PollutionResponse();
         List<HashMap<String, Object>> pollutionHashMapList = pollutionDAO.getAllPollution(site, start, end);
@@ -66,9 +71,11 @@ public class PollutionService {
         return singlePollutionResponse;
     }
 
+    public List<HashMap<String, Object>> getPollutionForApi(String site, String pollution, Date start, Date end) {
+        return pollutionDAO.getPollutionForApi(site,pollution,start,end);
+    }
+
     public HashMap<String, Object> getSiteUpdatedTime(String site) {
-
-
         return pollutionDAO.getSiteUpdatedTime(site);
     }
 

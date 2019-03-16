@@ -73,6 +73,9 @@ TODO
 - 站内信通知
 - 邮件通知
 
+![](/img/mail.png)
+
+
 ### 历史数据导出
 
 TODO
@@ -85,18 +88,127 @@ TODO
 - 历史 / 实时空气质量排行
 - 上海市 PM2.5 预测数据
 
-#### 污染物 API
 
+
+#### 污染物历史数据 API
+URL：
+```
+api/v1/history?site={site}&pollutant={pollutant}&start={start_time}&end={end_time}&key={api_key}
+```
+参数含义如下：
+
+|URL/参数|含义|
+|:--|:--|
+|site|监测点，为英文代码，如`jingan`、`hongkouu`|
+|pollutant|污染物，如`so2`、`pm25`，当为`all`时将返回全部污染物数据|
+|start|开始时间，如`2018-01-01 01:00:00`|
+|end|结束时间，如`2018-01-01 01:00:00`|
+|key|API Key|
+
+返回 JSON 字段含义如下：
+
+| 字段             | 内容                                                         |
+| ---------------- | ------------------------------------------------------------ |
+| site             | 监测点                                                       |
+| time             | 污染物监测时间                                               |
+| city             | 监测点所属城市                                               |
+| aqi              | 空气质量指数(AQI)，即Air Quality Index，是定量描述空气质量状况的无纲量指数 |
+| level            | 空气质量指数类别，有“优、良、轻度污染、中度污染、重度污染、严重污染”6类 |
+| primaryPollutant | 首要污染物                                                   |
+| pm25             | 颗粒物（粒径小于等于2.5μm）1小时平均                         |
+| pm10             | 颗粒物（粒径小于等于10μm）1小时平均                          |
+| co               | 一氧化碳1小时平均                                            |
+| no2              | 二氧化氮1小时平均                                            |
+| oZone            | 臭氧1小时平均                                                |
+| so2              | 二氧化硫1小时平均                                            |
+
+
+```
+# 示例
+api/v1/history?site=jingan&pollutant=all&start=2019-03-15 20:00:00&end=2019-03-16 00:00:00&key=52hD10R9vT2BX7or3
+
+# 返回JSON
+{
+    "code": 0,
+    "msg": "success",
+    "data": {
+        "name": "all pollutant",
+        "result": [
+            {
+                "no2": "86",
+                "site": "静安监测站",
+                "pm25": "37",
+                "city": "上海",
+                "level": "良",
+                "so2": "9",
+                "aqi": 73,
+                "pm10": "96",
+                "primaryPollutant": "PM10",
+                "time": "2019-03-15 20:00:00",
+                "co": "0.9",
+                "oZone": "68"
+            },
+                 ...
+            {
+                "no2": "42",
+                "site": "静安监测站",
+                "pm25": "23",
+                "city": "上海",
+                "level": "良",
+                "so2": "7",
+                "aqi": 59,
+                "pm10": "67",
+                "primaryPollutant": "PM10",
+                "time": "2019-03-16 00:00:00",
+                "co": "0.8",
+                "oZone": "82"
+            }
+        ]
+    }
+}
+```
 
 #### 空气质量排行 API
 
+URL：
+
+```
+api/v1/rank?area={area}&time={time}&order={order}}&key={api_key}
+```
+
+参数含义如下：
+
+|URL/参数|含义|
+|:--|:--|
+|area|地区，目前仅支持`sh`(上海地区)、`cn`(全国)|
+|pollutant|污染物，如`so2`、`pm25`，当为`all`时将返回全部污染物数据|
+|time|时间，如`2019-01-01 01:00:00`|
+|order|排行顺序，如`default`顺序、`reverse`逆序|
+|key|API Key|
+
+返回 JSON 字段含义如下：
+
+|字段|内容|
+|:--|:--|
+|area|地区，目前仅支持`sh`(上海地区)、`cn`(全国)|
+|pollutant|污染物，如`so2`、`pm25`，当为`all`时将返回全部污染物数据|
+|time|时间，如`2019-01-01 01:00:00`|
+|order|排行顺序，如`default`顺序、`reverse`逆序|
+|key|API Key|
+
 #### PM2.5 预测数据 API
 
-#### API 限流
+#### API Key 的生成策略
 
-由 Google  Guava RateLimiter 实现，若每秒请求次数超过最大每秒请求次数，或当月累计请求次数达到每月最大请求次数，则会触发限流。
+#### API 接口限流
+
+基于 Zuul 与  Guava RateLimiter 实现，若每秒请求次数超过最大每秒请求次数，或当月累计请求次数达到每月最大请求次数，则会触发限流。
 
 ![](/img/ratelimit.png)
+
+----------------------
+
+![](/img/ratelimit2.png)
 
 
 
@@ -141,3 +253,7 @@ TODO
 
 TODO
 
+
+```
+
+```

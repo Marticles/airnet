@@ -13,6 +13,6 @@ public class ApiKey {
     private Integer userId;
     private String userKey;
     private Integer preSecondRequestLimit;
-    private Integer dailyRequestLimit;
+    private Integer monthlyRequestLimit;
     private Integer allRequestCount;
 }

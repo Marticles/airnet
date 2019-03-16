@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.*;
 public interface ApiKeyMapper {
 
     @Results({@Result(column = "user_id", property = "userId"), @Result(column = "user_key", property = "userKey"),
-            @Result(column = "pre_second_request_limit", property = "preSecondRequestLimit"), @Result(column = "daily_request_limit", property = "dailyRequestLimit"),
+            @Result(column = "pre_second_request_limit", property = "preSecondRequestLimit"), @Result(column = "monthly_request_limit", property = "monthlyRequestLimit"),
             @Result(column = "all_request_count", property = "allRequestCount")})
     @Select({"select * from api_key where user_key = #{key}"})
     ApiKey getApiKey(@Param("key") String key);

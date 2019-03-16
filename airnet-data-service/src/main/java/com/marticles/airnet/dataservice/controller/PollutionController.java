@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Marticles
@@ -42,6 +43,14 @@ public class PollutionController {
         return pollutionService.getAllPollution(site, start, end);
     }
 
+    @GetMapping("/standard/{site}/pollution")
+    public List<HashMap<String, Object>> getAllPollutionForApi(@PathVariable String site,
+                                                               @RequestParam Date start,
+                                                               @RequestParam Date end) {
+        return pollutionService.getAllPollutionForApi(site, start, end);
+    }
+
+
     /**
      * 获取某污染物
      *
@@ -61,11 +70,20 @@ public class PollutionController {
         return pollutionService.getPollution(site, pollution, start, end);
     }
 
+
+    @GetMapping("/standard/{site}/{pollution}")
+    public List<HashMap<String, Object>> getPollutionForApi(@PathVariable String site,
+                                                            @PathVariable String pollution,
+                                                            @RequestParam Date start,
+                                                            @RequestParam Date end) {
+        return pollutionService.getPollutionForApi(pollution, site, start, end);
+    }
+
     /**
      * 获取监测站数据最后更新时间
      *
      * @param site
-     * @return java.util.HashMap<java.lang.String,java.lang.Object>
+     * @return java.util.HashMap<java.lang.String , java.lang.Object>
      * @author Marticles
      * @date 2019/3/10
      */
