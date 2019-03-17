@@ -257,6 +257,9 @@ api/v1/rank?area={area}&time={time}&order={order}}&key={api_key}
 ![](/img/alarm.png)
 
 ----------------------
+![](/img/apikey.png)
+
+----------------------
 ![](/img/info.png)
 
 ----------------------
@@ -266,13 +269,12 @@ api/v1/rank?area={area}&time={time}&order={order}}&key={api_key}
 ### 未登陆用户
 
 ----------------------
-![](/img/unlogin.png)
+![](/img/visiter.png)
 
-### 管理员
+----------------------
+![](/img/403.png)
 
-TODO
+### 后台管理
 
-
-```
-
-```
+----------------------
+![](/img/admin_user.png)

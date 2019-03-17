@@ -28,10 +28,10 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userLocalInterceptor).excludePathPatterns("/static/*");
-        registry.addInterceptor(authInterceptor).excludePathPatterns("/static/*"
-                ,"/","/check_user","/viz/airflowmap","/viz/aqimap"
-                ,"/viz/globalmap","/rank/cn","/info","/about-airnet"
-                ,"/login","/register","/403","/404","/api-key");
+//        registry.addInterceptor(authInterceptor).excludePathPatterns("/static/*"
+//                ,"/","/check_user","/viz/airflowmap","/viz/aqimap"
+//                ,"/viz/globalmap","/rank/cn","/info","/about-airnet"
+//                ,"/login","/register","/403","/404","/api-key");
         super.addInterceptors(registry);
     }
 

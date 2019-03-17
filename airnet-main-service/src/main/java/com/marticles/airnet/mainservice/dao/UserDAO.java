@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * @author Marticles
  * @description UserDAO
@@ -19,4 +21,7 @@ public interface UserDAO {
 
     @Select({"select id, name, email, type from user where name = #{name} and password = #{password}"})
     User checkUser(UserRequest user);
+
+    @Select({"select id, name, email, type from user where id != #{adminId}"})
+    List<User> getAllUsers(Integer adminId);
 }

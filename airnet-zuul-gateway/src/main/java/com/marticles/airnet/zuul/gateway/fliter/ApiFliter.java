@@ -127,10 +127,12 @@ public class ApiFliter extends ZuulFilter {
                     requestContext.setSendZuulResponse(false);
                     requestContext.setResponseStatusCode(HttpStatus.TOO_MANY_REQUESTS.value());
                     requestContext.setResponseBody("Too many requests");
+
+
+
                 }
             }
         }
-
         return null;
     }
 
