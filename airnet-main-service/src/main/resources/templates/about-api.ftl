@@ -114,13 +114,13 @@
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
-                <ul class="navbar-nav my-lg-0">
+            <ul class="navbar-nav my-lg-0">
 
                     <#if isLogin=="false">
                      <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="icon-login"></i><a href="/login" style="color: white"">登录</a>
+                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             <i class="icon-login"></i><a href="/login" style="color: white"">登录</a>
                      </li>
 
                     <li class="nav-item dropdown">
@@ -192,7 +192,7 @@
 
                 </ul>
 
-</#if>
+                    </#if>
             </div>
         </nav>
     </header>
@@ -251,7 +251,8 @@
                     <#if isLogin=="true">
 
                       <li>
-                          <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-chemical-weapon"></i><span
+                          <a class="has-arrow" href="#" aria-expanded="false"><i
+                                  class="mdi mdi-chemical-weapon"></i><span
                                   class="hide-menu">污染物预测</span></a>
                           <ul aria-expanded="false" class="collapse">
                               <li><a href="/forecast/sh">上海市PM2.5浓度预测</a></li>
@@ -266,7 +267,8 @@
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="/export" aria-expanded="false"><i class="mdi mdi-folder-download"></i>
+                        <a class="has-arrow " href="/export" aria-expanded="false"><i
+                                class="mdi mdi-folder-download"></i>
                             <span class="hide-menu">历史数据导出</span></a>
                     </li>
 
@@ -276,12 +278,14 @@
                     </li>
                     </#if>
                     <li>
-                        <a class="has-arrow " href="/info" aria-expanded="false"><i class="mdi mdi-book-open-variant"></i>
+                        <a class="has-arrow " href="/info" aria-expanded="false"><i
+                                class="mdi mdi-book-open-variant"></i>
                             <span class="hide-menu">相关知识</span></a>
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="/about-airnet" aria-expanded="false"><i class="mdi mdi-cloud-outline"></i>
+                        <a class="has-arrow " href="/about-airnet" aria-expanded="false"><i
+                                class="mdi mdi-cloud-outline"></i>
                             <span class="hide-menu">关于AirNet</span></a>
                     </li>
 
@@ -328,109 +332,500 @@
             <!-- Row -->
             <div class="row">
                 <!-- Column -->
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body ">
+                            <h4 class="card-title" align="center">API 说明</h4>
+
+                            <!-- Nav tabs -->
+                            <div class="vtabs customvtab">
+                                <ul class="nav nav-tabs tabs-vertical" role="tablist">
+                                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#key"
+                                                            role="tab"><span class="hidden-sm-up"><i
+                                            class="ti-home"></i></span> <span class="hidden-xs-down">申请API Key</span>
+                                    </a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#pollutant"
+                                                            role="tab"><span class="hidden-sm-up"><i
+                                            class="ti-user"></i></span> <span
+                                            class="hidden-xs-down">空气污染物数据API</span></a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#rank"
+                                                            role="tab"><span class="hidden-sm-up"><i
+                                            class="ti-email"></i></span> <span
+                                            class="hidden-xs-down">空气质量排行API</span></a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#forecast"
+                                                            role="tab"><span class="hidden-sm-up"><i
+                                            class="ti-email"></i></span> <span
+                                            class="hidden-xs-down">PM2.5预测数据API</span></a></li>
 
 
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="key" role="tabpanel">
+                                        <div class="col-md-12" id="request_input1">
+
+                                            <label class="control-label">输入你的申请理由：</label>
+                                            <input type="text" id="key-reason" class="form-control" placeholder="">
+
+                                            <label class="control-label">输入Key接收邮箱：</label>
+                                            <input type="text" id="key-mail" class="form-control" placeholder="">
+
+                                        </div>
+                                        <div class="col-md-2" id="request_input2">
+                                            <br>
+                                            <button type="button" id="request_button"
+                                                    class="btn waves-effect waves-light btn-primary ">
+                                                <i class="fa fa-check"></i> 提交申请
+                                            </button>
+                                        </div>
+
+                                        <h4 id="result">
+                                            <br>
+                                            &nbsp;&nbsp;&nbsp;我的API Key：暂无，请等待管理员同意申请。
+                                        </h4>
+                                    </div>
+
+                                    <div class="tab-pane p-20" id="rank" role="tabpanel">
+                                        <h5>
+                                            <p style="text-indent:2em ">
+                                                URL：api/v1/rank?area={area}&time={time}&order={order}}&key={api_key}
+                                            </p>
+                                        </h5>
+                                        <br>
+                                        <h5>
+                                            <p style="text-indent:2em;font-weight: bold">
+                                                参数含义：
+                                            </p>
+
+                                            <p style="text-indent:2em">
+                                                area：地区，目前仅支持sh(上海地区)、cn(全国)
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                pollutant：污染物，如so2、pm25，当为all时将返回全部污染物数据
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                time：时间，如2019-01-01 01:00:00
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                order：排行顺序，如default顺序、reverse逆序
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                key	：API Key
+                                            </p>
+                                        </h5>
+                                        <br>
+
+                                        <h5>
+
+                                            <p style="text-indent:2em;font-weight: bold">
+                                                示例：
+                                            </p>
+
+                                            <p style="text-indent:2em">
+                                                URL：/api/v1/rank?area=cn&time=2019-03-16 12:00:00&order=reverse&key=52hD10R9vT2BX7or3
+                                            </p>
+
+                                            <p style="text-indent:2em">
+                                                返回JSON：
+                                            </p>
+
+                                            <p style="text-indent:2em">
+                                                {
+                                            </p>
+                                            <p style="text-indent:4em">
+                                                "code": 0,
+                                            </p>
+                                            <p style="text-indent:4em">
+                                                "msg": "success",
+                                            </p>
+                                            <p style="text-indent:4em">
+                                                "data": {
+                                            </p>
+                                            <p style="text-indent:6em">
+                                                "name": "air quality rank",
+                                            </p>
+                                            <p style="text-indent:6em">
+                                                "result": [
+                                            </p>
+                                            <p style="text-indent:8em">
+                                                {
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "aqi": 245,
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "level": "重度污染",
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "pm25": "194"
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "time": "2019-03-16 12:00:00",
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "city": "五家渠"
+                                            </p>
+                                            <p style="text-indent:8em">
+                                                },
+                                            </p>
+
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                . . .
+                                            </p>
+                                            <p style="text-indent:6em">
+                                                ]
+                                            </p>
+                                            <p style="text-indent:4em">
+                                                }
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                }
+                                            </p>
+
+                                            </h5>
 
 
+                                    </div>
 
-            </div>
+                                    <div class="tab-pane p-20" id="pollutant" role="tabpanel">
+                                        <h5>
+                                            <p style="text-indent:2em ">
+                                                URL：api/v1/history?site={site}&pollutant={pollutant}&start={start_time}&end={end_time}&key={api_key}
+                                            </p>
+                                        </h5>
+                                        <br>
+                                        <h5>
+                                            <p style="text-indent:2em;font-weight: bold">
+                                                参数含义：
+                                            </p>
+
+                                            <p style="text-indent:2em">
+                                                site：监测点，为英文代码，如jingan、hongkou
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                pollutant：污染物，如so2、pm25，当为all时将返回全部污染物数据
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                start：开始时间，如2018-01-01 01:00:00
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                end：结束时间，如2018-01-01 01:00:00
+                                            </p>
+
+                                            <p style="text-indent:2em">
+                                                key	：API Key
+                                            </p>
+                                        </h5>
+                                        <br>
+                                        <h5>
+                                            <p style="text-indent:2em;font-weight: bold">
+                                                返回 JSON 字段含义如下：
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                site：监测点
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                time：污染物监测时间
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                city：监测点所属城市
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                aqi：空气质量指数(AQI)，即Air Quality Index，是定量描述空气质量状况的无纲量指数
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                level：空气质量指数类别，有“优、良、轻度污染、中度污染、重度污染、严重污染”6类
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                primaryPollutant：首要污染物
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                pm25：颗粒物（粒径小于等于2.5μm）1小时平均
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                pm10：颗粒物（粒径小于等于10μm）1小时平均
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                co：一氧化碳1小时平均
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                no2：二氧化氮1小时平均
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                oZone：臭氧1小时平均
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                so2	：二氧化硫1小时平均
+                                            </p>
+                                        </h5>
+
+                                        <h5>
+
+                                            <p style="text-indent:2em;font-weight: bold">
+                                                示例：
+                                            </p>
+
+                                            <p style="text-indent:2em">
+                                                URL：api/v1/history?site=jingan&pollutant=all&start=2019-03-15 20:00:00&end=2019-03-16 00:00:00&key=52hD10R9vT2BX7or3
+                                            </p>
+
+                                            <p style="text-indent:2em">
+                                                返回JSON：
+                                            </p>
+
+                                            <p style="text-indent:2em">
+                                                {
+                                            </p>
+                                            <p style="text-indent:4em">
+                                                "code": 0,
+                                            </p>
+                                            <p style="text-indent:4em">
+                                                "msg": "success",
+                                            </p>
+                                            <p style="text-indent:4em">
+                                                "data": {
+                                            </p>
+                                            <p style="text-indent:6em">
+                                                "name": "all pollutant",
+                                            </p>
+                                            <p style="text-indent:6em">
+                                                "result": [
+                                            </p>
+                                            <p style="text-indent:8em">
+                                                {
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "no2": "86",
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "site": "静安监测站",
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "city": "上海",
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "level": "良",
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "so2": "9",
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "aqi": 73,
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "pm10": "96",
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "primaryPollutant": "PM10",
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "time": "2019-03-15 20:00:00",
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "co": "0.9",
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                "oZone": "68"
+                                            </p>
+
+                                            <p style="text-indent:8em">
+                                                },
+                                            </p>
+                                            <p style="text-indent:10em">
+                                                . . .
+                                            </p>
+                                            <p style="text-indent:6em">
+                                                ]
+                                            </p>
+                                            <p style="text-indent:4em">
+                                                }
+                                            </p>
+                                            <p style="text-indent:2em">
+                                                }
+                                            </p>
+
+                                        </h5>
 
 
-            <!-- ============================================================== -->
-            <!-- End PAge Content -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Right sidebar -->
-            <!-- ============================================================== -->
-            <!-- .right-sidebar -->
-            <div class="right-sidebar">
-                <div class="slimscrollright">
-                    <div class="rpanel-title"> 配色 <span><i class="ti-close right-side-toggle"></i></span></div>
-                    <div class="r-panel-body">
-                        <ul id="themecolors" class="m-t-20">
-                            <li><b>亮色</b></li>
-                            <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
-                            <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
-                            <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
-                            <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
-                            <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
-                            <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
-                            <li class="d-block m-t-30"><b>暗色</b></li>
-                            <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a>
-                            </li>
-                            <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
-                            <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
-                            <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
-                            <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a>
-                            </li>
-                            <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a>
-                            </li>
-                        </ul>
+                                    </div>
+
+                                    <div class="tab-pane p-20" id="forecast" role="tabpanel">
+                                        <h4>
+                                            <p style="text-indent:2em ">
+                                                TODO
+                                            </p>
+                                        </h4>
+
+                                        </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <div class="right-sidebar">
+                    <div class="slimscrollright">
+                        <div class="rpanel-title"> 配色 <span><i class="ti-close right-side-toggle"></i></span></div>
+                        <div class="r-panel-body">
+                            <ul id="themecolors" class="m-t-20">
+                                <li><b>亮色</b></li>
+                                <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
+                                <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
+                                <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
+                                <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
+                                <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
+                                <li class="d-block m-t-30"><b>暗色</b></li>
+                                <li><a href="javascript:void(0)" data-theme="default-dark"
+                                       class="default-dark-theme">7</a>
+                                </li>
+                                <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a>
+                                </li>
+                                <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a>
+                                </li>
+                                <li><a href="javascript:void(0)" data-theme="purple-dark"
+                                       class="purple-dark-theme">11</a>
+                                </li>
+                                <li><a href="javascript:void(0)" data-theme="megna-dark"
+                                       class="megna-dark-theme ">12</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
             </div>
             <!-- ============================================================== -->
-            <!-- End Right sidebar -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer">
+                © 2019 LJH's Graduation Project
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
-        <footer class="footer">
-            © 2019 LJH's Graduation Project
-        </footer>
-        <!-- ============================================================== -->
-        <!-- End footer -->
+        <!-- End Page wrapper  -->
         <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
-    <!-- End Page wrapper  -->
+    <!-- End Wrapper -->
     <!-- ============================================================== -->
-</div>
-<!-- ============================================================== -->
-<!-- End Wrapper -->
-<!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- All Jquery -->
-<!-- ============================================================== -->
-<script src="/static/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap tether Core JavaScript -->
-<script src="/static/plugins/popper/popper.min.js"></script>
-<script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
-<!-- slimscrollbar scrollbar JavaScript -->
-<script src="/static/js/jquery.slimscroll.js"></script>
-<!--Wave Effects -->
-<script src="/static/js/waves.js"></script>
-<!--Menu sidebar -->
-<script src="/static/js/sidebarmenu.js"></script>
-<!--stickey kit -->
-<script src="/static/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
-<script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
-<script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
-<!--Custom JavaScript -->
-<script src="/static/js/custom.min.js"></script>
-<!-- ============================================================== -->
-<!-- This page plugins -->
-<!-- ============================================================== -->
-<!--c3 JavaScript -->
-<script src="/static/plugins/d3/d3.min.js"></script>
-<script src="/static/plugins/c3-master/c3.min.js"></script>
-<!-- chartist chart -->
-<script src="/static/plugins/chartist-js/dist/chartist.min.js"></script>
-<script src="/static/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
-<!-- ============================================================== -->
-<!-- Style switcher -->
-<!-- ============================================================== -->
-<script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="/static/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/static/plugins/popper/popper.min.js"></script>
+    <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="/static/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="/static/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="/static/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="/static/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/static/js/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!--c3 JavaScript -->
+    <script src="/static/plugins/d3/d3.min.js"></script>
+    <script src="/static/plugins/c3-master/c3.min.js"></script>
+    <!-- chartist chart -->
+    <script src="/static/plugins/chartist-js/dist/chartist.min.js"></script>
+    <script src="/static/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
 
 </body>
 
 </html>
 
 <script>
+
+
+    function get_apikey() {
+        if (getCookie("user_id") != null) {
+            $.ajax({
+                url: '/api-key/' + getCookie("user_id"),
+                type: 'GET',
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                success: function (data) {
+                    if (data.status == 0) {
+                        $("#result").html("<br>\n" +
+                                "                        &nbsp;&nbsp;&nbsp;我的API Key：暂无记录。");
+                    } else if (data.status == 1) {
+                        $("#result").html("<br>\n" +
+                                "                        &nbsp;&nbsp;&nbsp;我的API Key：" + data.key+"&emsp;&emsp; &emsp;  QPS限制："+data.preSecondRequestLimit+" &emsp;&emsp; &emsp;  每月API调用次数上限："+data.monthlyRequestLimit);
+                    } else if (data.status == 2) {
+                        $("#result").html("<br>\n" +
+                                "                        &nbsp;&nbsp;&nbsp;我的API Key：管理员拒绝了你的申请，你可以重新尝试申请。");
+                    }
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
+            });
+        }
+    }
+
+    get_apikey();
+
+    $("#request_button").click(function () {
+        var reason = $('#key-reason').val();
+        var request = {};
+        request.reason = reason;
+        request.mail = $('#key-mail').val();
+        $.ajax({
+            url: '/api-key',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(request),
+            contentType: 'application/json;charset=UTF-8',
+            success: function (data) {
+                if (data.code == 1) {
+                    alert("申请提交成功")
+                    window.location.reload();
+                } else {
+                    alert("申请提交失败，请重试")
+                    window.location.reload();
+                }
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+    });
+
+
     // 通知记数
     var msg_count = 0;
 
@@ -502,4 +897,4 @@
         return null;
     }
 
-    </script>
+</script>

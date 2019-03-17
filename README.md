@@ -88,8 +88,6 @@ TODO
 - 历史 / 实时空气质量排行
 - 上海市 PM2.5 预测数据
 
-
-
 #### 污染物历史数据 API
 URL：
 ```
@@ -99,7 +97,7 @@ api/v1/history?site={site}&pollutant={pollutant}&start={start_time}&end={end_tim
 
 |URL/参数|含义|
 |:--|:--|
-|site|监测点，为英文代码，如`jingan`、`hongkouu`|
+|site|监测点，为英文代码，如`jingan`、`hongkou`|
 |pollutant|污染物，如`so2`、`pm25`，当为`all`时将返回全部污染物数据|
 |start|开始时间，如`2018-01-01 01:00:00`|
 |end|结束时间，如`2018-01-01 01:00:00`|
@@ -186,15 +184,36 @@ api/v1/rank?area={area}&time={time}&order={order}}&key={api_key}
 |order|排行顺序，如`default`顺序、`reverse`逆序|
 |key|API Key|
 
-返回 JSON 字段含义如下：
+```
+# 示例
+/api/v1/rank?area=cn&time=2019-03-16 12:00:00&order=reverse&key=52hD10R9vT2BX7or3
 
-|字段|内容|
-|:--|:--|
-|area|地区，目前仅支持`sh`(上海地区)、`cn`(全国)|
-|pollutant|污染物，如`so2`、`pm25`，当为`all`时将返回全部污染物数据|
-|time|时间，如`2019-01-01 01:00:00`|
-|order|排行顺序，如`default`顺序、`reverse`逆序|
-|key|API Key|
+# 返回JSON
+{
+    "code": 0,
+    "msg": "success",
+    "data": {
+        "name": "air quality rank",
+        "result": [
+            {
+                "aqi": 245,
+                "level": "重度污染",
+                "pm25": "194",
+                "time": "2019-03-16 12:00:00",
+                "city": "五家渠"
+            },
+            ...
+            {
+                "aqi": 18,
+                "level": "优",
+                "pm25": "4",
+                "time": "2019-03-16 12:00:00",
+                "city": "林芝地区"
+            }
+        ]
+    }
+}         
+```
 
 #### PM2.5 预测数据 API
 
