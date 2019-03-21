@@ -234,7 +234,7 @@
                 <div class="col-md-5 col-8 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">主页</a></li>
-                        <li class="breadcrumb-item">用户管理</li>
+                        <li class="breadcrumb-item">API Key管理</li>
                     </ol>
                 </div>
 
@@ -255,74 +255,6 @@
                 <!-- Column -->
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body ">
-
-
-                            <div class="table-responsive">
-                                <table id="tb" class="table color-table primary-table hover-table">
-                                    <thead>
-                                    <tr style="text-align:center;">
-
-                                        <th>用户id</th>
-                                        <th>用户名</th>
-                                        <th>Email</th>
-                                        <th>用户权限</th>
-                                        <th>修改权限</th>
-                                        <th>修改用户</th>
-                                        <th>删除用户</th>
-
-                                    </tr>
-                                    </thead>
-                                    <tbody style="text-align:center;">
-
-                                    <#list userList as user>
-                                    <tr>
-                                        <td>${user.id}</td>
-                                        <td><input type="text" id="input-name-${user.id}" class="form-control" value=${user.name}></td>
-                                        <td><input type="text" id="input-email-${user.id}" class="form-control" value=${user.email}></td>
-                                            <#if user.type==1>
-                                            <td id = "role-${user.id}" value="${user.type}">普通用户</td>
-                                            <#elseif user.type==2>
-                                            <td id = "role-${user.id}" value="${user.type}">高级用户</td>
-                                            <#elseif user.type==0>
-                                            <td id = "role-${user.id}" value="${user.type}">管理员</td>
-                                            </#if>
-
-                                        <td><select class="selectpicker " id="role-picker-${user.id}"
-                                                    data-style="btn btn-block btn-outline-secondary" title="选择修改权限(默认普通用户)">
-                                            <optgroup>
-                                                <option value="1">普通用户</option>
-                                            </optgroup>
-
-                                            <optgroup>
-                                                <option value="2">高级用户</option>
-                                            </optgroup>
-
-                                            <optgroup>
-                                                <option value="0">管理员</option>
-                                            </optgroup>
-
-                                        </select></td>
-
-                                        <td>
-                                            <button type="button" id="updated-${user.id}" value=${user.id}
-                                                    class="btn waves-effect waves-light btn-primary btn-xs
-                                            "></i>确认修改
-                                            </button></td>
-
-                                        <td>
-                                            <button type="button" id="del-${user.id}" value=${user.id}
-                                                    class="btn waves-effect waves-light btn-danger btn-xs
-                                            "></i>确认删除
-                                            </button></td>
-                                    </tr
-                                    </#list>
-                                    </tbody>
-                                </table>
-                            </div>
-
-
-                        </div>
 
 
                     </div>

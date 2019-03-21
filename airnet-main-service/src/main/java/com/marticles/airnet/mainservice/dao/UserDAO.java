@@ -2,9 +2,7 @@ package com.marticles.airnet.mainservice.dao;
 
 import com.marticles.airnet.mainservice.model.User;
 import com.marticles.airnet.mainservice.model.UserRequest;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -24,4 +22,10 @@ public interface UserDAO {
 
     @Select({"select id, name, email, type from user where id != #{adminId}"})
     List<User> getAllUsers(Integer adminId);
+
+    @Delete({"delete from user where id = #{userId}"})
+    Integer deleteUser(Integer userId);
+
+    @Update({"update user set name = #{name}, email = #{email}, type = #{type} where id = #{id}"})
+    Integer updatedUser(User user);
 }

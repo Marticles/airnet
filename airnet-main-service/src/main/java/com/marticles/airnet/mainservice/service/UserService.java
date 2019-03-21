@@ -30,4 +30,12 @@ public class UserService {
     public List<User> getAllUsers(Integer adminId){
         return userDAO.getAllUsers(adminId);
     }
+
+    public void deleteUser(Integer userId){
+        userDAO.deleteUser(userId);
+    }
+
+    public void updatedUser(User user){
+        userDAO.updatedUser(user);
+    }
 }

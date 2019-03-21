@@ -1,5 +1,6 @@
 package com.marticles.airnet.mainservice.config;
 
+import com.marticles.airnet.mainservice.interceptor.AdminInterceptor;
 import com.marticles.airnet.mainservice.interceptor.AuthInterceptor;
 import com.marticles.airnet.mainservice.interceptor.UserLocalInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class InterceptorConfig extends WebMvcConfigurationSupport {
 
     @Autowired
-    UserLocalInterceptor userLocalInterceptor;
+    private UserLocalInterceptor userLocalInterceptor;
 
     @Autowired
-    AuthInterceptor authInterceptor;
+    private AuthInterceptor authInterceptor;
+
+    @Autowired
+    private AdminInterceptor adminInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -32,6 +36,7 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
 //                ,"/","/check_user","/viz/airflowmap","/viz/aqimap"
 //                ,"/viz/globalmap","/rank/cn","/info","/about-airnet"
 //                ,"/login","/register","/403","/404","/api-key");
+        registry.addInterceptor(adminInterceptor).excludePathPatterns("/static/*").addPathPatterns("/admin/**");
         super.addInterceptors(registry);
     }
 
