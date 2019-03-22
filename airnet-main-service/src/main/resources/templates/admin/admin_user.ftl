@@ -199,7 +199,7 @@
                 <ul id="sidebarnav">
                     <li class="nav-small-cap">PERSONAL</li>
                     <li>
-                        <a class="has-arrow " href="/admin/user" aria-expanded="false"><i
+                        <a class="has-arrow " href="/admin/index" aria-expanded="false"><i
                                 class="mdi mdi-account"></i>
                             <span class="hide-menu">用户管理</span></a>
                     </li>
@@ -301,15 +301,12 @@
                                             <optgroup>
                                                 <option value="0">管理员</option>
                                             </optgroup>
-
                                         </select></td>
-
                                         <td>
                                             <button type="button" id="updated-${user.id}" value=${user.id}
                                                     class="btn waves-effect waves-light btn-primary btn-xs
                                             "></i>确认修改
                                             </button></td>
-
                                         <td>
                                             <button type="button" id="del-${user.id}" value=${user.id}
                                                     class="btn waves-effect waves-light btn-danger btn-xs

@@ -19,5 +19,4 @@ public class ApiApplication {
     private String key;
     private Integer preSecondRequestLimit;
     private Integer monthlyRequestLimit;
-
 }

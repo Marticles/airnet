@@ -199,7 +199,7 @@
                 <ul id="sidebarnav">
                     <li class="nav-small-cap">PERSONAL</li>
                     <li>
-                        <a class="has-arrow " href="/admin/user" aria-expanded="false"><i
+                        <a class="has-arrow " href="/admin/index" aria-expanded="false"><i
                                 class="mdi mdi-account"></i>
                             <span class="hide-menu">用户管理</span></a>
                     </li>
@@ -255,127 +255,247 @@
                 <!-- Column -->
                 <div class="col-lg-12">
                     <div class="card">
-
-
-                    </div>
-
-
-                    <!-- ============================================================== -->
-                    <!-- End PAge Content -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- Right sidebar -->
-                    <!-- ============================================================== -->
-                    <!-- .right-sidebar -->
-                    <div class="right-sidebar">
-                        <div class="slimscrollright">
-                            <div class="rpanel-title"> 配色 <span><i class="ti-close right-side-toggle"></i></span></div>
-                            <div class="r-panel-body">
-                                <ul id="themecolors" class="m-t-20">
-                                    <li><b>亮色</b></li>
-                                    <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a>
-                                    </li>
-                                    <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
-                                    <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
-                                    <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a>
-                                    </li>
-                                    <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
-                                    <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
-                                    <li class="d-block m-t-30"><b>暗色</b></li>
-                                    <li><a href="javascript:void(0)" data-theme="default-dark"
-                                           class="default-dark-theme">7</a>
-                                    </li>
-                                    <li><a href="javascript:void(0)" data-theme="green-dark"
-                                           class="green-dark-theme">8</a>
-                                    </li>
-                                    <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a>
-                                    </li>
-                                    <li><a href="javascript:void(0)" data-theme="blue-dark"
-                                           class="blue-dark-theme">10</a>
-                                    </li>
-                                    <li><a href="javascript:void(0)" data-theme="purple-dark"
-                                           class="purple-dark-theme">11</a>
-                                    </li>
-                                    <li><a href="javascript:void(0)" data-theme="megna-dark"
-                                           class="megna-dark-theme ">12</a>
-                                    </li>
-                                </ul>
+                        <div class="card-header">
+                            <span>用户API Key 申请</span>
+                            <div class="card-actions">
+                                <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                                <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
+                                <a class="btn-close" data-action="close"><i class="ti-close"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class="table-responsive">
+                                <table class="table color-table primary-table hover-table">
+                                    <thead style="text-align:center;">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>用户</th>
+                                        <th>申请理由</th>
+                                        <th>申请时间</th>
+                                        <th>同意申请</th>
+                                        <th>拒绝申请</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody style="text-align:center;">
+                                    <#assign i = 1>
+                                    <#list apiApplicationList as apiApplication>
+                                        <tr>
+                                            <td>${i}</td>
+                                            <td>${apiApplication.userName}</td>
+                                            <td>${apiApplication.reason}</td>
+                                            <td>${apiApplication.createTime}</td>
+                                            <td>
+                                                <button onclick="genKey(${apiApplication.userId},${apiApplication.id})"
+                                                        data-target="#myModal" type="button"
+                                                        id="agree-${apiApplication.id}" value=${apiApplication.id}
+                                                                class="btn waves-effect waves-light btn-info btn-xs
+                                                " ></i>同意
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" id="reject-${apiApplication.id}"
+                                                        value=${apiApplication.id}
+                                                                class="btn waves-effect waves-light btn-danger btn-xs
+                                                "></i>拒绝
+                                                </button>
+                                            </td>
+                                        </tr
+                                        <#assign i += 1>
+                                    </#list>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <!-- ============================================================== -->
-                    <!-- End Right sidebar -->
-                    <!-- ============================================================== -->
                 </div>
-                <!-- ============================================================== -->
-                <!-- End Container fluid  -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- footer -->
-                <!-- ============================================================== -->
-                <footer class="footer">
-                    © 2019 LJH's Graduation Project
-                </footer>
-                <!-- ============================================================== -->
-                <!-- End footer -->
-                <!-- ============================================================== -->
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <span>已有API Key管理</span>
+                            <div class="card-actions">
+                                <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                                <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
+                                <a class="btn-close" data-action="close"><i class="ti-close"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class="table-responsive">
+                                <table class="table color-table primary-table hover-table">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>用户</th>
+                                        <th>次数</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <#assign i = 1>
+                                    <#list apiApplicationList as apiApplication>
+                                        <tr>
+                                            <td>${i}</td>
+                                            <td>${apiApplication.userName}</td>
+                                            <td>${apiApplication.id}</td>
+                                        </tr
+                                        <#assign i += 1>
+                                    </#list>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLabel1">确认生成API Key</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">×</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label">每秒最大请求次数</label>
+                                    <input type="text" class="form-control" id="max-qps">
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label">每月最大请求次数</label>
+                                    <input type="text" class="form-control" id="max-monthly-request"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button onclick="addKey()" type="button" class="btn btn-info">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <div class="right-sidebar">
+                <div class="slimscrollright">
+                    <div class="rpanel-title"> 配色 <span><i class="ti-close right-side-toggle"></i></span></div>
+                    <div class="r-panel-body">
+                        <ul id="themecolors" class="m-t-20">
+                            <li><b>亮色</b></li>
+                            <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a>
+                            </li>
+                            <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
+                            <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
+                            <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a>
+                            </li>
+                            <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
+                            <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
+                            <li class="d-block m-t-30"><b>暗色</b></li>
+                            <li><a href="javascript:void(0)" data-theme="default-dark"
+                                   class="default-dark-theme">7</a>
+                            </li>
+                            <li><a href="javascript:void(0)" data-theme="green-dark"
+                                   class="green-dark-theme">8</a>
+                            </li>
+                            <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a>
+                            </li>
+                            <li><a href="javascript:void(0)" data-theme="blue-dark"
+                                   class="blue-dark-theme">10</a>
+                            </li>
+                            <li><a href="javascript:void(0)" data-theme="purple-dark"
+                                   class="purple-dark-theme">11</a>
+                            </li>
+                            <li><a href="javascript:void(0)" data-theme="megna-dark"
+                                   class="megna-dark-theme ">12</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <!-- ============================================================== -->
-            <!-- End Page wrapper  -->
+            <!-- End Right sidebar -->
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
-        <!-- End Wrapper -->
+        <!-- End Container fluid  -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
-        <!-- All Jquery -->
+        <!-- footer -->
         <!-- ============================================================== -->
-        <script src="/static/plugins/jquery/jquery.min.js"></script>
-        <!-- Bootstrap tether Core JavaScript -->
-        <script src="/static/plugins/popper/popper.min.js"></script>
-        <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <!-- slimscrollbar scrollbar JavaScript -->
-        <script src="/static/js/jquery.slimscroll.js"></script>
-        <!--Wave Effects -->
-        <script src="/static/js/waves.js"></script>
-        <!--Menu sidebar -->
-        <script src="/static/js/sidebarmenu.js"></script>
-        <!--stickey kit -->
-        <script src="/static/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
-        <script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
-        <script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
-        <!--Custom JavaScript -->
-        <script src="/static/js/custom.min.js"></script>
+        <footer class="footer">
+            © 2019 LJH's Graduation Project
+        </footer>
         <!-- ============================================================== -->
-        <!-- This page plugins -->
+        <!-- End footer -->
         <!-- ============================================================== -->
-        <!--c3 JavaScript -->
-        <script src="/static/plugins/d3/d3.min.js"></script>
-        <script src="/static/plugins/c3-master/c3.min.js"></script>
-        <!-- chartist chart -->
-        <script src="/static/plugins/chartist-js/dist/chartist.min.js"></script>
-        <script src="/static/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
-        <!-- ============================================================== -->
-        <!-- Style switcher -->
-        <!-- ============================================================== -->
-        <script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-        <!-- Echarts -->
-        <script src="/static/js/echarts.js"></script>
-        <script src="/static/js/macarons.js"></script>
-        <!-- DateTime -->
-        <script src="/static/plugins/moment/moment.js"></script>
-        <script src="/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-        <!-- Clock Plugin JavaScript -->
-        <script src="/static/plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
-        <!-- Date Picker Plugin JavaScript -->
-        <script src="/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-        <!-- Date range Plugin JavaScript -->
-        <script src="/static/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-        <script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
-        <script src="/static/plugins/moment/moment.js"></script>
-        <!-- 自定义时间 -->
-        <script src="/static/js/datetime.js"></script>
-        <script src="/static/js/bootstrap-select.min.js"></script>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="/static/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/static/plugins/popper/popper.min.js"></script>
+<script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/static/js/jquery.slimscroll.js"></script>
+<!--Wave Effects -->
+<script src="/static/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/static/js/sidebarmenu.js"></script>
+<!--stickey kit -->
+<script src="/static/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+<script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
+<!--Custom JavaScript -->
+<script src="/static/js/custom.min.js"></script>
+<!-- ============================================================== -->
+<!-- This page plugins -->
+<!-- ============================================================== -->
+<!--c3 JavaScript -->
+<script src="/static/plugins/d3/d3.min.js"></script>
+<script src="/static/plugins/c3-master/c3.min.js"></script>
+<!-- chartist chart -->
+<script src="/static/plugins/chartist-js/dist/chartist.min.js"></script>
+<script src="/static/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+<!-- ============================================================== -->
+<!-- Style switcher -->
+<!-- ============================================================== -->
+<script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+<!-- Echarts -->
+<script src="/static/js/echarts.js"></script>
+<script src="/static/js/macarons.js"></script>
+<!-- DateTime -->
+<script src="/static/plugins/moment/moment.js"></script>
+<script src="/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<!-- Clock Plugin JavaScript -->
+<script src="/static/plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<!-- Date range Plugin JavaScript -->
+<script src="/static/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="/static/plugins/moment/moment.js"></script>
+<!-- 自定义时间 -->
+<script src="/static/js/datetime.js"></script>
+<script src="/static/js/bootstrap-select.min.js"></script>
 
 </body>
 
@@ -383,7 +503,6 @@
 
     // 通知记数
     var msg_count = 0;
-
     function get_notification() {
         if (getCookie("user_id") != null) {
             $.ajax({
@@ -429,10 +548,27 @@
         return null;
     }
 
-    $("#tb").on('click', "button[id^='del-']", function () {
+    var request_user_id = null;
+    var request_application_id = null;
+
+    function genKey(userId,applicationId) {
+        request_user_id = userId;
+        request_user_id = applicationId;
+        $("#myModal").modal();
+    }
+
+    function addKey() {
+        var request = {};
+        request.userId = request_user_id;
+        request.preSecondRequestLimit = $("#max-qps").val();
+        request.monthlyRequestLimit = $("#max-monthly-request").val();
+        request.status = 1;
         $.ajax({
-            url: '/admin/user/'+this.value,
-            type: 'DELETE',
+            url: '/admin/key/' + request_user_id,
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(request),
+            contentType: 'application/json; charset=UTF-8',
             success: function (data) {
                 window.location.reload();
             },
@@ -440,20 +576,24 @@
                 console.log(msg);
             }
         });
-    });
+
+    }
+
+
+
 
     $("#tb").on('click', "button[id^='updated-']", function () {
         var request = {};
         request.id = this.value;
-        request.name = $("#input-name-"+this.value).val();
-        request.email = $("#input-email-"+this.value).val();
-        if($("#role-picker-"+this.value).val()!== ""){
-            request.type = $("#role-picker-"+this.value).val();
-        }else {
-            request.type = $("#role-"+this.value).attr("value");
+        request.name = $("#input-name-" + this.value).val();
+        request.email = $("#input-email-" + this.value).val();
+        if ($("#role-picker-" + this.value).val() !== "") {
+            request.type = $("#role-picker-" + this.value).val();
+        } else {
+            request.type = $("#role-" + this.value).attr("value");
         }
         $.ajax({
-            url: '/admin/user/'+this.value,
+            url: '/admin/user/' + this.value,
             type: 'PUT',
             dataType: 'json',
             data: JSON.stringify(request),
