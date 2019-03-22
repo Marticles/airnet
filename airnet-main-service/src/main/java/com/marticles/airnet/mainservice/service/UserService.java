@@ -17,7 +17,7 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     public int addUser(UserRequest user){
         return userDAO.addUser(user);
@@ -33,6 +33,10 @@ public class UserService {
 
     public void deleteUser(Integer userId){
         userDAO.deleteUser(userId);
+    }
+
+    public User getUserById(Integer userId){
+        return userDAO.getUserById(userId);
     }
 
     public void updatedUser(User user){

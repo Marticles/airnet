@@ -33,6 +33,13 @@ public interface ApiKeyDAO {
     @Select({"select * from api_key where user_id = #{userId}"})
     ApiKey getApiKey(@Param("userId") Integer userId);
 
+    @Results({@Result(column = "user_id", property = "userId"), @Result(column = "user_key", property = "userKey"),
+            @Result(column = "pre_second_request_limit", property = "preSecondRequestLimit"), @Result(column = "monthly_request_limit", property = "monthlyRequestLimit"),
+            @Result(column = "all_request_count", property = "allRequestCount")})
+    @Select({"select * from api_key order by id "})
+    List<ApiKey> getAllApiKey();
+
+
 
     @Update({"update api_application set status = #{status} where id = #{id}"})
     Integer updateApplicationStatus(@Param("id") Integer id, @Param("status") Integer status);
@@ -46,6 +53,6 @@ public interface ApiKeyDAO {
     Integer addApiKey(@Param("userId") Integer userId, @Param("key") String key, @Param("preSecondRequestLimit") Integer preSecondRequestLimit, @Param("monthlyRequestLimit") Integer monthlyRequestLimit);
 
 
-    @Update({"update api_key set user_key = #{key} where user_id = #{userId}"})
+    @Update({"update api_key set user_key = #{key} ,pre_second_request_limit=#{preSecondRequestLimit}, monthly_request_limit= #{monthlyRequestLimit} where user_id = #{userId}"})
     Integer updateApiKey(@Param("userId") Integer userId, @Param("key") String key, @Param("preSecondRequestLimit") Integer preSecondRequestLimit, @Param("monthlyRequestLimit") Integer monthlyRequestLimit);
 }

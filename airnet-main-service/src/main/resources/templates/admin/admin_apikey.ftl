@@ -293,7 +293,7 @@
                                                 </button>
                                             </td>
                                             <td>
-                                                <button type="button" id="reject-${apiApplication.id}"
+                                                <button onclick="rejectRequest(${apiApplication.userId},${apiApplication.id})" type="button" id="reject-${apiApplication.id}"
                                                         value=${apiApplication.id}
                                                                 class="btn waves-effect waves-light btn-danger btn-xs
                                                 "></i>拒绝
@@ -312,7 +312,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <span>已有API Key管理</span>
+                            <span>API Key管理</span>
                             <div class="card-actions">
                                 <a class="" data-action="collapse"><i class="ti-minus"></i></a>
                                 <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
@@ -322,20 +322,36 @@
                         <div class="card-body ">
                             <div class="table-responsive">
                                 <table class="table color-table primary-table hover-table">
-                                    <thead>
+                                    <thead style="text-align:center;">
                                     <tr>
                                         <th>#</th>
-                                        <th>用户</th>
-                                        <th>次数</th>
+                                        <th>用户名</th>
+                                        <th>Key</th>
+                                        <th>QPS限制</th>
+                                        <th>每月最多调用次数</th>
+                                        <th>修改Key</th>
+                                        <th>删除Key</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody style="text-align:center;">
                                     <#assign i = 1>
-                                    <#list apiApplicationList as apiApplication>
+                                    <#list apiKeyList as apiKey>
                                         <tr>
                                             <td>${i}</td>
-                                            <td>${apiApplication.userName}</td>
-                                            <td>${apiApplication.id}</td>
+                                            <td>${apiKey.userName}</td>
+                                            <td>${apiKey.getUserKey()}</td>
+                                            <td><input type="text" id="input-qps-${apiKey.getId()}" class="form-control" value=${apiKey.getPreSecondRequestLimit()}></td>
+                                            <td><input type="text" id="input-qps-${apiKey.getId()}" class="form-control" value=${apiKey.getMonthlyRequestLimit()}></td>
+                                            <td>
+                                                <button type="button" id="updated-${user.id}" value=${user.id}
+                                                        class="btn waves-effect waves-light btn-primary btn-xs
+                                                "></i>确认修改
+                                                </button></td>
+                                            <td>
+                                                <button type="button" id="del-${user.id}" value=${user.id}
+                                                        class="btn waves-effect waves-light btn-danger btn-xs
+                                                "></i>确认删除
+                                                </button></td>
                                         </tr
                                         <#assign i += 1>
                                     </#list>
@@ -373,7 +389,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button onclick="addKey()" type="button" class="btn btn-info">确认</button>
+                            <button onclick="allowRequest()" type="button" class="btn btn-info">确认</button>
                         </div>
                     </div>
                 </div>
@@ -553,18 +569,18 @@
 
     function genKey(userId,applicationId) {
         request_user_id = userId;
-        request_user_id = applicationId;
+        request_application_id = applicationId;
         $("#myModal").modal();
     }
 
-    function addKey() {
+    function allowRequest() {
         var request = {};
         request.userId = request_user_id;
         request.preSecondRequestLimit = $("#max-qps").val();
         request.monthlyRequestLimit = $("#max-monthly-request").val();
         request.status = 1;
         $.ajax({
-            url: '/admin/key/' + request_user_id,
+            url: '/admin/key/' + request_application_id,
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(request),
@@ -579,22 +595,13 @@
 
     }
 
-
-
-
-    $("#tb").on('click', "button[id^='updated-']", function () {
+    function rejectRequest(userId,applicationId) {
         var request = {};
-        request.id = this.value;
-        request.name = $("#input-name-" + this.value).val();
-        request.email = $("#input-email-" + this.value).val();
-        if ($("#role-picker-" + this.value).val() !== "") {
-            request.type = $("#role-picker-" + this.value).val();
-        } else {
-            request.type = $("#role-" + this.value).attr("value");
-        }
+        request.userId = userId;
+        request.status = 2;
         $.ajax({
-            url: '/admin/user/' + this.value,
-            type: 'PUT',
+            url: '/admin/key/' + applicationId,
+            type: 'POST',
             dataType: 'json',
             data: JSON.stringify(request),
             contentType: 'application/json; charset=UTF-8',
@@ -605,7 +612,7 @@
                 console.log(msg);
             }
         });
-    });
+    }
 
 </script>
 

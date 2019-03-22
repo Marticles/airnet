@@ -28,4 +28,7 @@ public interface UserDAO {
 
     @Update({"update user set name = #{name}, email = #{email}, type = #{type} where id = #{id}"})
     Integer updatedUser(User user);
+
+    @Select({"select id, name, email, type from user where id = #{userId}"})
+    User getUserById(Integer userId);
 }

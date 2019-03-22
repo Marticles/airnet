@@ -107,7 +107,7 @@ api/v1/history?site={site}&pollutant={pollutant}&start={start_time}&end={end_tim
 
 | 字段             | 内容                                                         |
 | ---------------- | ------------------------------------------------------------ |
-| site             | 监测点                                                       |
+| site             | 监测点，如`jingan`、`yangpusipiao`,`pudongxinqu`等           |
 | time             | 污染物监测时间                                               |
 | city             | 监测点所属城市                                               |
 | aqi              | 空气质量指数(AQI)，即Air Quality Index，是定量描述空气质量状况的无纲量指数 |
@@ -217,11 +217,36 @@ api/v1/rank?area={area}&time={time}&order={order}}&key={api_key}
 
 #### PM2.5 预测数据 API
 
+URL：
+
+```
+api/v1/forecast?site={site}&start={start_time}&end={end_time}&key={api_key}
+```
+
+参数含义如下：
+
+|URL/参数|含义|
+|:--|:--|
+|site|监测点，如`jingan`、`yangpusipiao`,`pudongxinqu`等|
+|start|预测开始时间，如`2018-01-01 01:00:00`|
+|end|预测结束时间，如`2018-01-01 01:00:00`|
+|key|API Key|
+
+```
+# 示例
+api/v1/forecast?site=yangpusipiao&start=2019-12-01 12:00:00&end=2019-12-20 12:00:00&key=api_key=52hD10R9vT2BX7or3
+
+# 返回JSON
+TODO
+```
+
 #### API Key 的生成策略
+
+考虑到分布式环境下采用 UUID 直接生成 Key 可能会导致 Key 重复的问题，最终的生成策略采用 Snowflake 算法生成唯一 ID， 再对 ID 进行 HmacMD5 加密生成 API Key。
 
 #### API 接口限流
 
-基于 Zuul 与  Guava RateLimiter 实现，若每秒请求次数超过最大每秒请求次数，或当月累计请求次数达到每月最大请求次数，则会触发限流。
+基于 Zuul 与  Guava RateLimiter 实现，若用户的每秒请求次数超过 QPS 限制，或当月累计请求次数达到每月最大请求次数，则会触发限流。
 
 ![](/img/ratelimit.png)
 
@@ -286,3 +311,6 @@ api/v1/rank?area={area}&time={time}&order={order}}&key={api_key}
 
 ----------------------
 ![](/img/admin_user.png)
+
+----------------------
+![](/img/admin_api.png)

@@ -15,4 +15,5 @@ public class ApiKey {
     private Integer preSecondRequestLimit;
     private Integer monthlyRequestLimit;
     private Integer allRequestCount;
+    private String userName;
 }

@@ -1,6 +1,7 @@
 package com.marticles.airnet.mainservice.service;
 
 import com.marticles.airnet.mainservice.dao.ApiKeyDAO;
+import com.marticles.airnet.mainservice.dao.UserDAO;
 import com.marticles.airnet.mainservice.model.ApiApplication;
 import com.marticles.airnet.mainservice.model.ApiKey;
 import com.marticles.airnet.mainservice.model.UserLocal;
@@ -28,6 +29,9 @@ public class ApiKeyService {
     private ApiKeyDAO apiKeyDAO;
 
     @Autowired
+    private UserDAO userDAO;
+
+    @Autowired
     private UserLocal userLocal;
 
     public Integer addApiApplication(String reason, String sendEmail) {
@@ -43,6 +47,14 @@ public class ApiKeyService {
 
     public ApiKey getApiKey(Integer userId) {
         return apiKeyDAO.getApiKey(userId);
+    }
+
+    public List<ApiKey> getAllApiKey() {
+        List<ApiKey> apiKeyList = apiKeyDAO.getAllApiKey();
+        for (ApiKey apiKey : apiKeyList) {
+            apiKey.setUserName(userDAO.getUserById(apiKey.getUserId()).getName());
+        }
+        return apiKeyList;
     }
 
     public List<ApiApplication> getApiApplication() {
@@ -70,7 +82,7 @@ public class ApiKeyService {
         SecretKey secretKey = new SecretKeySpec(HMC_SECRET_KEY.getBytes(), "HmacMD5");
         Mac mac = Mac.getInstance("HmacMD5");
         mac.init(secretKey);
-        String key = byteToString(mac.doFinal(uniqueId.getBytes()));
+        String key = byteToString(mac.doFinal(uniqueId.getBytes())).toUpperCase();
         // API KEY已存在
         if (apiKeyDAO.countApiKey(userId) > 0) {
             apiKeyDAO.updateApiKey(userId, key, preSecondRequestLimit, monthlyRequestLimit);

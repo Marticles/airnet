@@ -1,11 +1,9 @@
 package com.marticles.airnet.mainservice.controller;
 
-import com.marticles.airnet.mainservice.model.ApiApplication;
-import com.marticles.airnet.mainservice.model.Response;
-import com.marticles.airnet.mainservice.model.User;
-import com.marticles.airnet.mainservice.model.UserLocal;
+import com.marticles.airnet.mainservice.model.*;
 import com.marticles.airnet.mainservice.service.AdminService;
 import com.marticles.airnet.mainservice.service.ApiKeyService;
+import com.marticles.airnet.mainservice.service.NotificationService;
 import com.marticles.airnet.mainservice.service.UserService;
 import com.marticles.airnet.mainservice.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +37,9 @@ public class AdminController {
     private ApiKeyService apiKeyService;
 
     @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
     private UserLocal userLocal;
 
     @GetMapping("")
@@ -66,7 +67,9 @@ public class AdminController {
     @GetMapping("/api-key")
     public String adminApiKey(Model model) {
         List<ApiApplication> apiApplicationList = apiKeyService.getApiApplication();
+        List<ApiKey> apiKeyList = apiKeyService.getAllApiKey();
         model.addAttribute("apiApplicationList", apiApplicationList);
+        model.addAttribute("apiKeyList", apiKeyList);
         return "/admin/admin_apikey";
     }
 
@@ -74,28 +77,24 @@ public class AdminController {
     @PostMapping("/key/{id}")
     public Response addApiKey(@PathVariable Integer id, @RequestBody ApiApplication apiApplication) throws Exception {
         Response response = new Response();
-        try{
+        try {
             apiKeyService.updateApplicationStatus(id, apiApplication.getStatus());
-            // 若同意申请
-            // TODO 发通知+邮件
             if (apiApplication.getStatus().equals(1)) {
-                // 拿到用户ID
                 apiKeyService.addApiKey(apiApplication.getUserId(), apiApplication.getPreSecondRequestLimit(), apiApplication.getMonthlyRequestLimit());
-                // 拒绝申请
-                // TODO 发通知+邮件
-            } else {
+                notificationService.addApiKeyNotification(apiApplication.getUserId(), apiApplication.getStatus());
 
+            } else {
+                notificationService.addApiKeyNotification(apiApplication.getUserId(), apiApplication.getStatus());
             }
             response.setCode(0);
             response.setMsg("success");
-        }catch (Exception e){
+        } catch (Exception e) {
             response.setCode(1);
             response.setMsg(e.getMessage());
         }
         return response;
 
     }
-
 
     @ResponseBody
     @DeleteMapping("/user/{userId}")
