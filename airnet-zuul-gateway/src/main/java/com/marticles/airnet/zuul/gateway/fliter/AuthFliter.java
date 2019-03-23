@@ -1,6 +1,5 @@
 package com.marticles.airnet.zuul.gateway.fliter;
 
-import com.google.common.util.concurrent.RateLimiter;
 import com.marticles.airnet.zuul.gateway.model.User;
 import com.marticles.airnet.zuul.gateway.model.UserType;
 import com.marticles.airnet.zuul.gateway.util.JwtUtil;
@@ -11,13 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_DECORATION_FILTER_ORDER;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
 /**
- * 权限校验与限流
+ * 权限校验
  *
  * @author Marticles
  * @description AuthFliter
@@ -26,13 +24,10 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 @Slf4j
 public class AuthFliter extends ZuulFilter {
 
-
-
     private final String DATASERVICE_URL = "/data";
 
-    private final String APIKEY_PREFIX = "ApiKey-";
 
-    private final ConcurrentHashMap<String, RateLimiter> rateLimiterMap = new ConcurrentHashMap<>();
+    //TODO 数据导出服务鉴权
 
     @Override
     public String filterType() {

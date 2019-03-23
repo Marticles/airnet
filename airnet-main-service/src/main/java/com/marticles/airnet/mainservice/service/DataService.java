@@ -17,7 +17,7 @@ import java.util.List;
  * @description DataService
  * @date 2019/1/25
  */
-@FeignClient(value = "airnet-zuul-gateway",fallback = DataService.VizFallBackService.class)
+@FeignClient(value = "airnet-zuul-gateway", fallback = DataService.VizFallBackService.class)
 public interface DataService {
 
     @GetMapping("/data/{site}/pollution")
@@ -28,10 +28,10 @@ public interface DataService {
 
     @GetMapping("/data/{site}/{pollution}")
     JSONObject getPollution(@RequestHeader("Authorization") String jwtToken,
-                                @PathVariable(value = "site") String site,
-                                @PathVariable(value = "pollution") String pollution,
-                                @RequestParam(value = "start") String start,
-                                @RequestParam(value = "end") String end);
+                            @PathVariable(value = "site") String site,
+                            @PathVariable(value = "pollution") String pollution,
+                            @RequestParam(value = "start") String start,
+                            @RequestParam(value = "end") String end);
 
 
     @GetMapping("/data/{site}/updated-time")
@@ -41,17 +41,26 @@ public interface DataService {
 
     @GetMapping("/data/rank")
     List<SiteRank> getSiteRanks(@RequestHeader("Authorization") String jwtToken,
-                            @RequestParam(value = "time") String time,
-                            @RequestParam(value = "order") String order);
+                                @RequestParam(value = "time") String time,
+                                @RequestParam(value = "order") String order);
 
     @GetMapping("/data/notification/{userId}")
     List<Notification> getNotifications(@RequestHeader(value = "Authorization") String jwtToken,
-                                       @PathVariable(value = "userId") Integer userId,
-                                       @RequestParam(value = "read-status") Integer readStatus);
+                                        @PathVariable(value = "userId") Integer userId,
+                                        @RequestParam(value = "read-status") Integer readStatus);
 
     @PutMapping("data/notification/{id}")
     void readNotification(@RequestHeader(value = "Authorization") String jwtToken,
                           @PathVariable(value = "id") Integer id);
+
+
+    @GetMapping("data/page/{site}/pollution")
+    JSONObject getAllPollutionForPage(@RequestHeader("Authorization") String jwtToken,
+                                      @PathVariable(value = "site") String site,
+                                      @RequestParam(value = "start") String start,
+                                      @RequestParam(value = "end") String end,
+                                      @RequestParam(value = "pageNum") Integer pageNum,
+                                      @RequestParam(value = "pageSize") Integer pageSize);
 
 
     @Slf4j
@@ -102,6 +111,14 @@ public interface DataService {
             log.error("***********************************");
             log.error(String.format("Data service was disable! readNotification(id=%s)", id));
             log.error("***********************************");
+        }
+
+        @Override
+        public JSONObject getAllPollutionForPage(String jwtToken, String site, String start, String end, Integer pageNum, Integer pageSize) {
+            log.error("***********************************");
+            log.error(String.format("Data service was disable! getAllPollutionForPage(site=%s,start=%s,end=%s,pageNum=%s,pageSize=%s)", site, start, end, pageNum, pageSize));
+            log.error("***********************************");
+            return null;
         }
     }
 }

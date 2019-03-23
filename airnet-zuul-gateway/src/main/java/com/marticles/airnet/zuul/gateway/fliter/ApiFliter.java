@@ -21,6 +21,8 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
 /**
+ * API限流
+ *
  * @author Marticles
  * @description ApiFliter
  * @date 2019/3/13
@@ -127,9 +129,6 @@ public class ApiFliter extends ZuulFilter {
                     requestContext.setSendZuulResponse(false);
                     requestContext.setResponseStatusCode(HttpStatus.TOO_MANY_REQUESTS.value());
                     requestContext.setResponseBody("Too many requests");
-
-
-
                 }
             }
         }

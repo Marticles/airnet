@@ -1,5 +1,7 @@
 package com.marticles.airnet.dataservice.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.marticles.airnet.dataservice.dao.PollutionDAO;
 import com.marticles.airnet.dataservice.model.PollutionList;
 import com.marticles.airnet.dataservice.model.PollutionResponse;
@@ -7,7 +9,10 @@ import com.marticles.airnet.dataservice.model.SinglePollutionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Marticles
@@ -24,6 +29,15 @@ public class PollutionService {
     public List<HashMap<String, Object>> getAllPollutionForApi(String site, Date start, Date end) {
         return pollutionDAO.getAllPollution(site, start, end);
     }
+
+    public PageInfo getAllPollutionForPage(String site, Date start, Date end,Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<HashMap<String, Object>> pollutionList = pollutionDAO.getAllPollution(site, start, end);
+        PageInfo page = new PageInfo(pollutionList);
+        return page;
+    }
+
+
 
     public PollutionResponse getAllPollution(String site, Date start, Date end) {
         PollutionResponse pollutionResponse = new PollutionResponse();

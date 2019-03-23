@@ -80,9 +80,8 @@ public class AdminController {
         try {
             apiKeyService.updateApplicationStatus(id, apiApplication.getStatus());
             if (apiApplication.getStatus().equals(1)) {
-                apiKeyService.addApiKey(apiApplication.getUserId(), apiApplication.getPreSecondRequestLimit(), apiApplication.getMonthlyRequestLimit());
+                apiKeyService.addApiKey(id, apiApplication.getUserId(), apiApplication.getPreSecondRequestLimit(), apiApplication.getMonthlyRequestLimit());
                 notificationService.addApiKeyNotification(apiApplication.getUserId(), apiApplication.getStatus());
-
             } else {
                 notificationService.addApiKeyNotification(apiApplication.getUserId(), apiApplication.getStatus());
             }
@@ -93,8 +92,24 @@ public class AdminController {
             response.setMsg(e.getMessage());
         }
         return response;
-
     }
+
+    @ResponseBody
+    @PutMapping("/key/{id}")
+    public Response updateApiKey(@PathVariable Integer id, @RequestBody ApiApplication apiApplication) {
+        Response response = new Response();
+        apiKeyService.updateApiKeyWithOutKey(id, apiApplication.getPreSecondRequestLimit(), apiApplication.getMonthlyRequestLimit());
+        return response;
+    }
+
+    @ResponseBody
+    @DeleteMapping("/key/{id}")
+    public Response deleteApiKey(@PathVariable Integer id, @RequestBody ApiApplication apiApplication) {
+        Response response = new Response();
+        apiKeyService.deleteApiKey(id);
+        return response;
+    }
+
 
     @ResponseBody
     @DeleteMapping("/user/{userId}")

@@ -76,7 +76,7 @@ public class ApiKeyService {
      * @author Marticles
      * @date 2019/3/22
      */
-    public void addApiKey(Integer userId, Integer preSecondRequestLimit, Integer monthlyRequestLimit) throws Exception {
+    public void addApiKey(Integer id,Integer userId, Integer preSecondRequestLimit, Integer monthlyRequestLimit) throws Exception {
         SnowflakeIdGenerator snowflakeIdGenerator = new SnowflakeIdGenerator(0, 0);
         String uniqueId = String.valueOf(snowflakeIdGenerator.nextId());
         SecretKey secretKey = new SecretKeySpec(HMC_SECRET_KEY.getBytes(), "HmacMD5");
@@ -85,10 +85,19 @@ public class ApiKeyService {
         String key = byteToString(mac.doFinal(uniqueId.getBytes())).toUpperCase();
         // API KEY已存在
         if (apiKeyDAO.countApiKey(userId) > 0) {
-            apiKeyDAO.updateApiKey(userId, key, preSecondRequestLimit, monthlyRequestLimit);
+            apiKeyDAO.updateApiKey(id, key, preSecondRequestLimit, monthlyRequestLimit);
         } else {
             apiKeyDAO.addApiKey(userId, key, preSecondRequestLimit, monthlyRequestLimit);
         }
+    }
+
+    public void updateApiKeyWithOutKey(Integer id, Integer preSecondRequestLimit, Integer monthlyRequestLimit){
+        apiKeyDAO.updateApiKeyWithOutKey(id, preSecondRequestLimit, monthlyRequestLimit);
+    }
+
+
+    public void deleteApiKey(Integer id){
+        apiKeyDAO.deleteApiKey(id);
     }
 
     private String byteToString(byte[] digest) {

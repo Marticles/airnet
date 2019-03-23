@@ -12,5 +12,7 @@ public class AirnetDataServiceApplication {
         SpringApplication.run(AirnetDataServiceApplication.class, args);
     }
 
+
+
 }
 

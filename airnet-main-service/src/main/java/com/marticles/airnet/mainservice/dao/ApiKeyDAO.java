@@ -39,8 +39,6 @@ public interface ApiKeyDAO {
     @Select({"select * from api_key order by id "})
     List<ApiKey> getAllApiKey();
 
-
-
     @Update({"update api_application set status = #{status} where id = #{id}"})
     Integer updateApplicationStatus(@Param("id") Integer id, @Param("status") Integer status);
 
@@ -52,7 +50,14 @@ public interface ApiKeyDAO {
     @Insert({"insert into api_key (user_id,user_key,pre_second_request_limit,monthly_request_limit) values (#{userId},#{key},#{preSecondRequestLimit},#{monthlyRequestLimit})"})
     Integer addApiKey(@Param("userId") Integer userId, @Param("key") String key, @Param("preSecondRequestLimit") Integer preSecondRequestLimit, @Param("monthlyRequestLimit") Integer monthlyRequestLimit);
 
+    @Update({"update api_key set user_key = #{key} ,pre_second_request_limit=#{preSecondRequestLimit}, monthly_request_limit= #{monthlyRequestLimit} where id = #{id}"})
+    Integer updateApiKey(@Param("id") Integer userId, @Param("key") String key, @Param("preSecondRequestLimit") Integer preSecondRequestLimit, @Param("monthlyRequestLimit") Integer monthlyRequestLimit);
 
-    @Update({"update api_key set user_key = #{key} ,pre_second_request_limit=#{preSecondRequestLimit}, monthly_request_limit= #{monthlyRequestLimit} where user_id = #{userId}"})
-    Integer updateApiKey(@Param("userId") Integer userId, @Param("key") String key, @Param("preSecondRequestLimit") Integer preSecondRequestLimit, @Param("monthlyRequestLimit") Integer monthlyRequestLimit);
+
+    @Update({"update api_key set pre_second_request_limit=#{preSecondRequestLimit}, monthly_request_limit= #{monthlyRequestLimit} where id = #{id}"})
+    Integer updateApiKeyWithOutKey(@Param("id") Integer userId, @Param("preSecondRequestLimit") Integer preSecondRequestLimit, @Param("monthlyRequestLimit") Integer monthlyRequestLimit);
+
+
+    @Delete({"delete from api_key where id = #{id}"})
+    Integer deleteApiKey(Integer id);
 }

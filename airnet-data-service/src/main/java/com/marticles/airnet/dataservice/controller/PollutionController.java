@@ -1,5 +1,6 @@
 package com.marticles.airnet.dataservice.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.marticles.airnet.dataservice.model.PollutionResponse;
 import com.marticles.airnet.dataservice.model.SinglePollutionResponse;
 import com.marticles.airnet.dataservice.service.PollutionService;
@@ -43,11 +44,42 @@ public class PollutionController {
         return pollutionService.getAllPollution(site, start, end);
     }
 
+    /**
+     * API接口
+     *
+     * @param site
+     * @param start
+     * @param end
+     * @return java.util.List<java.util.HashMap < java.lang.String , java.lang.Object>>
+     * @author Marticles
+     * @date 2019/3/23
+     */
     @GetMapping("/standard/{site}/pollution")
     public List<HashMap<String, Object>> getAllPollutionForApi(@PathVariable String site,
                                                                @RequestParam Date start,
                                                                @RequestParam Date end) {
         return pollutionService.getAllPollutionForApi(site, start, end);
+    }
+
+    /**
+     * 分页接口
+     *
+     * @param site
+     * @param start
+     * @param end
+     * @param pageNum
+     * @param pageSize
+     * @return com.github.pagehelper.PageInfo
+     * @author Marticles
+     * @date 2019/3/23
+     */
+    @GetMapping("/page/{site}/pollution")
+    public PageInfo getAllPollutionForPage(@PathVariable String site,
+                                           @RequestParam Date start,
+                                           @RequestParam Date end,
+                                           @RequestParam Integer pageNum,
+                                           @RequestParam Integer pageSize) {
+        return pollutionService.getAllPollutionForPage(site, start, end, pageNum, pageSize);
     }
 
 
@@ -71,6 +103,17 @@ public class PollutionController {
     }
 
 
+    /**
+     * API接口
+     *
+     * @param site
+     * @param pollution
+     * @param start
+     * @param end
+     * @return java.util.List<java.util.HashMap < java.lang.String , java.lang.Object>>
+     * @author Marticles
+     * @date 2019/3/23
+     */
     @GetMapping("/standard/{site}/{pollution}")
     public List<HashMap<String, Object>> getPollutionForApi(@PathVariable String site,
                                                             @PathVariable String pollution,
@@ -83,7 +126,7 @@ public class PollutionController {
      * 获取监测站数据最后更新时间
      *
      * @param site
-     * @return java.util.HashMap<java.lang.String , java.lang.Object>
+     * @return java.util.HashMap<java.lang.String   ,   java.lang.Object>
      * @author Marticles
      * @date 2019/3/10
      */

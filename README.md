@@ -82,11 +82,11 @@ TODO
 
 ### 7.API
 
-只有注册用户在 “API 说明” 页面中主动申请 API Key 后才可调用 API，提供以下三种数据，对于不同的用户可实现自定义的限流策略（包括每秒最大请求次数与每月最大请求次数）。
+只有注册用户在 “API 说明” 页面中主动申请 API Key 并经过管理员同意下发 Key 后，用户才可使用 API Key 调用 API。AirNet API 提供以下三个接口，所有接口对于不同的用户都实现了自定义的限流策略（包括 QPS 限制与每月最多请求次数限制）。
 
-- 历史 / 实时污染物数据
-- 历史 / 实时空气质量排行
-- 上海市 PM2.5 预测数据
+- 历史 / 实时污染物数据 API
+- 历史 / 实时空气质量排行 API
+- 上海市 PM2.5 预测数据 API
 
 #### 污染物历史数据 API
 URL：
@@ -123,7 +123,7 @@ api/v1/history?site={site}&pollutant={pollutant}&start={start_time}&end={end_tim
 
 ```
 # 示例
-api/v1/history?site=jingan&pollutant=all&start=2019-03-15 20:00:00&end=2019-03-16 00:00:00&key=52hD10R9vT2BX7or3
+api/v1/history?site=jingan&pollutant=all&start=2019-03-15 20:00:00&end=2019-03-16 00:00:00&key=FBC2FD19931DE2665E64F7F1659E0075
 
 # 返回JSON
 {
@@ -186,7 +186,7 @@ api/v1/rank?area={area}&time={time}&order={order}}&key={api_key}
 
 ```
 # 示例
-/api/v1/rank?area=cn&time=2019-03-16 12:00:00&order=reverse&key=52hD10R9vT2BX7or3
+/api/v1/rank?area=cn&time=2019-03-16 12:00:00&order=reverse&key=FBC2FD19931DE2665E64F7F1659E0075
 
 # 返回JSON
 {
@@ -234,7 +234,7 @@ api/v1/forecast?site={site}&start={start_time}&end={end_time}&key={api_key}
 
 ```
 # 示例
-api/v1/forecast?site=yangpusipiao&start=2019-12-01 12:00:00&end=2019-12-20 12:00:00&key=api_key=52hD10R9vT2BX7or3
+api/v1/forecast?site=yangpusipiao&start=2019-12-01 12:00:00&end=2019-12-20 12:00:00&key=api_key=FBC2FD19931DE2665E64F7F1659E0075
 
 # 返回JSON
 TODO
@@ -242,11 +242,11 @@ TODO
 
 #### API Key 的生成策略
 
-考虑到分布式环境下采用 UUID 直接生成 Key 可能会导致 Key 重复的问题，最终的生成策略采用 Snowflake 算法生成唯一 ID， 再对 ID 进行 HmacMD5 加密生成 API Key。
+考虑到分布式环境下采用 UUID 直接生成 Key 可能会导致 Key 重复的问题，最终的 Key 生成策略采用 Twitter Snowflake 算法生成唯一 ID， 再对 ID 进行 HmacMD5 加密生成 API Key。
 
 #### API 接口限流
 
-基于 Zuul 与  Guava RateLimiter 实现，若用户的每秒请求次数超过 QPS 限制，或当月累计请求次数达到每月最大请求次数，则会触发限流。
+基于 Zuul 与 Guava RateLimiter 实现，若用户的每秒请求次数超过 QPS 限制，或当月累计请求次数达到每月最大请求次数，则会触发限流。
 
 ![](/img/ratelimit.png)
 

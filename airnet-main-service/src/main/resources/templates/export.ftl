@@ -20,6 +20,8 @@
     <!-- Daterange picker plugins css -->
     <link href="/static/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="/static/plugins/daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="/static/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
+          rel="stylesheet">
     <!-- chartist CSS -->
     <link href="/static/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
     <link href="/static/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
@@ -113,7 +115,7 @@
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                            <span>USST | 环境污染物数据平台后台管理</span>
+                            <span>USST | 环境污染物数据平台</span>
                         </a>
                     </li>
 
@@ -122,7 +124,23 @@
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
-                <ul class="navbar-nav my-lg-0">
+            <ul class="navbar-nav my-lg-0">
+
+                    <#if isLogin=="false">
+                     <li class="nav-item dropdown">
+                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             <i class="icon-login"></i><a href="/login" style="color: white"">登录</a>
+                     </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-user-follow"></i><a href="/register" style="color: white"">注册</a>
+                    </li>
+
+                    </#if>
+                    <#if isLogin=="true">
                     <!-- ============================================================== -->
                     <!-- Messages -->
                     <!-- ============================================================== -->
@@ -141,6 +159,7 @@
                                 </li>
                                 <li>
                                     <div class="message-center" id="notification">
+
                                     </div>
                                 </li>
                                 <li>
@@ -160,14 +179,14 @@
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="mdi mdi-account-circle"></i>
-                            <span>${user.name!'未登录'}</span>
+                            <span>${user.name}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right scale-up">
                             <ul class="dropdown-user">
                                 <li>
                                     <div class="dw-user-box">
                                         <div class="u-text">
-                                            <h4>${user.name!'未登录'}</h4>
+                                            <h4>${user.name}</h4>
                                             <p class="text-muted">${user.email!}</p>
                                         </div>
                                 </li>
@@ -180,8 +199,10 @@
                             </ul>
                         </div>
                     </li>
+
                 </ul>
 
+                    </#if>
             </div>
         </nav>
     </header>
@@ -199,15 +220,81 @@
                 <ul id="sidebarnav">
                     <li class="nav-small-cap">PERSONAL</li>
                     <li>
-                        <a class="has-arrow " href="/admin/index" aria-expanded="false"><i
-                                class="mdi mdi-account"></i>
-                            <span class="hide-menu">用户管理</span></a>
+                        <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span
+                                class="hide-menu">数据可视化</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                    <#if isLogin=="true">
+                            <li><a href="/viz/airflowmap">上海市高空气流图</a></li>
+                            <li><a href="/viz/aqimap">全国空气质量指数(AQI)地图</a></li>
+                            <li><a href="/viz/globalmap">全球污染物分布图</a></li>
+                            <li><a href="/viz/line">标准折线图</a></li>
+                            <li><a href="/viz/bar">标准柱状图</a></li>
+                            <li><a href="/viz/scatter">标准散点图</a></li>
+                            <li><a href="/viz/pie">标准饼图</a></li>
+                            <li><a href="/viz/radar">标准雷达图</a></li>
+                            <li><a href="/viz/funnel">标准漏斗图</a></li>
+                            <li><a href="/viz/rose">南丁格尔玫瑰图</a></li>
+                    </#if>
+                            <#if isLogin=="false">
+                            <li><a href="/viz/airflowmap">上海市高空气流图</a></li>
+                            <li><a href="/viz/aqimap">全国空气质量指数(AQI)地图</a></li>
+                            <li><a href="/viz/globalmap">全球污染物分布图</a></li>
+                            </#if>
+                        </ul>
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="/admin/api-key" aria-expanded="false"><i
-                                class="mdi mdi-asterisk"></i>
-                            <span class="hide-menu">API Key管理</span></a>
+                        <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span
+                                class="hide-menu">空气质量排行</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                              <#if isLogin=="true">
+                            <li><a href="/rank/sh">上海市空气质量实时/历史排行</a></li>
+                            <li><a href="/rank/cn">全国空气质量实时排行</a></li>
+                              </#if>
+                            <#if isLogin=="false">
+                            <li><a href="/rank/cn">全国空气质量实时排行</a></li>
+                            </#if>
+                        </ul>
+                    </li>
+
+                    <#if isLogin=="true">
+
+                    <li>
+                        <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-chemical-weapon"></i><span
+                                class="hide-menu">污染物预测</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="/forecast/sh">上海市PM2.5浓度预测</a></li>
+                            <li><a href="/forecast/cn">全国空气质量预报地图</a></li>
+                            <li><a href="/forecast/csj">长三角空气质量预报地图</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow " href="/alarm" aria-expanded="false"><i class="mdi mdi-alert"></i>
+                            <span class="hide-menu">污染物预警</span></a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow " href="/export" aria-expanded="false"><i
+                                class="mdi mdi-folder-download"></i>
+                            <span class="hide-menu">历史数据导出</span></a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow " href="/about-api" aria-expanded="false"><i class="mdi mdi-cube"></i>
+                            <span class="hide-menu">API说明</span></a>
+                    </li>
+                    </#if>
+                    <li>
+                        <a class="has-arrow " href="/info" aria-expanded="false"><i
+                                class="mdi mdi-book-open-variant"></i>
+                            <span class="hide-menu">相关知识</span></a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow " href="/about-airnet" aria-expanded="false"><i
+                                class="mdi mdi-cloud-outline"></i>
+                            <span class="hide-menu">关于AirNet</span></a>
                     </li>
 
                 </ul>
@@ -234,7 +321,7 @@
                 <div class="col-md-5 col-8 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">主页</a></li>
-                        <li class="breadcrumb-item">API Key管理</li>
+                        <li class="breadcrumb-item">历史数据导出</li>
                     </ol>
                 </div>
 
@@ -256,7 +343,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <span>用户API Key 申请</span>
+                            <span>历史污染物数据导出(csv)</span>
                             <div class="card-actions">
                                 <a class="" data-action="collapse"><i class="ti-minus"></i></a>
                                 <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
@@ -264,144 +351,48 @@
                             </div>
                         </div>
                         <div class="card-body ">
+
+                            <div class="row">
+                                <div class="col-md-3" style=" margin-left:250px;">
+                                    <input type="text" id="date-picker" class="form-control"
+                                           placeholder="" value="${updatedTime!}">
+                                </div>
+
+
+
+                                <div class="col-md-2" style=" margin-left:-20px;">
+                                    <button type="button" id="request_button"
+                                            class="btn waves-effect waves-light btn-primary "><i
+                                            class="fa fa-check"></i>&nbsp确认
+                                    </button>
+                                </div>
+                            </div>
+
+                            <hr style=" margin-top:15px;">
                             <div class="table-responsive">
-                                <table class="table color-table primary-table hover-table">
-                                    <thead style="text-align:center;">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>用户</th>
-                                        <th>申请理由</th>
-                                        <th>申请时间</th>
-                                        <th>同意申请</th>
-                                        <th>拒绝申请</th>
+                                <table id="tb" class="table color-table primary-table hover-table">
+                                    <thead>
+                                    <tr style="text-align:center;">
+                                        <th>排名</th>
+                                        <th>监测站</th>
+                                        <th>等级</th>
+                                        <th>AQI</th>
+                                        <th>主要污染物</th>
+                                        <th>PM2.5</th>
+                                        <th>PM10</th>
+                                        <th>CO</th>
+                                        <th>NO2</th>
+                                        <th>O3</th>
+                                        <th>SO2</th>
                                     </tr>
                                     </thead>
-                                    <tbody style="text-align:center;">
-                                    <#assign i = 1>
-                                    <#list apiApplicationList as apiApplication>
-                                        <tr>
-                                            <td>${i}</td>
-                                            <td>${apiApplication.userName}</td>
-                                            <td>${apiApplication.reason}</td>
-                                            <td>${apiApplication.createTime}</td>
-                                            <td>
-                                                <button onclick="genKey(${apiApplication.userId},${apiApplication.id})"
-                                                        data-target="#myModal" type="button"
-                                                        id="agree-${apiApplication.id}" value=${apiApplication.id}
-                                                                class="btn waves-effect waves-light btn-info btn-xs
-                                                " ></i>同意
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button onclick="rejectRequest(${apiApplication.userId},${apiApplication.id})"
-                                                        type="button" id="reject-${apiApplication.id}"
-                                                        value=${apiApplication.id}
-                                                                class="btn waves-effect waves-light btn-danger btn-xs
-                                                "></i>拒绝
-                                                </button>
-                                            </td>
-                                        </tr
-                                        <#assign i += 1>
-                                    </#list>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <span>API Key管理</span>
-                            <div class="card-actions">
-                                <a class="" data-action="collapse"><i class="ti-minus"></i></a>
-                                <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
-                                <a class="btn-close" data-action="close"><i class="ti-close"></i></a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table color-table primary-table hover-table">
-                                    <thead style="text-align:center;">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>用户名</th>
-                                        <th>Key</th>
-                                        <th>QPS限制</th>
-                                        <th>每月最多调用次数</th>
-                                        <th>修改Key</th>
-                                        <th>删除Key</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody style="text-align:center;">
-                                    <#assign i = 1>
-                                    <#list apiKeyList as apiKey>
-                                        <tr>
-                                            <td>${i}</td>
-                                            <td>${apiKey.userName}</td>
-                                            <td>${apiKey.getUserKey()}</td>
-                                            <td><input type="text" id="input-qps-${apiKey.getId()}" class="form-control"
-                                                       value=${apiKey.getPreSecondRequestLimit()}></td>
-                                            <td><input type="text" id="input-monthly-${apiKey.getId()}" class="form-control"
-                                                       value=${apiKey.getMonthlyRequestLimit()}></td>
-                                            <td>
-                                                <button onclick="updateKey(${apiKey.getId()},${apiKey.getUserId()},${apiKey.getPreSecondRequestLimit()},${apiKey.getMonthlyRequestLimit()})"
-                                                        type="button" id="updated-${apiKey.getId()}"
-                                                        value=${apiKey.getId()}
-                                                                class="btn waves-effect waves-light btn-primary btn-xs
-                                                "></i>确认修改
-                                                </button></td>
-                                            <td>
-                                                <button onclick="delKey(${apiKey.getId()})" type="button"
-                                                        id="del-${apiKey.getId()}" value=${apiKey.getId()}
-                                                                class="btn waves-effect waves-light btn-danger btn-xs
-                                                "></i>确认删除
-                                                </button></td>
-                                        </tr
-                                        <#assign i += 1>
-                                    </#list>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
-
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="exampleModalLabel1">确认生成API Key</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">×</span></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">每秒最大请求次数</label>
-                                    <input type="text" class="form-control" id="max-qps">
-                                </div>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">每月最大请求次数</label>
-                                    <input type="text" class="form-control" id="max-monthly-request"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button onclick="allowRequest()" type="button" class="btn btn-info">确认</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
             <!-- ============================================================== -->
             <!-- End PAge Content -->
             <!-- ============================================================== -->
@@ -415,31 +406,21 @@
                     <div class="r-panel-body">
                         <ul id="themecolors" class="m-t-20">
                             <li><b>亮色</b></li>
-                            <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a>
-                            </li>
+                            <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
                             <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
                             <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
-                            <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a>
-                            </li>
+                            <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
                             <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
                             <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
                             <li class="d-block m-t-30"><b>暗色</b></li>
-                            <li><a href="javascript:void(0)" data-theme="default-dark"
-                                   class="default-dark-theme">7</a>
+                            <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a>
                             </li>
-                            <li><a href="javascript:void(0)" data-theme="green-dark"
-                                   class="green-dark-theme">8</a>
+                            <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
+                            <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
+                            <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
+                            <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a>
                             </li>
-                            <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a>
-                            </li>
-                            <li><a href="javascript:void(0)" data-theme="blue-dark"
-                                   class="blue-dark-theme">10</a>
-                            </li>
-                            <li><a href="javascript:void(0)" data-theme="purple-dark"
-                                   class="purple-dark-theme">11</a>
-                            </li>
-                            <li><a href="javascript:void(0)" data-theme="megna-dark"
-                                   class="megna-dark-theme ">12</a>
+                            <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a>
                             </li>
                         </ul>
                     </div>
@@ -501,9 +482,6 @@
 <!-- Style switcher -->
 <!-- ============================================================== -->
 <script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-<!-- Echarts -->
-<script src="/static/js/echarts.js"></script>
-<script src="/static/js/macarons.js"></script>
 <!-- DateTime -->
 <script src="/static/plugins/moment/moment.js"></script>
 <script src="/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
@@ -514,7 +492,8 @@
 <!-- Date range Plugin JavaScript -->
 <script src="/static/plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
-<script src="/static/plugins/moment/moment.js"></script>
+<script src="/static/plugins/moment/moment-with-locales.js"></script>
+<script src="/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 <!-- 自定义时间 -->
 <script src="/static/js/datetime.js"></script>
 <script src="/static/js/bootstrap-select.min.js"></script>
@@ -522,6 +501,17 @@
 </body>
 
 <script>
+
+    $('#date-picker').bootstrapMaterialDatePicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+    });
+
+    function getCookie(name) {
+        var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+        if (arr != null)
+            return unescape(arr[2]);
+        return null;
+    }
 
     // 通知记数
     var msg_count = 0;
@@ -564,104 +554,34 @@
 
     get_notification();
 
-    function getCookie(name) {
-        var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
-        if (arr != null)
-            return unescape(arr[2]);
-        return null;
-    }
-
-    var request_user_id = null;
-    var request_application_id = null;
-
-    function genKey(userId, applicationId) {
-        request_user_id = userId;
-        request_application_id = applicationId;
-        $("#myModal").modal();
-    }
-
-    function allowRequest() {
-        var request = {};
-        request.userId = request_user_id;
-        request.preSecondRequestLimit = $("#max-qps").val();
-        request.monthlyRequestLimit = $("#max-monthly-request").val();
-        request.status = 1;
+    $("#notification").on('click', "button[id^='read-']", function () {
+        var id = this.value;
         $.ajax({
-            url: '/admin/key/' + request_application_id,
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify(request),
-            contentType: 'application/json; charset=UTF-8',
-            success: function (data) {
-                window.location.reload();
-            },
-            error: function (msg) {
-                console.log(msg);
-            }
-        });
-
-    }
-
-    function rejectRequest(userId, applicationId) {
-        var request = {};
-        request.userId = userId;
-        request.status = 2;
-        $.ajax({
-            url: '/admin/key/' + applicationId,
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify(request),
-            contentType: 'application/json; charset=UTF-8',
-            success: function (data) {
-                window.location.reload();
-            },
-            error: function (msg) {
-                console.log(msg);
-            }
-        });
-    }
-
-    function updateKey(id, userId, qps, monthly) {
-        var request = {};
-        request.id = id;
-        request.userId = userId;
-        // 这两个拿到的是错的
-        request.preSecondRequestLimit = $("#input-qps-"+id).val();
-        request.monthlyRequestLimit = $("#input-monthly-"+id).val();
-        console.log(request);
-        $.ajax({
-            url: '/admin/key/' + id,
+            url: '/notification/' + id,
             type: 'PUT',
-            dataType: 'json',
-            data: JSON.stringify(request),
-            contentType: 'application/json; charset=UTF-8',
-            success: function (data) {
-                window.location.reload();
+            headers: {
+                Authorization: getCookie("jwt_token")
             },
-            error: function (msg) {
-                console.log(msg);
-            }
-        });
-    }
+            success: function (data) {
+                var count = $('#notification_title').val();
+                $("#notification-" + id).remove();
+                msg_count -= 1;
+                $('#notification_title').html("你有 " + msg_count + " 条未读通知");
+                $('#notification_title').val(msg_count);
 
-    function delKey(id) {
-        var request = {};
-        request.userId = id;
-        $.ajax({
-            url: '/admin/key/' + id,
-            type: 'DELETE',
-            dataType: 'json',
-            data: JSON.stringify(request),
-            contentType: 'application/json; charset=UTF-8',
-            success: function (data) {
-                window.location.reload();
             },
             error: function (msg) {
                 console.log(msg);
             }
         });
-    }
+
+    });
+
+
+
+
 
 </script>
+
 
 </html>
