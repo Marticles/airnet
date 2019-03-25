@@ -26,8 +26,8 @@ public class AuthFliter extends ZuulFilter {
 
     private final String DATASERVICE_URL = "/data";
 
+    private final String EXPORTSERVICE_URL = "/export";
 
-    //TODO 数据导出服务鉴权
 
     @Override
     public String filterType() {
@@ -44,7 +44,7 @@ public class AuthFliter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String requestUrl = request.getRequestURL().toString();
-        if (requestUrl.contains(DATASERVICE_URL)) {
+        if (requestUrl.contains(DATASERVICE_URL)||requestUrl.contains(EXPORTSERVICE_URL)) {
             // log.info(requestUrl);
             return true;
         }

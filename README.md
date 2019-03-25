@@ -75,10 +75,11 @@ TODO
 
 ![](/img/mail.png)
 
-
 ### 6.历史数据导出
 
-TODO
+- 支持 Excel 导出
+
+![](/img/excel.png)
 
 ### 7.API
 
@@ -242,7 +243,7 @@ TODO
 
 #### API Key 的生成策略
 
-考虑到分布式环境下采用 UUID 直接生成 Key 可能会导致 Key 重复的问题，最终的 Key 生成策略采用 Twitter Snowflake 算法生成唯一 ID， 再对 ID 进行 HmacMD5 加密生成 API Key。
+考虑到分布式环境下采用 UUID 直接生成 Key 可能会导致 Key 重复的问题，最终的 Key 生成策略采用 Twitter Snowflake 算法生成唯一 ID， 再使用 HmacMD5 算法对 ID 加密生成 API Key。
 
 #### API 接口限流
 
@@ -290,6 +291,9 @@ TODO
 ![](/img/alarm.png)
 
 ----------------------
+![](/img/export.png)
+
+----------------------
 ![](/img/apikey.png)
 
 ----------------------
@@ -302,7 +306,7 @@ TODO
 ### 未登陆用户
 
 ----------------------
-![](/img/visiter.png)
+![](/img/unlogin.png)
 
 ----------------------
 ![](/img/403.png)

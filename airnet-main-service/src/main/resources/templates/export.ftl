@@ -346,7 +346,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <span>历史污染物数据导出(csv)</span>
+                            <span>历史污染物数据导出(excel)</span>
                             <div class="card-actions">
                                 <a class="" data-action="collapse"><i class="ti-minus"></i></a>
                                 <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
@@ -406,7 +406,7 @@
                                 </div>
 
                                 <div class="col-md-2" style=" margin-left:-50px;">
-                                    <button type="button" id="request_button"
+                                    <button type="button" id="download_button"
                                             class="btn waves-effect btn-primary "><i
                                             class="fa fa-check"></i>&nbsp点此下载
                                     </button>
@@ -432,12 +432,12 @@
                                         <th>SO2</th>
                                     </tr>
                                     </thead>
+
                                 </table>
                             </div>
 
-                            <div class="col-md-12" style=" margin-left:450px;">
+                            <div class="col-md-12" style=" margin-left:350px;">
                                 <ul class="pagination" id="page-nav">
-
                                 </ul>
                             </div>
 
@@ -569,6 +569,8 @@
 
 <script>
 
+    var default_site = "yangpusipiao"
+
     $('#date-picker').bootstrapMaterialDatePicker({
         format: 'YYYY-MM-DD HH:mm:ss',
     });
@@ -587,16 +589,42 @@
             success: function (data) {
                 var default_time = data.start + ' - ' + data.end;
                 $('#time-range').val(default_time);
+                $('#tb tr:gt(0)').remove();
+                var table_data = '';
+                var color = '';
                 for (let i of data.pollutant.list) {
-                    console.log(i);
+                    if (i.aqi < 50) {
+                        color = '<td><span class="label label-success">' + i.level + '</span></td>';
+                    }
+                    if (i.aqi > 50 && i.aqi < 100) {
+                        color = '<td><span class="label label-info">' + i.level + '</span></td>';
+                    }
+                    if (i.aqi > 100 && i.aqi < 150) {
+                        color = '<td><span class="label label-warning">' + i.level + '</span></td>';
+                    }
+                    if (i.aqi > 150 && i.aqi < 200) {
+                        color = '<td><span class="label label-light-warning">' + i.level + '</span></td>';
+                    }
+                    if (i.aqi > 200 && i.aqi < 300) {
+                        color = '<td><span class="label label-danger">' + i.level + '</span></td>';
+                    }
+                    if (i.aqi > 300) {
+                        color = '<td><span class="label label-danger">' + i.level + '</span></td>';
+                    }
+                    table_data += '<tr><td>' + i.time + '</td><td>' + i.site + '</td>';
+                    table_data += color;
+                    table_data += '<td>' + i.aqi + '</td><td>' + i.primaryPollutant + '</td><td>' + i.pm25 + '</td><td>' + i.pm10 + '</td><td>' + i.co + '</td><td>' + i.no2 + '</td><td>' + i.oZone + '</td><td>' + i.so2 + '</td></tr>';
                 }
-                ;
-                var page_nav = ""
-                page_nav += "<li onclick=\"test(" + data.pollutant.prePage + ")\" class=\"page-item\"><a class=\"page-link\">上一页</a></li>"
+                $('#tb').append('<tbody style="text-align:center;">' + table_data + '</tbody>');
+
+                var page_nav = "";
+                page_nav += "<li onclick=\"getCustomeData(" + "'yangpusipiao'" + "," + 1 + ")\" class=\"page-item\"><a class=\"page-link\">首页</a></li>"
+                page_nav += "<li onclick=\"getCustomeData(" + "'yangpusipiao'" + "," + data.pollutant.prePage + ")\" class=\"page-item\"><a class=\"page-link\">上一页</a></li>"
                 for (let i of data.pollutant.navigatepageNums) {
-                    page_nav += "<li onlick=\"test(" + i + ")\" class=\"page-item\"><a class=\"page-link\">" + i + "</a></li>"
+                    page_nav += "<li onclick=\"getCustomeData(" + "'yangpusipiao'" + "," + i + ")\" class=\"page-item\"><a class=\"page-link\">" + i + "</a></li>"
                 }
-                page_nav += " <li onclike=\"test(" + data.pollutant.nextPage + ")\" class=\"page-item\"><a class=\"page-link\">下一页</a></li>\n"
+                page_nav += " <li onclike=\"getCustomeData(" + "'yangpusipiao'" + "," + data.pollutant.nextPage + ")\" class=\"page-item\"><a class=\"page-link\">下一页</a></li>\n"
+                page_nav += "<li onclick=\"getCustomeData(" + "'yangpusipiao'" + "," + data.pollutant.pages + ")\" class=\"page-item\"><a class=\"page-link\">尾页</a></li>"
                 $('#page-nav').html(page_nav);
 
             },
@@ -605,6 +633,71 @@
             }
         });
     }
+
+    function getCustomeData(site, pageNum) {
+        var time = $('#time-range').val().split(" - ");
+        $.ajax({
+            url: '/export/' + site + '/pollution?start=' + time[0] + '&end=' + time[1] + '&pageNum=' + pageNum + '&pageSize=10',
+            type: 'GET',
+            headers: {
+                Authorization: getCookie("jwt_token")
+            },
+            success: function (data) {
+                $('#tb tr:gt(0)').remove();
+                var table_data = '';
+                var color = '';
+                for (let i of data.list) {
+                    if (i.aqi < 50) {
+                        color = '<td><span class="label label-success">' + i.level + '</span></td>';
+                    }
+                    if (i.aqi > 50 && i.aqi < 100) {
+                        color = '<td><span class="label label-info">' + i.level + '</span></td>';
+                    }
+                    if (i.aqi > 100 && i.aqi < 150) {
+                        color = '<td><span class="label label-warning">' + i.level + '</span></td>';
+                    }
+                    if (i.aqi > 150 && i.aqi < 200) {
+                        color = '<td><span class="label label-light-warning">' + i.level + '</span></td>';
+                    }
+                    if (i.aqi > 200 && i.aqi < 300) {
+                        color = '<td><span class="label label-danger">' + i.level + '</span></td>';
+                    }
+                    if (i.aqi > 300) {
+                        color = '<td><span class="label label-danger">' + i.level + '</span></td>';
+                    }
+                    table_data += '<tr><td>' + i.time + '</td><td>' + i.site + '</td>';
+                    table_data += color;
+                    table_data += '<td>' + i.aqi + '</td><td>' + i.primaryPollutant + '</td><td>' + i.pm25 + '</td><td>' + i.pm10 + '</td><td>' + i.co + '</td><td>' + i.no2 + '</td><td>' + i.oZone + '</td><td>' + i.so2 + '</td></tr>';
+                }
+                $('#tb').append('<tbody style="text-align:center;">' + table_data + '</tbody>');
+
+                var page_nav = "";
+                $('#page-nav').html("");
+                page_nav += "<li onclick=\"getCustomeData(" + "'" + site + "'" + "," + 1 + ")\" class=\"page-item\"><a class=\"page-link\">首页</a></li>"
+                page_nav += "<li onclick=\"getCustomeData(" + "'" + site + "'" + "," + data.prePage + ")\" class=\"page-item\"><a class=\"page-link\">上一页</a></li>"
+                for (let i of data.navigatepageNums) {
+                    page_nav += "<li onclick=\"getCustomeData(" + "'" + site + "'" + "," + i + ")\" class=\"page-item\"><a class=\"page-link\">" + i + "</a></li>"
+                }
+                page_nav += " <li onclike=\"getCustomeData(" + "'" + site + "'" + "," + data.nextPage + ")\" class=\"page-item\"><a class=\"page-link\">下一页</a></li>\n"
+                page_nav += "<li onclick=\"getCustomeData(" + "'" + site + "'" + "," + data.pages + ")\" class=\"page-item\"><a class=\"page-link\">尾页</a></li>"
+                $('#page-nav').html(page_nav);
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+
+    }
+
+    $("#request_button").click(function () {
+        getCustomeData($('#site_picker').val(), 10);
+    });
+
+    $("#download_button").click(function () {
+        var time = $('#time-range').val().split(" - ");
+        var site = $('#site_picker').val();
+        window.open('/export/excel/' + site + '?start=' + time[0] + '&end=' + time[1] + '&jwt=' + getCookie("jwt_token"));
+    });
 
 
     function getCookie(name) {
