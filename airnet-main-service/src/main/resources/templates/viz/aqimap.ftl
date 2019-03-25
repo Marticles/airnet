@@ -475,7 +475,7 @@
                         $('#notify').html("<span class=\"heartbit\"></span><span class=\"point\"></span>");
                         for (let i of data) {
                             content += "<a id=\"notification-" + i.id + "\"><div class=\"mail-contnet\"> <h5>" + i.title + "</h5><h6>" + i.subTitle
-                                    + "</h6><span class=\"mail-desc\">" + i.content + "</span> <span class=\"time\">2019-01-21 12:14</span></div>"
+                                    + "</h6><span class=\"mail-desc\">" + i.content + "</span> <span class=\"time\">"+i.createTime+"</span></div>"
                                     + "<span style=\"margin-top:25px;float:right\"> <button type=\"button\" id=\"read-" + i.id + "\" class=\"btn waves-effect waves-light btn-primary btn-sm \" value=" + i.id + ">标为已读</button></span>" + "</a>"
                         }
                         $('#notification').html(content);

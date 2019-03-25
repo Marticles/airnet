@@ -13,6 +13,9 @@
     <title>AirNet</title>
     <!-- Bootstrap Core CSS -->
     <link href="/static/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Footable CSS -->
+    <link href="/static/plugins/footable/css/footable.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet"/>
     <!-- Page plugins css -->
     <link href="/static/plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
     <!-- Date picker plugins css -->
@@ -353,27 +356,70 @@
                         <div class="card-body ">
 
                             <div class="row">
-                                <div class="col-md-3" style=" margin-left:250px;">
-                                    <input type="text" id="date-picker" class="form-control"
-                                           placeholder="" value="${updatedTime!}">
+                                <div class="col-md-4" style=" margin-left:80px;">
+                                    <div class='input-group mb-3'>
+                                        <input type='text' id='time-range' class="form-control timeseconds"/>
+                                        <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <span class="ti-calendar"></span>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style=" margin-left:60px;">
+                                    <select class="selectpicker" id="site_picker"
+                                            data-style="btn btn-block btn-outline-secondary" title="选择监测站(默认上海杨浦)">
+                                        <optgroup label="静安">
+                                            <option value="jingan">静安监测站</option>
+                                        </optgroup>
+                                        <optgroup label="虹口">
+                                            <option value="hongkou">虹口监测站</option>
+                                        </optgroup>
+                                        <optgroup label="浦东">
+                                            <option value="pudongchuansha">浦东川沙监测站</option>
+                                            <option value="pudongxinqu">浦东新区监测站</option>
+                                            <option value="pudongzhangjiang">浦东张江监测站</option>
+                                        </optgroup>
+                                        <optgroup label="普陀">
+                                            <option value="putuo">普陀监测站</option>
+                                        </optgroup>
+                                        <optgroup label="黄埔">
+                                            <option value="shiwuchang">十五厂(卢湾师专附小)监测站</option>
+                                        </optgroup>
+                                        <optgroup label="杨浦">
+                                            <option value="yangpusipiao">杨浦四漂监测站</option>
+                                        </optgroup>
+                                        <optgroup label="徐汇">
+                                            <option value="xuhuishangshida">徐汇上师大监测站</option>
+                                        </optgroup>
+                                        <optgroup label="青浦">
+                                            <option value="qingpudianshanhu">青浦淀山湖监测站</option>
+                                        </optgroup>
+                                    </select>
                                 </div>
 
-
-
-                                <div class="col-md-2" style=" margin-left:-20px;">
+                                <div class="col-md-2" style=" margin-left:-30x;">
                                     <button type="button" id="request_button"
-                                            class="btn waves-effect waves-light btn-primary "><i
-                                            class="fa fa-check"></i>&nbsp确认
+                                            class="btn waves-effect btn-info "><i
+                                            class="fa fa-check"></i>&nbsp确认选择
                                     </button>
                                 </div>
+
+                                <div class="col-md-2" style=" margin-left:-50px;">
+                                    <button type="button" id="request_button"
+                                            class="btn waves-effect btn-primary "><i
+                                            class="fa fa-check"></i>&nbsp点此下载
+                                    </button>
+                                </div>
+
                             </div>
 
-                            <hr style=" margin-top:15px;">
+                            <hr style=" margin-top:5px;">
                             <div class="table-responsive">
                                 <table id="tb" class="table color-table primary-table hover-table">
                                     <thead>
                                     <tr style="text-align:center;">
-                                        <th>排名</th>
+                                        <th>时间</th>
                                         <th>监测站</th>
                                         <th>等级</th>
                                         <th>AQI</th>
@@ -388,9 +434,17 @@
                                     </thead>
                                 </table>
                             </div>
+
+                            <div class="col-md-12" style=" margin-left:450px;">
+                                <ul class="pagination" id="page-nav">
+
+                                </ul>
+                            </div>
+
                         </div>
                     </div>
                 </div>
+
 
             </div>
             <!-- ============================================================== -->
@@ -497,6 +551,19 @@
 <!-- 自定义时间 -->
 <script src="/static/js/datetime.js"></script>
 <script src="/static/js/bootstrap-select.min.js"></script>
+<!-- Footable -->
+<script src="/static/plugins/moment/moment.js"></script>
+<script src="/static/plugins/footable/js/footable.min.js"></script>
+<script src="/static/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/static/js/jquery.slimscroll.js"></script>
+<!--Wave Effects -->
+<script src="/static/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/static/js/sidebarmenu.js"></script>
+<!--stickey kit -->
+<script src="/static/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+<script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
 
 </body>
 
@@ -505,6 +572,40 @@
     $('#date-picker').bootstrapMaterialDatePicker({
         format: 'YYYY-MM-DD HH:mm:ss',
     });
+
+    $(document).ready(function () {
+        getDefaultData();
+    });
+
+    function getDefaultData() {
+        $.ajax({
+            url: '/export/default',
+            type: 'GET',
+            headers: {
+                Authorization: getCookie("jwt_token")
+            },
+            success: function (data) {
+                var default_time = data.start + ' - ' + data.end;
+                $('#time-range').val(default_time);
+                for (let i of data.pollutant.list) {
+                    console.log(i);
+                }
+                ;
+                var page_nav = ""
+                page_nav += "<li onclick=\"test(" + data.pollutant.prePage + ")\" class=\"page-item\"><a class=\"page-link\">上一页</a></li>"
+                for (let i of data.pollutant.navigatepageNums) {
+                    page_nav += "<li onlick=\"test(" + i + ")\" class=\"page-item\"><a class=\"page-link\">" + i + "</a></li>"
+                }
+                page_nav += " <li onclike=\"test(" + data.pollutant.nextPage + ")\" class=\"page-item\"><a class=\"page-link\">下一页</a></li>\n"
+                $('#page-nav').html(page_nav);
+
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+    }
+
 
     function getCookie(name) {
         var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
@@ -534,7 +635,7 @@
                         $('#notify').html("<span class=\"heartbit\"></span><span class=\"point\"></span>");
                         for (let i of data) {
                             content += "<a id=\"notification-" + i.id + "\"><div class=\"mail-contnet\"> <h5>" + i.title + "</h5><h6>" + i.subTitle
-                                    + "</h6><span class=\"mail-desc\">" + i.content + "</span> <span class=\"time\">2019-01-21 12:14</span></div>"
+                                    + "</h6><span class=\"mail-desc\">" + i.content + "</span> <span class=\"time\">" + i.createTime + "</span></div>"
                                     + "<span style=\"margin-top:25px;float:right\"> <button type=\"button\" id=\"read-" + i.id + "\" class=\"btn waves-effect waves-light btn-primary btn-sm \" value=" + i.id + ">标为已读</button></span>" + "</a>"
                         }
                         $('#notification').html(content);
@@ -576,10 +677,6 @@
         });
 
     });
-
-
-
-
 
 </script>
 
