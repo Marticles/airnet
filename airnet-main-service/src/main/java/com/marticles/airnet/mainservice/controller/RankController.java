@@ -57,7 +57,7 @@ public class RankController {
             model.addAttribute("isLogin", "false");
         }
         model.addAttribute("updatedTime",indexService.getIndexUpdatedTime());
-        return "/rank/sh";
+        return "/rank/rank_sh";
     }
 
     @GetMapping("/cn")
@@ -74,7 +74,7 @@ public class RankController {
         model.addAttribute("reverseCityRanks", reverseCityRanks);
         Date updatedTime = setUpdatedTime(reverseCityRanks.get(0).getTime());
         model.addAttribute("updatedTime", SIMPLE_DATE_FORMAT.format(updatedTime));
-        return "/rank/cn";
+        return "/rank/rank_cn";
     }
 
     private Date setUpdatedTime(Date updatedTime){
