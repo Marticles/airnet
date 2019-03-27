@@ -210,6 +210,12 @@
                             <span class="hide-menu">API Key管理</span></a>
                     </li>
 
+                    <li>
+                        <a class="has-arrow " href="/admin/log" aria-expanded="false"><i
+                                class="mdi mdi-server"></i>
+                            <span class="hide-menu">日志管理</span></a>
+                    </li>
+
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->

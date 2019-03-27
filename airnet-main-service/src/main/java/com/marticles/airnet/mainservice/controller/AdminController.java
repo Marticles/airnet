@@ -1,10 +1,8 @@
 package com.marticles.airnet.mainservice.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.marticles.airnet.mainservice.model.*;
-import com.marticles.airnet.mainservice.service.AdminService;
-import com.marticles.airnet.mainservice.service.ApiKeyService;
-import com.marticles.airnet.mainservice.service.NotificationService;
-import com.marticles.airnet.mainservice.service.UserService;
+import com.marticles.airnet.mainservice.service.*;
 import com.marticles.airnet.mainservice.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +40,9 @@ public class AdminController {
     @Autowired
     private UserLocal userLocal;
 
+    @Autowired
+    private LogService logService;
+
     @GetMapping("")
     public String admin(Model model) {
         User admin = userLocal.getUser();
@@ -62,6 +63,18 @@ public class AdminController {
         model.addAttribute("user", admin);
         model.addAttribute("userList", userList);
         return "/admin/admin_user";
+    }
+
+    @GetMapping("/log")
+    public String adminLog(Model model, @RequestParam(name="pageNum",required = false) Integer pageNum) {
+        PageInfo logPage = null;
+        if (null == pageNum) {
+            logPage = logService.getLogsForPage(1);
+        }else{
+            logPage = logService.getLogsForPage(pageNum);
+        }
+        model.addAttribute("logPage", logPage);
+        return "/admin/admin_log";
     }
 
     @GetMapping("/api-key")

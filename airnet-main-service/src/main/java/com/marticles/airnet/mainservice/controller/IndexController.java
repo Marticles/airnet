@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -35,7 +34,7 @@ public class IndexController {
     private UserLocal userLocal;
 
     @GetMapping("/")
-    public String index(HttpServletRequest request,Model model) throws Exception{
+    public String index(Model model) throws Exception{
         User user = userLocal.getUser();
         if (null != user) {
             model.addAttribute("isLogin", "true");

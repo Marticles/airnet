@@ -586,6 +586,10 @@
     // 通知记数
     var msg_count = 0;
 
+    $(document).ready(function () {
+        get_notification();
+    });
+
     function get_notification() {
         if (getCookie("user_id") != null) {
             $.ajax({
@@ -621,8 +625,6 @@
             });
         }
     }
-
-    get_notification();
 
     $("#notification").on('click', "button[id^='read-']", function () {
         var id = this.value;

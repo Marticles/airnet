@@ -1,5 +1,6 @@
 package com.marticles.airnet.mainservice.controller;
 
+import com.marticles.airnet.mainservice.annotation.MyLogger;
 import com.marticles.airnet.mainservice.model.Notification;
 import com.marticles.airnet.mainservice.model.Response;
 import com.marticles.airnet.mainservice.model.UserLocal;

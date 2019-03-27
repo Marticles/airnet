@@ -13,9 +13,6 @@
     <title>AirNet</title>
     <!-- Bootstrap Core CSS -->
     <link href="/static/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Footable CSS -->
-    <link href="/static/plugins/footable/css/footable.bootstrap.min.css" rel="stylesheet">
-    <link href="/static/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet"/>
     <!-- Page plugins css -->
     <link href="/static/plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
     <!-- Date picker plugins css -->
@@ -23,8 +20,6 @@
     <!-- Daterange picker plugins css -->
     <link href="/static/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="/static/plugins/daterangepicker/daterangepicker.css" rel="stylesheet">
-    <link href="/static/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
-          rel="stylesheet">
     <!-- chartist CSS -->
     <link href="/static/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
     <link href="/static/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
@@ -118,7 +113,7 @@
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                            <span>USST | 环境污染物数据平台</span>
+                            <span>USST | 环境污染物数据平台后台管理</span>
                         </a>
                     </li>
 
@@ -127,23 +122,7 @@
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
-            <ul class="navbar-nav my-lg-0">
-
-                    <#if isLogin=="false">
-                     <li class="nav-item dropdown">
-                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             <i class="icon-login"></i><a href="/login" style="color: white"">登录</a>
-                     </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="icon-user-follow"></i><a href="/register" style="color: white"">注册</a>
-                    </li>
-
-                    </#if>
-                    <#if isLogin=="true">
+                <ul class="navbar-nav my-lg-0">
                     <!-- ============================================================== -->
                     <!-- Messages -->
                     <!-- ============================================================== -->
@@ -162,7 +141,6 @@
                                 </li>
                                 <li>
                                     <div class="message-center" id="notification">
-
                                     </div>
                                 </li>
                                 <li>
@@ -182,14 +160,14 @@
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="mdi mdi-account-circle"></i>
-                            <span>${user.name}</span>
+                            <span>${user.name!'未登录'}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right scale-up">
                             <ul class="dropdown-user">
                                 <li>
                                     <div class="dw-user-box">
                                         <div class="u-text">
-                                            <h4>${user.name}</h4>
+                                            <h4>${user.name!'未登录'}</h4>
                                             <p class="text-muted">${user.email!}</p>
                                         </div>
                                 </li>
@@ -202,10 +180,8 @@
                             </ul>
                         </div>
                     </li>
-
                 </ul>
 
-                    </#if>
             </div>
         </nav>
     </header>
@@ -223,81 +199,21 @@
                 <ul id="sidebarnav">
                     <li class="nav-small-cap">PERSONAL</li>
                     <li>
-                        <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span
-                                class="hide-menu">数据可视化</span></a>
-                        <ul aria-expanded="false" class="collapse">
-                    <#if isLogin=="true">
-                            <li><a href="/viz/airflowmap">上海市高空气流图</a></li>
-                            <li><a href="/viz/aqimap">全国空气质量指数(AQI)地图</a></li>
-                            <li><a href="/viz/globalmap">全球污染物分布图</a></li>
-                            <li><a href="/viz/line">标准折线图</a></li>
-                            <li><a href="/viz/bar">标准柱状图</a></li>
-                            <li><a href="/viz/scatter">标准散点图</a></li>
-                            <li><a href="/viz/pie">标准饼图</a></li>
-                            <li><a href="/viz/radar">标准雷达图</a></li>
-                            <li><a href="/viz/funnel">标准漏斗图</a></li>
-                            <li><a href="/viz/rose">南丁格尔玫瑰图</a></li>
-                    </#if>
-                            <#if isLogin=="false">
-                            <li><a href="/viz/airflowmap">上海市高空气流图</a></li>
-                            <li><a href="/viz/aqimap">全国空气质量指数(AQI)地图</a></li>
-                            <li><a href="/viz/globalmap">全球污染物分布图</a></li>
-                            </#if>
-                        </ul>
+                        <a class="has-arrow " href="/admin/index" aria-expanded="false"><i
+                                class="mdi mdi-account"></i>
+                            <span class="hide-menu">用户管理</span></a>
                     </li>
 
                     <li>
-                        <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span
-                                class="hide-menu">空气质量排行</span></a>
-                        <ul aria-expanded="false" class="collapse">
-                              <#if isLogin=="true">
-                            <li><a href="/rank/sh">上海市空气质量实时/历史排行</a></li>
-                            <li><a href="/rank/cn">全国空气质量实时排行</a></li>
-                              </#if>
-                            <#if isLogin=="false">
-                            <li><a href="/rank/cn">全国空气质量实时排行</a></li>
-                            </#if>
-                        </ul>
-                    </li>
-
-                    <#if isLogin=="true">
-
-                    <li>
-                        <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-chemical-weapon"></i><span
-                                class="hide-menu">污染物预测</span></a>
-                        <ul aria-expanded="false" class="collapse">
-                            <li><a href="/forecast/sh">上海市PM2.5浓度预测</a></li>
-                            <li><a href="/forecast/cn">全国空气质量预报地图</a></li>
-                            <li><a href="/forecast/csj">长三角空气质量预报地图</a></li>
-                        </ul>
+                        <a class="has-arrow " href="/admin/api-key" aria-expanded="false"><i
+                                class="mdi mdi-asterisk"></i>
+                            <span class="hide-menu">API Key管理</span></a>
                     </li>
 
                     <li>
-                        <a class="has-arrow " href="/alarm" aria-expanded="false"><i class="mdi mdi-alert"></i>
-                            <span class="hide-menu">污染物预警</span></a>
-                    </li>
-
-                    <li>
-                        <a class="has-arrow " href="/export" aria-expanded="false"><i
-                                class="mdi mdi-folder-download"></i>
-                            <span class="hide-menu">历史数据导出</span></a>
-                    </li>
-
-                    <li>
-                        <a class="has-arrow " href="/about-api" aria-expanded="false"><i class="mdi mdi-cube"></i>
-                            <span class="hide-menu">API说明</span></a>
-                    </li>
-                    </#if>
-                    <li>
-                        <a class="has-arrow " href="/info" aria-expanded="false"><i
-                                class="mdi mdi-book-open-variant"></i>
-                            <span class="hide-menu">相关知识</span></a>
-                    </li>
-
-                    <li>
-                        <a class="has-arrow " href="/about-airnet" aria-expanded="false"><i
-                                class="mdi mdi-cloud-outline"></i>
-                            <span class="hide-menu">关于AirNet</span></a>
+                        <a class="has-arrow " href="/admin/log" aria-expanded="false"><i
+                                class="mdi mdi-server"></i>
+                            <span class="hide-menu">日志管理</span></a>
                     </li>
 
                 </ul>
@@ -324,7 +240,7 @@
                 <div class="col-md-5 col-8 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">主页</a></li>
-                        <li class="breadcrumb-item">历史数据导出</li>
+                        <li class="breadcrumb-item">日志管理</li>
                     </ol>
                 </div>
 
@@ -346,7 +262,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <span>历史污染物数据导出(excel)</span>
+                            <span>用户API Key 申请</span>
                             <div class="card-actions">
                                 <a class="" data-action="collapse"><i class="ti-minus"></i></a>
                                 <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
@@ -354,99 +270,63 @@
                             </div>
                         </div>
                         <div class="card-body ">
-
-                            <div class="row">
-                                <div class="col-md-4" style=" margin-left:80px;">
-                                    <div class='input-group mb-3'>
-                                        <input type='text' id='time-range' class="form-control timeseconds"/>
-                                        <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <span class="ti-calendar"></span>
-                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3" style=" margin-left:60px;">
-                                    <select class="selectpicker" id="site_picker"
-                                            data-style="btn btn-block btn-outline-secondary" title="选择监测站(默认上海杨浦)">
-                                        <optgroup label="静安">
-                                            <option value="jingan">静安监测站</option>
-                                        </optgroup>
-                                        <optgroup label="虹口">
-                                            <option value="hongkou">虹口监测站</option>
-                                        </optgroup>
-                                        <optgroup label="浦东">
-                                            <option value="pudongchuansha">浦东川沙监测站</option>
-                                            <option value="pudongxinqu">浦东新区监测站</option>
-                                            <option value="pudongzhangjiang">浦东张江监测站</option>
-                                        </optgroup>
-                                        <optgroup label="普陀">
-                                            <option value="putuo">普陀监测站</option>
-                                        </optgroup>
-                                        <optgroup label="黄埔">
-                                            <option value="shiwuchang">十五厂(卢湾师专附小)监测站</option>
-                                        </optgroup>
-                                        <optgroup label="杨浦">
-                                            <option value="yangpusipiao">杨浦四漂监测站</option>
-                                        </optgroup>
-                                        <optgroup label="徐汇">
-                                            <option value="xuhuishangshida">徐汇上师大监测站</option>
-                                        </optgroup>
-                                        <optgroup label="青浦">
-                                            <option value="qingpudianshanhu">青浦淀山湖监测站</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-2" style=" margin-left:-30x;">
-                                    <button type="button" id="request_button"
-                                            class="btn waves-effect btn-info "><i
-                                            class="fa fa-check"></i>&nbsp确认选择
-                                    </button>
-                                </div>
-
-                                <div class="col-md-2" style=" margin-left:-50px;">
-                                    <button type="button" id="download_button"
-                                            class="btn waves-effect btn-primary "><i
-                                            class="fa fa-check"></i>&nbsp点此下载
-                                    </button>
-                                </div>
-
-                            </div>
-
-                            <hr style=" margin-top:5px;">
                             <div class="table-responsive">
-                                <table id="tb" class="table color-table primary-table hover-table">
-                                    <thead>
-                                    <tr style="text-align:center;">
+                                <table class="table color-table primary-table hover-table">
+                                    <thead style="text-align:center;">
+                                    <tr>
                                         <th>时间</th>
-                                        <th>监测站</th>
-                                        <th>等级</th>
-                                        <th>AQI</th>
-                                        <th>主要污染物</th>
-                                        <th>PM2.5</th>
-                                        <th>PM10</th>
-                                        <th>CO</th>
-                                        <th>NO2</th>
-                                        <th>O3</th>
-                                        <th>SO2</th>
+                                        <th>URL</th>
+                                        <th>IP</th>
+                                        <th>用户ID</th>
+                                        <th>用户名</th>
+                                        <th>Class</th>
+                                        <th>Method</th>
+                                        <th>Parameters</th>
                                     </tr>
                                     </thead>
+                                    <tbody style="text-align:center;">
 
+                                    <#list logPage.list as log>
+                                    <tr>
+                                        <td>${log.requestTime?string("yyyy-MM-dd hh:mm:ss")!}</td>
+                                        <td>${log.requestURL!}</td>
+                                        <td>${log.userIP!}</td>
+                                        <td>${log.userId!}</td>
+                                        <td>${log.userName!}</td>
+                                        <td>${log.className!}</td>
+                                        <td>${log.methodName!}</td>
+                                        <td>${log.parameters!}</td>
+                                    </#list>
+                                    </tbody>
                                 </table>
                             </div>
-
-                            <div class="col-md-12" style=" margin-left:350px;">
-                                <ul class="pagination" id="page-nav">
-                                </ul>
-                            </div>
-
                         </div>
+
+                        <div class="col-md-12" style=" margin-left:400px;">
+                            <ul class="pagination" id="page-nav">
+                                <ul class="pagination" id="page-nav">
+                                    <li onclick="getLog(1)" class="page-item"><a
+                                            class="page-link">首页</a></li>
+                                    <li onclick="getLog(${logPage.prePage!})" class="page-item"><a
+                                            class="page-link">上一页</a></li>
+                                    <#list logPage.navigatepageNums as pageNum>
+                                    <li onclick="getLog(${pageNum})" class="page-item"><a
+                                            class="page-link">${pageNum}</a></li>
+                                    </#list>
+                                    <li onclick="getLog(${logPage.nextPage!})" class="page-item"><a
+                                            class="page-link">下一页</a></li>
+                                    <li onclick="getLog(${logPage.navigatePages!})" class="page-item"><a
+                                            class="page-link">尾页</a></li>
+                                </ul>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
 
-
             </div>
+
+
             <!-- ============================================================== -->
             <!-- End PAge Content -->
             <!-- ============================================================== -->
@@ -460,21 +340,31 @@
                     <div class="r-panel-body">
                         <ul id="themecolors" class="m-t-20">
                             <li><b>亮色</b></li>
-                            <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
+                            <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a>
+                            </li>
                             <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
                             <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
-                            <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
+                            <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a>
+                            </li>
                             <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
                             <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
                             <li class="d-block m-t-30"><b>暗色</b></li>
-                            <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a>
+                            <li><a href="javascript:void(0)" data-theme="default-dark"
+                                   class="default-dark-theme">7</a>
                             </li>
-                            <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
-                            <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
-                            <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
-                            <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a>
+                            <li><a href="javascript:void(0)" data-theme="green-dark"
+                                   class="green-dark-theme">8</a>
                             </li>
-                            <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a>
+                            <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a>
+                            </li>
+                            <li><a href="javascript:void(0)" data-theme="blue-dark"
+                                   class="blue-dark-theme">10</a>
+                            </li>
+                            <li><a href="javascript:void(0)" data-theme="purple-dark"
+                                   class="purple-dark-theme">11</a>
+                            </li>
+                            <li><a href="javascript:void(0)" data-theme="megna-dark"
+                                   class="megna-dark-theme ">12</a>
                             </li>
                         </ul>
                     </div>
@@ -536,6 +426,9 @@
 <!-- Style switcher -->
 <!-- ============================================================== -->
 <script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+<!-- Echarts -->
+<script src="/static/js/echarts.js"></script>
+<script src="/static/js/macarons.js"></script>
 <!-- DateTime -->
 <script src="/static/plugins/moment/moment.js"></script>
 <script src="/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
@@ -546,165 +439,17 @@
 <!-- Date range Plugin JavaScript -->
 <script src="/static/plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
-<script src="/static/plugins/moment/moment-with-locales.js"></script>
-<script src="/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<script src="/static/plugins/moment/moment.js"></script>
 <!-- 自定义时间 -->
 <script src="/static/js/datetime.js"></script>
 <script src="/static/js/bootstrap-select.min.js"></script>
-<!-- Footable -->
-<script src="/static/plugins/moment/moment.js"></script>
-<script src="/static/plugins/footable/js/footable.min.js"></script>
-<script src="/static/plugins/bootstrap-select/bootstrap-select.min.js"></script>
-<!-- slimscrollbar scrollbar JavaScript -->
-<script src="/static/js/jquery.slimscroll.js"></script>
-<!--Wave Effects -->
-<script src="/static/js/waves.js"></script>
-<!--Menu sidebar -->
-<script src="/static/js/sidebarmenu.js"></script>
-<!--stickey kit -->
-<script src="/static/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
-<script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
 
 </body>
 
 <script>
 
-    var default_site = "yangpusipiao"
-
-    $('#date-picker').bootstrapMaterialDatePicker({
-        format: 'YYYY-MM-DD HH:mm:ss',
-    });
-
-    $(document).ready(function () {
-        getDefaultData();
-    });
-
-    function getDefaultData() {
-        $.ajax({
-            url: '/export/default',
-            type: 'GET',
-            headers: {
-                Authorization: getCookie("jwt_token")
-            },
-            success: function (data) {
-                var default_time = data.start + ' - ' + data.end;
-                $('#time-range').val(default_time);
-                $('#tb tr:gt(0)').remove();
-                var table_data = '';
-                var color = '';
-                for (let i of data.pollutant.list) {
-                    if (i.aqi < 50) {
-                        color = '<td><span class="label label-success">' + i.level + '</span></td>';
-                    }
-                    if (i.aqi > 50 && i.aqi < 100) {
-                        color = '<td><span class="label label-info">' + i.level + '</span></td>';
-                    }
-                    if (i.aqi > 100 && i.aqi < 150) {
-                        color = '<td><span class="label label-warning">' + i.level + '</span></td>';
-                    }
-                    if (i.aqi > 150 && i.aqi < 200) {
-                        color = '<td><span class="label label-light-warning">' + i.level + '</span></td>';
-                    }
-                    if (i.aqi > 200 && i.aqi < 300) {
-                        color = '<td><span class="label label-danger">' + i.level + '</span></td>';
-                    }
-                    if (i.aqi > 300) {
-                        color = '<td><span class="label label-danger">' + i.level + '</span></td>';
-                    }
-                    table_data += '<tr><td>' + i.time + '</td><td>' + i.site + '</td>';
-                    table_data += color;
-                    table_data += '<td>' + i.aqi + '</td><td>' + i.primaryPollutant + '</td><td>' + i.pm25 + '</td><td>' + i.pm10 + '</td><td>' + i.co + '</td><td>' + i.no2 + '</td><td>' + i.oZone + '</td><td>' + i.so2 + '</td></tr>';
-                }
-                $('#tb').append('<tbody style="text-align:center;">' + table_data + '</tbody>');
-
-                var page_nav = "";
-                page_nav += "<li onclick=\"getCustomeData(" + "'yangpusipiao'" + "," + 1 + ")\" class=\"page-item\"><a class=\"page-link\">首页</a></li>"
-                page_nav += "<li onclick=\"getCustomeData(" + "'yangpusipiao'" + "," + data.pollutant.prePage + ")\" class=\"page-item\"><a class=\"page-link\">上一页</a></li>"
-                for (let i of data.pollutant.navigatepageNums) {
-                    page_nav += "<li onclick=\"getCustomeData(" + "'yangpusipiao'" + "," + i + ")\" class=\"page-item\"><a class=\"page-link\">" + i + "</a></li>"
-                }
-                page_nav += " <li onclick=\"getCustomeData(" + "'yangpusipiao'" + "," + data.pollutant.nextPage + ")\" class=\"page-item\"><a class=\"page-link\">下一页</a></li>\n"
-                page_nav += "<li onclick=\"getCustomeData(" + "'yangpusipiao'" + "," + data.pollutant.pages + ")\" class=\"page-item\"><a class=\"page-link\">尾页</a></li>"
-                $('#page-nav').html(page_nav);
-
-            },
-            error: function (msg) {
-                console.log(msg);
-            }
-        });
-    }
-
-    function getCustomeData(site, pageNum) {
-        var time = $('#time-range').val().split(" - ");
-        $.ajax({
-            url: '/export/' + site + '/pollution?start=' + time[0] + '&end=' + time[1] + '&pageNum=' + pageNum + '&pageSize=10',
-            type: 'GET',
-            headers: {
-                Authorization: getCookie("jwt_token")
-            },
-            success: function (data) {
-                $('#tb tr:gt(0)').remove();
-                var table_data = '';
-                var color = '';
-                for (let i of data.list) {
-                    if (i.aqi < 50) {
-                        color = '<td><span class="label label-success">' + i.level + '</span></td>';
-                    }
-                    if (i.aqi > 50 && i.aqi < 100) {
-                        color = '<td><span class="label label-info">' + i.level + '</span></td>';
-                    }
-                    if (i.aqi > 100 && i.aqi < 150) {
-                        color = '<td><span class="label label-warning">' + i.level + '</span></td>';
-                    }
-                    if (i.aqi > 150 && i.aqi < 200) {
-                        color = '<td><span class="label label-light-warning">' + i.level + '</span></td>';
-                    }
-                    if (i.aqi > 200 && i.aqi < 300) {
-                        color = '<td><span class="label label-danger">' + i.level + '</span></td>';
-                    }
-                    if (i.aqi > 300) {
-                        color = '<td><span class="label label-danger">' + i.level + '</span></td>';
-                    }
-                    table_data += '<tr><td>' + i.time + '</td><td>' + i.site + '</td>';
-                    table_data += color;
-                    table_data += '<td>' + i.aqi + '</td><td>' + i.primaryPollutant + '</td><td>' + i.pm25 + '</td><td>' + i.pm10 + '</td><td>' + i.co + '</td><td>' + i.no2 + '</td><td>' + i.oZone + '</td><td>' + i.so2 + '</td></tr>';
-                }
-                $('#tb').append('<tbody style="text-align:center;">' + table_data + '</tbody>');
-
-                var page_nav = "";
-                $('#page-nav').html("");
-                page_nav += "<li onclick=\"getCustomeData(" + "'" + site + "'" + "," + 1 + ")\" class=\"page-item\"><a class=\"page-link\">首页</a></li>"
-                page_nav += "<li onclick=\"getCustomeData(" + "'" + site + "'" + "," + data.prePage + ")\" class=\"page-item\"><a class=\"page-link\">上一页</a></li>"
-                for (let i of data.navigatepageNums) {
-                    page_nav += "<li onclick=\"getCustomeData(" + "'" + site + "'" + "," + i + ")\" class=\"page-item\"><a class=\"page-link\">" + i + "</a></li>"
-                }
-                page_nav += " <li onclick=\"getCustomeData(" + "'" + site + "'" + "," + data.nextPage + ")\" class=\"page-item\"><a class=\"page-link\">下一页</a></li>\n"
-                page_nav += "<li onclick=\"getCustomeData(" + "'" + site + "'" + "," + data.pages + ")\" class=\"page-item\"><a class=\"page-link\">尾页</a></li>"
-                $('#page-nav').html(page_nav);
-            },
-            error: function (msg) {
-                console.log(msg);
-            }
-        });
-
-    }
-
-    $("#request_button").click(function () {
-        getCustomeData($('#site_picker').val(), 10);
-    });
-
-    $("#download_button").click(function () {
-        var time = $('#time-range').val().split(" - ");
-        var site = $('#site_picker').val();
-        window.open('/export/excel/' + site + '?start=' + time[0] + '&end=' + time[1] + '&jwt=' + getCookie("jwt_token"));
-    });
-
-
-    function getCookie(name) {
-        var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
-        if (arr != null)
-            return unescape(arr[2]);
-        return null;
+    function getLog(pageNum) {
+        window.location.href='/admin/log?pageNum='+pageNum;
     }
 
     // 通知记数
@@ -748,30 +493,14 @@
 
     get_notification();
 
-    $("#notification").on('click', "button[id^='read-']", function () {
-        var id = this.value;
-        $.ajax({
-            url: '/notification/' + id,
-            type: 'PUT',
-            headers: {
-                Authorization: getCookie("jwt_token")
-            },
-            success: function (data) {
-                var count = $('#notification_title').val();
-                $("#notification-" + id).remove();
-                msg_count -= 1;
-                $('#notification_title').html("你有 " + msg_count + " 条未读通知");
-                $('#notification_title').val(msg_count);
+    function getCookie(name) {
+        var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+        if (arr != null)
+            return unescape(arr[2]);
+        return null;
+    }
 
-            },
-            error: function (msg) {
-                console.log(msg);
-            }
-        });
-
-    });
 
 </script>
-
 
 </html>
