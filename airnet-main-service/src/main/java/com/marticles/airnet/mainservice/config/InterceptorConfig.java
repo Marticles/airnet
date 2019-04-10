@@ -36,7 +36,8 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
 //                ,"/","/check_user","/viz/airflowmap","/viz/aqimap"
 //                ,"/viz/globalmap","/rank/cn","/info","/about-airnet"
 //                ,"/login","/register","/403","/404","/api-key");
-        registry.addInterceptor(adminInterceptor).excludePathPatterns("/static/*").addPathPatterns("/admin/**");
+//        registry.addInterceptor(adminInterceptor).excludePathPatterns("/static/*").addPathPatterns("/admin/**");
+//
         super.addInterceptors(registry);
     }
 
