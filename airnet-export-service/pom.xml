@@ -6,7 +6,7 @@
         <groupId>com.marticles</groupId>
         <artifactId>airnet</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+
     </parent>
     <groupId>com.marticles</groupId>
     <artifactId>airnet-export-service</artifactId>

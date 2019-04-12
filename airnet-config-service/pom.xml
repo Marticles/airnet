@@ -6,9 +6,9 @@
         <groupId>com.marticles</groupId>
         <artifactId>airnet</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.marticles</groupId>
+
     <artifactId>airnet-config-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>airnet-config-service</name>
@@ -43,6 +43,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+
+
         </plugins>
     </build>
 

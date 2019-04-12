@@ -44,8 +44,8 @@ public class AuthFliter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String requestUrl = request.getRequestURL().toString();
+        log.info(requestUrl);
         if (requestUrl.contains(DATASERVICE_URL)||requestUrl.contains(EXPORTSERVICE_URL)) {
-            // log.info(requestUrl);
             return true;
         }
         return false;

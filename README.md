@@ -68,9 +68,7 @@ AirNet 是一个环境污染物数据分析与预测平台，采用微服务架�
 
 #### 基于 Seq2seq 的 PM2.5 预测模型
 
-采用异步方式处理模型训练请求，Spring 端会将用户的训练请求发送至 Kafka，Python 端从 Kafka 中取出请求开始训练模型。
-
-TODO
+采用异步方式处理模型训练请求，Spring Cloud 端会将用户的训练请求发至 Kafka，Python 端从 Kafka 中取出请求并训练模型完成预测。
 
 ### 5.污染物预警
 

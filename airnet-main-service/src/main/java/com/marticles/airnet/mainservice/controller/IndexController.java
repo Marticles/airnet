@@ -1,5 +1,6 @@
 package com.marticles.airnet.mainservice.controller;
 
+import com.marticles.airnet.mainservice.annotation.MyLogger;
 import com.marticles.airnet.mainservice.model.User;
 import com.marticles.airnet.mainservice.model.UserLocal;
 import com.marticles.airnet.mainservice.model.WeatherInfo;
@@ -33,6 +34,7 @@ public class IndexController {
     @Autowired
     private UserLocal userLocal;
 
+    @MyLogger
     @GetMapping("/")
     public String index(Model model) throws Exception{
         User user = userLocal.getUser();
