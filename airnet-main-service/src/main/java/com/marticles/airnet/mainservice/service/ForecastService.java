@@ -1,5 +1,7 @@
 package com.marticles.airnet.mainservice.service;
 
+import com.marticles.airnet.mainservice.dao.ForecastDAO;
+import com.marticles.airnet.mainservice.model.ForecastList;
 import com.marticles.airnet.mainservice.util.ImgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,17 @@ public class ForecastService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private ForecastDAO forecastDAO;
+
+    public ForecastList getShForecast(String site, String start, String end){
+        ForecastList forecastList = new ForecastList();
+        forecastList.setPollutionName("pm25");
+        forecastList.setTime(forecastDAO.getForecastDate(site,start,end));
+        forecastList.setPollution(forecastDAO.getForecastPM25(site,start,end));
+        return forecastList;
+    }
 
     public List<String> getCNImgList() {
         List<String> imgUrlList = ImgUtil.getImgUrl(restTemplate, FORECAST_CN_URL);
