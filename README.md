@@ -22,7 +22,7 @@ AirNet 是一个环境污染物数据分析与预测平台，采用微服务架�
 | airnet-data-service   | 8081 | 数据服务(包括污染物数据与用户数据)     |
 | airnet-mail-service | 8082 | 邮件服务 |
 | airnet-export-service | 8083 | 数据导出服务 |
-| airnet-forecast-service | 8084 | PM2.5 预测服务(Flask&Kears) |
+| airnet-forecast-service | 8084 | PM2.5 预测服务(Flask&Keras) |
 | airnet-api-service | 8085 | API 服务 |
 
 ![](/img/airnet.png)
@@ -68,11 +68,11 @@ AirNet 是一个环境污染物数据分析与预测平台，采用微服务架�
 
 #### 基于 Seq2seq 的 PM2.5 预测模型
 
-采用异步方式处理模型训练请求，Spring Cloud 端会将用户的训练请求发至 Kafka，Flask 端从 Kafka 中取出请求并训练模型完成预测。
+采用异步方式处理模型训练请求，Spring Cloud 端会将用户的训练请求发至 Kafka，Flask 端从 Kafka 中拉出请求并训练模型完成预测。
 
 ### 5.污染物预警
 
-通过 Spring 的 @Scheduled 注解实现定时任务，具体操作是通过查询数据库中对应监测站的最新一条数据与用户设置的预警阈值进行比较，超过预警阈值则发送站内信与邮件通知用户。
+通过 Spring 的 @Scheduled 注解实现定时任务，若监测站的最新一条数据超过用户设置的预警阈值，则会发送站内信与邮件通知用户。
 
 - 站内信通知
 - 邮件通知
@@ -87,7 +87,7 @@ AirNet 是一个环境污染物数据分析与预测平台，采用微服务架�
 
 ### 7.API
 
-只有注册用户在 “API 说明” 页面中主动申请 API Key 并经过管理员同意下发 Key 后，用户才可使用 API Key 调用 API。AirNet API 提供以下三个接口，所有接口对于不同的用户都实现了自定义的限流策略（包括 QPS 限制与每月最多请求次数限制）。
+只有注册用户在 “API 说明” 页面中主动申请 API Key 并经过管理员同意下发 Key 后，用户才可使用 API Key 调用 API。AirNet API 提供以下三个接口，所有接口对于不同的用户都实现了可自定义化的限流策略（包括 QPS 限制与每月最多请求次数限制）。
 
 - 历史 / 实时污染物数据 API
 - 历史 / 实时空气质量排行 API
